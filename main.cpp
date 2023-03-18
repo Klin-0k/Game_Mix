@@ -7,7 +7,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-//#include "Global_Classes.h"
+#include "Global_Classes.h"
 #include "Global_Variables.h"
 
 void EventHandling() {

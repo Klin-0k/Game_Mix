@@ -8,5 +8,5 @@
 
 #include <SFML/Graphics.hpp>
 
-sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Window");
+sf::RenderWindow window(sf::VideoMode(1920, 1080), "Casino");
 bool program_is_ending = false;

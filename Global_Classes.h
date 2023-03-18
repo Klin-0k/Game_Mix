@@ -6,10 +6,24 @@
 
 #include "Global_Variables.h"
 
+//----------------------------------------------------------
+
 class Object {
  public:
  private:
 };
+
+class Button:Object {
+ public:
+ private:
+};
+
+class Character:Object {
+ public:
+ private:
+};
+
+//----------------------------------------------------------
 
 class Game {
  public:
@@ -21,13 +35,29 @@ class MainMenu {
  public:
 };
 
+class InGameMenu {
+ private:
+ public:
+};
+
+class Exit {
+ private:
+ public:
+};
+
 class Settings {
  private:
  public:
 };
+
+//----------------------------------------------------------
 
 class Profile {
  private:
  public:
 };
 
+class User {
+ private:
+ public:
+};

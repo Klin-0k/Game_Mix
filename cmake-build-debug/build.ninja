@@ -65,10 +65,10 @@ build CMakeFiles/TP_2023_Project.dir/main.cpp.obj: CXX_COMPILER__TP_2023_Project
 #############################################
 # Link the executable TP_2023_Project.exe
 
-build TP_2023_Project.exe: CXX_EXECUTABLE_LINKER__TP_2023_Project_Debug CMakeFiles/TP_2023_Project.dir/main.cpp.obj | ../SFML-2.5.1/lib/libsfml-graphics-s-d.a ../SFML-2.5.1/lib/libsfml-window-s-d.a ../SFML-2.5.1/lib/libsfml-system-s-d.a H$:/MIPT/CS/SFML-2.5.1/lib/libfreetype.a
+build TP_2023_Project.exe: CXX_EXECUTABLE_LINKER__TP_2023_Project_Debug CMakeFiles/TP_2023_Project.dir/main.cpp.obj | ../SFML-2.5.1/lib/libsfml-graphics-s-d.a ../SFML-2.5.1/lib/libsfml-window-s-d.a ../SFML-2.5.1/lib/libsfml-system-s-d.a ../SFML-2.5.1/lib/libfreetype.a
   FLAGS = -g
   LINK_FLAGS = -static -static-libgcc
-  LINK_LIBRARIES = ../SFML-2.5.1/lib/libsfml-graphics-s-d.a  ../SFML-2.5.1/lib/libsfml-window-s-d.a  ../SFML-2.5.1/lib/libsfml-system-s-d.a  -lwinmm  -lgdi32  -lOpenGL32  H:/MIPT/CS/SFML-2.5.1/lib/libfreetype.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = ../SFML-2.5.1/lib/libsfml-graphics-s-d.a  ../SFML-2.5.1/lib/libsfml-window-s-d.a  ../SFML-2.5.1/lib/libsfml-system-s-d.a  -lwinmm  -lgdi32  -lOpenGL32  ../SFML-2.5.1/lib/libfreetype.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\TP_2023_Project.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
