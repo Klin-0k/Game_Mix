@@ -41,13 +41,46 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = H$:/MIPT/CS/TP/TP_2023_Project/cmake-build-debug/
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target Global_Classes
+
+
+#############################################
+# Order-only phony target for Global_Classes
+
+build cmake_object_order_depends_target_Global_Classes: phony || CMakeFiles/Global_Classes.dir
+
+build CMakeFiles/Global_Classes.dir/Global_Classes.cpp.obj: CXX_COMPILER__Global_Classes_Debug H$:/MIPT/CS/TP/TP_2023_Project/Global_Classes.cpp || cmake_object_order_depends_target_Global_Classes
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\Global_Classes.dir\Global_Classes.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem H:/MIPT/CS/TP/TP_2023_Project/SFML-2.5.1/include
+  OBJECT_DIR = CMakeFiles\Global_Classes.dir
+  OBJECT_FILE_DIR = CMakeFiles\Global_Classes.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target Global_Classes
+
+
+#############################################
+# Link the static library libGlobal_Classes.a
+
+build libGlobal_Classes.a: CXX_STATIC_LIBRARY_LINKER__Global_Classes_Debug CMakeFiles/Global_Classes.dir/Global_Classes.cpp.obj
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles\Global_Classes.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libGlobal_Classes.a
+  TARGET_PDB = Global_Classes.a.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target TP_2023_Project
 
 
 #############################################
 # Order-only phony target for TP_2023_Project
 
-build cmake_object_order_depends_target_TP_2023_Project: phony || CMakeFiles/TP_2023_Project.dir
+build cmake_object_order_depends_target_TP_2023_Project: phony || cmake_object_order_depends_target_Global_Classes
 
 build CMakeFiles/TP_2023_Project.dir/main.cpp.obj: CXX_COMPILER__TP_2023_Project_Debug H$:/MIPT/CS/TP/TP_2023_Project/main.cpp || cmake_object_order_depends_target_TP_2023_Project
   DEFINES = -DSFML_STATIC
@@ -65,10 +98,10 @@ build CMakeFiles/TP_2023_Project.dir/main.cpp.obj: CXX_COMPILER__TP_2023_Project
 #############################################
 # Link the executable TP_2023_Project.exe
 
-build TP_2023_Project.exe: CXX_EXECUTABLE_LINKER__TP_2023_Project_Debug CMakeFiles/TP_2023_Project.dir/main.cpp.obj | ../SFML-2.5.1/lib/libsfml-graphics-s-d.a ../SFML-2.5.1/lib/libsfml-window-s-d.a ../SFML-2.5.1/lib/libsfml-system-s-d.a ../SFML-2.5.1/lib/libfreetype.a
+build TP_2023_Project.exe: CXX_EXECUTABLE_LINKER__TP_2023_Project_Debug CMakeFiles/TP_2023_Project.dir/main.cpp.obj | libGlobal_Classes.a ../SFML-2.5.1/lib/libsfml-graphics-s-d.a ../SFML-2.5.1/lib/libsfml-window-s-d.a ../SFML-2.5.1/lib/libsfml-system-s-d.a ../SFML-2.5.1/lib/libfreetype.a || libGlobal_Classes.a
   FLAGS = -g
   LINK_FLAGS = -static -static-libgcc
-  LINK_LIBRARIES = ../SFML-2.5.1/lib/libsfml-graphics-s-d.a  ../SFML-2.5.1/lib/libsfml-window-s-d.a  ../SFML-2.5.1/lib/libsfml-system-s-d.a  -lwinmm  -lgdi32  -lOpenGL32  ../SFML-2.5.1/lib/libfreetype.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = libGlobal_Classes.a  ../SFML-2.5.1/lib/libsfml-graphics-s-d.a  ../SFML-2.5.1/lib/libsfml-window-s-d.a  ../SFML-2.5.1/lib/libsfml-system-s-d.a  ../SFML-2.5.1/lib/libfreetype.a  -lOpenGL32  -lgdi32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\TP_2023_Project.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -102,6 +135,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build Global_Classes: phony libGlobal_Classes.a
+
 build TP_2023_Project: phony TP_2023_Project.exe
 
 # =============================================================================
@@ -112,7 +147,7 @@ build TP_2023_Project: phony TP_2023_Project.exe
 #############################################
 # Folder: H:/MIPT/CS/TP/TP_2023_Project/cmake-build-debug
 
-build all: phony TP_2023_Project.exe
+build all: phony libGlobal_Classes.a TP_2023_Project.exe
 
 # =============================================================================
 # Built-in targets
