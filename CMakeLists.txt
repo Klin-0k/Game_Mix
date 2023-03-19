@@ -1,10 +1,10 @@
 #Base
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.16)
 project(TP_2023_Project)
-set(CMAKE_CXX_STANDARD 23)
-add_library(Global_Classes Global_Classes.cpp Global_Classes.h)
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} Global_Classes)
+set(CMAKE_CXX_STANDARD 20)
+#add_library(Global_Classes Global_Classes.cpp Global_Classes.h)
+add_executable(${PROJECT_NAME} main.cpp Global_Variables.h)
+#target_link_libraries(${PROJECT_NAME} Global_Classes)
 ##########################################################################
 
 
@@ -22,11 +22,18 @@ target_link_libraries(${PROJECT_NAME} Global_Classes)
 
 
 #some magic that turn on SFML
-set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc")
-set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML ./SFML-2.5.1)
-set(SFML_DIR ${SFML}/lib/cmake/SFML)
-target_link_libraries(Global_Classes sfml-graphics sfml-window sfml-system)
+if (WIN32)
+  set(SFML ./SFML-2.5.1)
+  set(SFML_DIR ${SFML}/lib/cmake/SFML)
+  set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc")
+  set(SFML_STATIC_LIBRARIES TRUE)
+endif(WIN32)
+
+if (UNIX)
+  set(SFML ./SFML-2.5.1_for_linux)
+  set(SFML_DIR ${SFML}/lib/cmake/SFML)
+endif (UNIX)
+#target_link_libraries(Global_Classes sfml-graphics sfml-window sfml-system)
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 find_package(SFML REQUIRED graphics network audio window system)
 ##########################################################################

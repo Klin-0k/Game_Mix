@@ -7,14 +7,15 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include "Global_Classes.h"
-#include "Global_Variables.h"
+#include "Global_Classes.cpp"
 
 void GettingStarted() {
     sf::Image window_icon;
     window_icon.loadFromFile("../Resources/icon.png");
     window.setIcon(1024, 1024, window_icon.getPixelsPtr());
-};
+    window.setFramerateLimit(120);
+    //Object test = Object(sf::Image(), sf::Rect<int>());
+}
 void EventHandling() {
   sf::Event event;
   while (window.pollEvent(event))
@@ -30,40 +31,49 @@ void EventHandling() {
       case sf::Event::GainedFocus:
       case sf::Event::TextEntered:
         for (auto i : ObjectsWithTextEnteredEvent) {
-          (*i).KeyPressed();
+          i->TextEntered();
         }
+        break;
       case sf::Event::KeyPressed:
         for (auto i : ObjectsWithKeyPressedEvent) {
-          (*i).KeyPressed();
+          i->KeyPressed();
         }
+        break;
       case sf::Event::KeyReleased:
         for (auto i : ObjectsWithKeyReleasedEvent) {
-          (*i).KeyPressed();
+          i->KeyReleased();
         }
+        break;
       case sf::Event::MouseWheelScrolled:
         for (auto i : ObjectsWithMouseWheelScrolledEvent) {
-          (*i).KeyPressed();
+          i->MouseWheelScrolled();
         }
+        break;
       case sf::Event::MouseButtonPressed:
         for (auto i : ObjectsWithMouseButtonPressedEvent) {
-          (*i).KeyPressed();
+          i->MouseButtonPressed();
         }
+        break;
       case sf::Event::MouseButtonReleased:
         for (auto i : ObjectsWithMouseButtonReleasedEvent) {
-          (*i).KeyPressed();
+          i->MouseButtonReleased();
         }
+        break;
       case sf::Event::MouseMoved:
         for (auto i : ObjectsWithMouseMovedEvent) {
-          (*i).KeyPressed();
+          i->MouseMoved();
         }
+        break;
       case sf::Event::MouseEntered:
         for (auto i : ObjectsWithMouseEnteredEvent) {
-          (*i).KeyPressed();
+          i->MouseEntered();
         }
+        break;
       case sf::Event::MouseLeft:
         for (auto i : ObjectsWithMouseLeftEvent) {
-          (*i).KeyPressed();
+          i->MouseLeft();
         }
+        break;
       case sf::Event::JoystickButtonPressed:
       case sf::Event::JoystickButtonReleased:
       case sf::Event::JoystickMoved:
@@ -81,16 +91,14 @@ void EventHandling() {
 
 int main() {
   GettingStarted();
-  sf::Color color(255, 0, 0);
   while (true) {
     EventHandling();
     if (program_is_ending) {
       break;
     }
-    color.r = (color.r + 1) % 256;
-    color.g = (color.g + 2) % 256;
-    color.b = (color.b + 3) % 256;
-    window.clear(color);
+    for (auto i : ObjectsToDraw) {
+      i->Draw();
+    }
     window.display();
   }
   return 0;

@@ -1,4 +1,3 @@
-H:/MIPT/CS/TP/TP_2023_Project/cmake-build-debug/CMakeFiles/Global_Classes.dir
 H:/MIPT/CS/TP/TP_2023_Project/cmake-build-debug/CMakeFiles/TP_2023_Project.dir
 H:/MIPT/CS/TP/TP_2023_Project/cmake-build-debug/CMakeFiles/edit_cache.dir
 H:/MIPT/CS/TP/TP_2023_Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir

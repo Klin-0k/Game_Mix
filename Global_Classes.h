@@ -4,16 +4,23 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Global_Variables.h"
+extern sf::RenderWindow window;
 
 //----------------------------------------------------------
 
 class Object {
  public:
+  Object(const sf::Image& image, sf::Rect<int> rect, sf::RenderWindow& parent = window, int X = window.getSize().x / 2, int Y = window.getSize().y / 2): parent_(parent), Ox(X), Oy(Y) {
+    SetEnableMod(true);
+    SetVisibleMod(true);
+  }
+  Object(const sf::Image& image, sf::Rect<int> rect, sf::RenderWindow& parent): Object(image, rect, parent, parent.getSize().x / 2, parent.getSize().y / 2) {}
   void Move(int X, int Y);
   void MoveByCenter(int X, int Y);
-  bool& enable();
-  bool& visible();
+  void SetEnableMod(bool enable);
+  void SetVisibleMod(bool visible);
+  bool GetEnableMod();
+  bool GetVisibleMod();
   const sf::RenderWindow& parent();
   void SetTextEnteredEvent(void (* Func)());
   void SetKeyPressedEvent(void (* Func)());
@@ -25,15 +32,13 @@ class Object {
   void SetMouseEnteredEvent(void (* Func)());
   void SetMouseLeftEvent(void (* Func)());
   friend void EventHandling();
+  void Draw();
  protected:
   int Ox, Oy;
   sf::Sprite Sprite_;
-  sf::Texture Texture_;
-  sf::RectangleShape Shape_;
   bool enable_ = true;
   bool visible_ = true;
   sf::RenderWindow& parent_;
-  void draw(sf::RenderTarget& target, sf::RenderStates states);
  private:
   void (* TextEntered)() = nullptr;
   void (* KeyPressed)() = nullptr;
@@ -45,16 +50,6 @@ class Object {
   void (* MouseEntered)() = nullptr;
   void (* MouseLeft)() = nullptr;
 };
-
-std::unordered_set<Object*> ObjectsWithTextEnteredEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithKeyPressedEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithKeyReleasedEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithMouseWheelScrolledEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithMouseButtonPressedEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithMouseButtonReleasedEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithMouseMovedEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithMouseEnteredEvent = std::unordered_set<Object*>();
-std::unordered_set<Object*> ObjectsWithMouseLeftEvent = std::unordered_set<Object*>();
 
 class Character : Object {
  public:

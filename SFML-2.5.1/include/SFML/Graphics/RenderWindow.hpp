@@ -149,7 +149,7 @@ public:
     /// image with the contents of the window and then use it for
     /// drawing, you should rather use a sf::Texture and its
     /// update(Window&) function.
-    /// You can also draw things directly to a texture with the
+    /// You can also Draw things directly to a texture with the
     /// sf::RenderTexture class.
     ///
     /// \return Image containing the captured contents
@@ -226,9 +226,9 @@ protected:
 ///    window.clear();
 ///
 ///    // Draw some graphical entities
-///    window.draw(sprite);
-///    window.draw(circle);
-///    window.draw(text);
+///    window.Draw(sprite);
+///    window.Draw(circle);
+///    window.Draw(text);
 ///
 ///    // End the current frame and display its contents on screen
 ///    window.display();
@@ -260,7 +260,7 @@ protected:
 ///
 ///     // Draw a background sprite
 ///     window.pushGLStates();
-///     window.draw(sprite);
+///     window.Draw(sprite);
 ///     window.popGLStates();
 ///
 ///     // Draw a 3D object using OpenGL
@@ -271,7 +271,7 @@ protected:
 ///
 ///     // Draw text on top of the 3D object
 ///     window.pushGLStates();
-///     window.draw(text);
+///     window.Draw(text);
 ///     window.popGLStates();
 ///
 ///     // Finally, display the rendered frame on screen

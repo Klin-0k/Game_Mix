@@ -327,13 +327,13 @@ private:
 /// window.setView(view);
 ///
 /// // Render stuff
-/// window.draw(someSprite);
+/// window.Draw(someSprite);
 ///
 /// // Set the default view back
 /// window.setView(window.getDefaultView());
 ///
 /// // Render stuff not affected by the view
-/// window.draw(someText);
+/// window.Draw(someText);
 /// \endcode
 ///
 /// See also the note on coordinates and undistorted rendering in sf::Transformable.

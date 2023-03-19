@@ -194,7 +194,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the sprite to a render target
     ///
-    /// \param target Render target to draw to
+    /// \param target Render target to Draw to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -246,7 +246,7 @@ private:
 /// and better performances: indeed a sf::Texture is a heavy resource,
 /// and any operation on it is slow (often too slow for real-time
 /// applications). On the other side, a sf::Sprite is a lightweight
-/// object which can use the pixel data of a sf::Texture and draw
+/// object which can use the pixel data of a sf::Texture and Draw
 /// it with its own transformation/color/blending attributes.
 ///
 /// It is important to note that the sf::Sprite instance doesn't
@@ -271,7 +271,7 @@ private:
 /// sprite.setPosition(100, 25);
 ///
 /// // Draw it
-/// window.draw(sprite);
+/// window.Draw(sprite);
 /// \endcode
 ///
 /// \see sf::Texture, sf::Transformable

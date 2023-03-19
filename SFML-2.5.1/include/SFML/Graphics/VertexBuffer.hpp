@@ -238,10 +238,10 @@ public:
     unsigned int getNativeHandle() const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief Set the type of primitives to draw
+    /// \brief Set the type of primitives to Draw
     ///
     /// This function defines how the vertices must be interpreted
-    /// when it's time to draw them.
+    /// when it's time to Draw them.
     ///
     /// The default primitive type is sf::Points.
     ///
@@ -294,11 +294,11 @@ public:
     /// sf::VertexBuffer vb1, vb2;
     /// ...
     /// sf::VertexBuffer::bind(&vb1);
-    /// // draw OpenGL stuff that use vb1...
+    /// // Draw OpenGL stuff that use vb1...
     /// sf::VertexBuffer::bind(&vb2);
-    /// // draw OpenGL stuff that use vb2...
+    /// // Draw OpenGL stuff that use vb2...
     /// sf::VertexBuffer::bind(NULL);
-    /// // draw OpenGL stuff that use no vertex buffer...
+    /// // Draw OpenGL stuff that use no vertex buffer...
     /// \endcode
     ///
     /// \param vertexBuffer Pointer to the vertex buffer to bind, can be null to use no vertex buffer
@@ -323,7 +323,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the vertex buffer to a render target
     ///
-    /// \param target Render target to draw to
+    /// \param target Render target to Draw to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -336,7 +336,7 @@ private:
     ////////////////////////////////////////////////////////////
     unsigned int  m_buffer;        ///< Internal buffer identifier
     std::size_t   m_size;          ///< Size in Vertexes of the currently allocated buffer
-    PrimitiveType m_primitiveType; ///< Type of primitives to draw
+    PrimitiveType m_primitiveType; ///< Type of primitives to Draw
     Usage         m_usage;         ///< How this vertex buffer is to be used
 };
 
@@ -400,7 +400,7 @@ private:
 /// triangles.create(15);
 /// triangles.update(vertices);
 /// ...
-/// window.draw(triangles);
+/// window.Draw(triangles);
 /// \endcode
 ///
 /// \see sf::Vertex, sf::VertexArray

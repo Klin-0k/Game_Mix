@@ -377,17 +377,17 @@ private:
 /// \code
 /// class MyEntity : public sf::Transformable, public sf::Drawable
 /// {
-///     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+///     virtual void Draw(sf::RenderTarget& target, sf::RenderStates states) const
 ///     {
 ///         states.transform *= getTransform();
-///         target.draw(..., states);
+///         target.Draw(..., states);
 ///     }
 /// };
 ///
 /// MyEntity entity;
 /// entity.setPosition(10, 20);
 /// entity.setRotation(45);
-/// window.draw(entity);
+/// window.Draw(entity);
 /// \endcode
 ///
 /// It can also be used as a member, if you don't want to use
@@ -404,7 +404,7 @@ private:
 ///
 ///     void Draw(sf::RenderTarget& target) const
 ///     {
-///         target.draw(..., myTransform.getTransform());
+///         target.Draw(..., myTransform.getTransform());
 ///     }
 ///
 /// private:

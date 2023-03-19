@@ -81,7 +81,7 @@ public:
     /// font that supports that size is used.
     ///
     /// \param string         Text assigned to the string
-    /// \param font           Font used to draw the string
+    /// \param font           Font used to Draw the string
     /// \param characterSize  Base size of characters, in pixels
     ///
     ////////////////////////////////////////////////////////////
@@ -417,7 +417,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the text to a render target
     ///
-    /// \param target Render target to draw to
+    /// \param target Render target to Draw to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -505,7 +505,7 @@ private:
 /// text.setFillColor(sf::Color::Red);
 ///
 /// // Draw it
-/// window.draw(text);
+/// window.Draw(text);
 /// \endcode
 ///
 /// \see sf::Font, sf::Transformable

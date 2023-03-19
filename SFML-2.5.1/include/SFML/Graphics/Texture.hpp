@@ -549,11 +549,11 @@ public:
     /// sf::Texture t1, t2;
     /// ...
     /// sf::Texture::bind(&t1);
-    /// // draw OpenGL stuff that use t1...
+    /// // Draw OpenGL stuff that use t1...
     /// sf::Texture::bind(&t2);
-    /// // draw OpenGL stuff that use t2...
+    /// // Draw OpenGL stuff that use t2...
     /// sf::Texture::bind(NULL);
-    /// // draw OpenGL stuff that use no texture...
+    /// // Draw OpenGL stuff that use no texture...
     /// \endcode
     ///
     /// The \a coordinateType argument controls how texture
@@ -639,7 +639,7 @@ private:
 ///
 /// sf::Texture stores pixels that can be drawn, with a sprite
 /// for example. A texture lives in the graphics card memory,
-/// therefore it is very fast to draw a texture to a render target,
+/// therefore it is very fast to Draw a texture to a render target,
 /// or copy a render target to a texture (the graphics card can
 /// access both directly).
 ///
@@ -688,7 +688,7 @@ private:
 /// sprite.setTexture(texture);
 ///
 /// // Draw the textured sprite
-/// window.draw(sprite);
+/// window.Draw(sprite);
 /// \endcode
 ///
 /// \code
@@ -711,8 +711,8 @@ private:
 ///     sf::Uint8* pixels = ...; // get a fresh chunk of pixels (the next frame of a movie, for example)
 ///     texture.update(pixels);
 ///
-///     // draw it
-///     window.draw(sprite);
+///     // Draw it
+///     window.Draw(sprite);
 ///
 ///     ...
 /// }

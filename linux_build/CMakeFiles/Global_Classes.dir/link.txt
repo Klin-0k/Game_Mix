@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGlobal_Classes.a  CMakeFiles/Global_Classes.dir/Global_Classes.cpp.o
+/usr/bin/ranlib libGlobal_Classes.a

@@ -648,11 +648,11 @@ public:
     /// sf::Shader s1, s2;
     /// ...
     /// sf::Shader::bind(&s1);
-    /// // draw OpenGL stuff that use s1...
+    /// // Draw OpenGL stuff that use s1...
     /// sf::Shader::bind(&s2);
-    /// // draw OpenGL stuff that use s2...
+    /// // Draw OpenGL stuff that use s2...
     /// sf::Shader::bind(NULL);
-    /// // draw OpenGL stuff that use no shader...
+    /// // Draw OpenGL stuff that use no shader...
     /// \endcode
     ///
     /// \param shader Shader to bind, can be null to use no shader
@@ -822,16 +822,16 @@ private:
 /// object being drawn (which cannot be known in advance).
 ///
 /// To apply a shader to a drawable, you must pass it as an
-/// additional parameter to the \ref RenderWindow::draw function:
+/// additional parameter to the \ref RenderWindow::Draw function:
 /// \code
-/// window.draw(sprite, &shader);
+/// window.Draw(sprite, &shader);
 /// \endcode
 ///
 /// ... which is in fact just a shortcut for this:
 /// \code
 /// sf::RenderStates states;
 /// states.shader = &shader;
-/// window.draw(sprite, states);
+/// window.Draw(sprite, states);
 /// \endcode
 ///
 /// In the code above we pass a pointer to the shader, because it may
@@ -850,11 +850,11 @@ private:
 /// Shaders can also be used to apply global post-effects to the
 /// current contents of the target (like the old sf::PostFx class
 /// in SFML 1). This can be done in two different ways:
-/// \li draw everything to a sf::RenderTexture, then draw it to
+/// \li draw everything to a sf::RenderTexture, then Draw it to
 ///     the main target using the shader
-/// \li draw everything directly to the main target, then use
+/// \li Draw everything directly to the main target, then use
 ///     sf::Texture::update(Window&) to copy its contents to a texture
-///     and draw it to the main target using the shader
+///     and Draw it to the main target using the shader
 ///
 /// The first technique is more optimized because it doesn't involve
 /// retrieving the target's pixels to system memory, but the

@@ -1,0 +1,3 @@
+/mnt/h/MIPT/CS/TP/TP_2023_Project/linux_build/CMakeFiles/rebuild_cache.dir
+/mnt/h/MIPT/CS/TP/TP_2023_Project/linux_build/CMakeFiles/edit_cache.dir
+/mnt/h/MIPT/CS/TP/TP_2023_Project/linux_build/CMakeFiles/TP_2023_Project.dir

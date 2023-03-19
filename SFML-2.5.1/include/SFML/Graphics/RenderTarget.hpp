@@ -230,7 +230,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Draw a drawable object to the render target
     ///
-    /// \param drawable Object to draw
+    /// \param drawable Object to Draw
     /// \param states   Render states to use for drawing
     ///
     ////////////////////////////////////////////////////////////
@@ -241,7 +241,7 @@ public:
     ///
     /// \param vertices    Pointer to the vertices
     /// \param vertexCount Number of vertices in the array
-    /// \param type        Type of primitives to draw
+    /// \param type        Type of primitives to Draw
     /// \param states      Render states to use for drawing
     ///
     ////////////////////////////////////////////////////////////
@@ -286,7 +286,7 @@ public:
     /// if you want to make it active on another thread you have
     /// to deactivate it on the previous thread first if it was active.
     /// Only one context can be current in a thread, so if you
-    /// want to draw OpenGL geometry to another render target
+    /// want to Draw OpenGL geometry to another render target
     /// don't forget to activate it again. Activating a render
     /// target will automatically deactivate the previously active
     /// context (if any).
@@ -312,8 +312,8 @@ public:
     /// \code
     /// // OpenGL code here...
     /// window.pushGLStates();
-    /// window.draw(...);
-    /// window.draw(...);
+    /// window.Draw(...);
+    /// window.Draw(...);
     /// window.popGLStates();
     /// // OpenGL code here...
     /// \endcode
@@ -349,7 +349,7 @@ public:
     /// This function can be used when you mix SFML drawing
     /// and direct OpenGL rendering, if you choose not to use
     /// pushGLStates/popGLStates. It makes sure that all OpenGL
-    /// states needed by SFML are set, so that subsequent draw()
+    /// states needed by SFML are set, so that subsequent Draw()
     /// calls will work as expected.
     ///
     /// Example:
@@ -357,8 +357,8 @@ public:
     /// // OpenGL code here...
     /// glPushAttrib(...);
     /// window.resetGLStates();
-    /// window.draw(...);
-    /// window.draw(...);
+    /// window.Draw(...);
+    /// window.Draw(...);
     /// glPopAttrib(...);
     /// // OpenGL code here...
     /// \endcode
@@ -435,7 +435,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the primitives
     ///
-    /// \param type        Type of primitives to draw
+    /// \param type        Type of primitives to Draw
     /// \param firstVertex Index of the first vertex to use when drawing
     /// \param vertexCount Number of vertices to use when drawing
     ///
@@ -460,7 +460,7 @@ private:
 
         bool      enable;         ///< Is the cache enabled?
         bool      glStatesSet;    ///< Are our internal GL states set yet?
-        bool      viewChanged;    ///< Has the current view changed since last draw?
+        bool      viewChanged;    ///< Has the current view changed since last Draw?
         BlendMode lastBlendMode;  ///< Cached blending mode
         Uint64    lastTextureId;  ///< Cached texture
         bool      texCoordsArrayEnabled; ///< Is GL_TEXTURE_COORD_ARRAY client state enabled?
@@ -489,7 +489,7 @@ private:
 ///
 /// sf::RenderTarget defines the common behavior of all the
 /// 2D render targets usable in the graphics module. It makes
-/// it possible to draw 2D entities like sprites, shapes, text
+/// it possible to Draw 2D entities like sprites, shapes, text
 /// without using any OpenGL command directly.
 ///
 /// A sf::RenderTarget is also able to use views (sf::View),
