@@ -9,12 +9,17 @@
 
 #include "Global_Classes.cpp"
 
+void testf() {
+  sf::Color color(rand() % 256, rand() % 256, rand() % 256);
+  window.clear(color);
+}
+
 void GettingStarted() {
     sf::Image window_icon;
     window_icon.loadFromFile("../Resources/icon.png");
     window.setIcon(1024, 1024, window_icon.getPixelsPtr());
-    window.setFramerateLimit(120);
-    //Object test = Object(sf::Image(), sf::Rect<int>());
+    //window.setFramerateLimit(120);
+    //test.SetMouseButtonPressedEvent(testf);
 }
 void EventHandling() {
   sf::Event event;
@@ -52,6 +57,7 @@ void EventHandling() {
       case sf::Event::MouseButtonPressed:
         for (auto i : ObjectsWithMouseButtonPressedEvent) {
           i->MouseButtonPressed();
+          //std::cout << "I was here\n";
         }
         break;
       case sf::Event::MouseButtonReleased:
