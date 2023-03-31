@@ -9,9 +9,9 @@
 
 #include "Global_Classes.cpp"
 
+sf::Color color = sf::Color();
 void testf(const sf::Event& event) {
-  sf::Color color(rand() % 256, rand() % 256, rand() % 256);
-  window.clear(color);
+  color = sf::Color (rand() % 256, rand() % 256, rand() % 256);
 }
 Button* test;
 void GettingStarted() {
@@ -22,10 +22,11 @@ void GettingStarted() {
   i2.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/buttons/buttonP2.png");
   i3.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/buttons/buttonP3.png");
   test = new Button(i1, i2, i3);
-  //test->SetMouseEnteredEvent(testf);
+  test->SetMouseEnteredEvent(testf);
   sf::Image window_icon;
   window_icon.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/icon.png");
   window.setIcon(1024, 1024, window_icon.getPixelsPtr());
+  window.setVerticalSyncEnabled(true);
   //window.setFramerateLimit(120);
   test->SetMouseButtonPressedEvent(testf);
 }
@@ -123,6 +124,7 @@ int main() {
   GettingStarted();
   while (true) {
     EventHandling();
+    window.clear(color);
     if (program_is_ending) {
       for (auto i : AllObjects) {
         delete i;
@@ -133,6 +135,8 @@ int main() {
       i->Draw();
     }
     window.display();
+//    window.setActive(false);
+//    window.setActive(true);
   }
   return 0;
 }
