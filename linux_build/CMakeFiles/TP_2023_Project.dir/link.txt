@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/TP_2023_Project.dir/main.cpp.o  -o ../TP_2023_Project  -Wl,-rpath,/mnt/h/MIPT/CS/TP/TP_2023_Project/SFML-2.5.1_for_linux/lib ../SFML-2.5.1_for_linux/lib/libsfml-graphics.so.2.5.1 ../SFML-2.5.1_for_linux/lib/libsfml-window.so.2.5.1 ../SFML-2.5.1_for_linux/lib/libsfml-system.so.2.5.1 
