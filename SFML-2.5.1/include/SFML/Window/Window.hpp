@@ -385,8 +385,8 @@ public:
     /// \brief Enable or disable automatic key-repeat
     ///
     /// If key repeat is enabled, you will receive repeated
-    /// KeyPressed events while keeping a key pressed. If it is disabled,
-    /// you will only get a single event when the key is pressed.
+    /// KeyPressed events while keeping a key pressed_. If it is disabled,
+    /// you will only get a single event when the key is pressed_.
     ///
     /// Key repeat is enabled by default.
     ///

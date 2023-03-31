@@ -9,20 +9,28 @@
 
 #include "Global_Classes.cpp"
 
-void testf() {
+void testf(const sf::Event& event) {
   sf::Color color(rand() % 256, rand() % 256, rand() % 256);
   window.clear(color);
 }
-
+Button* test;
 void GettingStarted() {
-    sf::Image window_icon;
-    window_icon.loadFromFile("../Resources/icon.png");
-    window.setIcon(1024, 1024, window_icon.getPixelsPtr());
-    //window.setFramerateLimit(120);
-    //test.SetMouseButtonPressedEvent(testf);
+  sf::Texture i1;
+  sf::Texture i2;
+  sf::Texture i3;
+  i1.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/buttons/buttonP1.png");
+  i2.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/buttons/buttonP2.png");
+  i3.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/buttons/buttonP3.png");
+  test = new Button(i1, i2, i3);
+  //test->SetMouseEnteredEvent(testf);
+  sf::Image window_icon;
+  window_icon.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/icon.png");
+  window.setIcon(1024, 1024, window_icon.getPixelsPtr());
+  //window.setFramerateLimit(120);
+  test->SetMouseButtonPressedEvent(testf);
 }
 void EventHandling() {
-  sf::Event event;
+  sf::Event event = sf::Event();
   while (window.pollEvent(event))
   {
     switch (event.type)
@@ -36,48 +44,64 @@ void EventHandling() {
       case sf::Event::GainedFocus:
       case sf::Event::TextEntered:
         for (auto i : ObjectsWithTextEnteredEvent) {
-          i->TextEntered();
+          i->TextEntered(event);
         }
         break;
       case sf::Event::KeyPressed:
         for (auto i : ObjectsWithKeyPressedEvent) {
-          i->KeyPressed();
+          i->KeyPressed(event);
         }
         break;
       case sf::Event::KeyReleased:
         for (auto i : ObjectsWithKeyReleasedEvent) {
-          i->KeyReleased();
+          i->KeyReleased(event);
         }
         break;
       case sf::Event::MouseWheelScrolled:
         for (auto i : ObjectsWithMouseWheelScrolledEvent) {
-          i->MouseWheelScrolled();
+          i->MouseWheelScrolled(event);
         }
         break;
       case sf::Event::MouseButtonPressed:
         for (auto i : ObjectsWithMouseButtonPressedEvent) {
-          i->MouseButtonPressed();
-          //std::cout << "I was here\n";
+          if(i->Sprite_.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+            i->pressed_ = true;
+            i->MouseButtonPressed(event);
+            //std::cout << "I was here\n";
+          }
         }
         break;
       case sf::Event::MouseButtonReleased:
         for (auto i : ObjectsWithMouseButtonReleasedEvent) {
-          i->MouseButtonReleased();
+          if(i->pressed_) {
+            i->MouseButtonReleased(event);
+            i->pressed_ = false;
+          }
         }
         break;
       case sf::Event::MouseMoved:
         for (auto i : ObjectsWithMouseMovedEvent) {
-          i->MouseMoved();
+          if(i->under_mouse_ && i->Sprite_.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+            i->MouseMoved(event);
+          }
+          if(i->under_mouse_ && !(i->Sprite_.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))) {
+            i->MouseLeft(event);
+            i->under_mouse_ = false;
+          }
+          if(!i->under_mouse_ && i->Sprite_.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+            i->under_mouse_ = true;
+            i->MouseEntered(event);
+          }
         }
         break;
       case sf::Event::MouseEntered:
         for (auto i : ObjectsWithMouseEnteredEvent) {
-          i->MouseEntered();
+
         }
         break;
       case sf::Event::MouseLeft:
         for (auto i : ObjectsWithMouseLeftEvent) {
-          i->MouseLeft();
+
         }
         break;
       case sf::Event::JoystickButtonPressed:
@@ -100,6 +124,9 @@ int main() {
   while (true) {
     EventHandling();
     if (program_is_ending) {
+      for (auto i : AllObjects) {
+        delete i;
+      }
       break;
     }
     for (auto i : ObjectsToDraw) {

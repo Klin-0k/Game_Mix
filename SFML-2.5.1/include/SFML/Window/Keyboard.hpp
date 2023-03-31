@@ -162,11 +162,11 @@ public:
     };
 
     ////////////////////////////////////////////////////////////
-    /// \brief Check if a key is pressed
+    /// \brief Check if a key is pressed_
     ///
     /// \param key Key to check
     ///
-    /// \return True if the key is pressed, false otherwise
+    /// \return True if the key is pressed_, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     static bool isKeyPressed(Key key);
@@ -206,9 +206,9 @@ public:
 /// its events. Compared to the KeyPressed and KeyReleased events,
 /// sf::Keyboard can retrieve the state of a key at any time
 /// (you don't need to store and update a boolean on your side
-/// in order to know if a key is pressed or released), and you
+/// in order to know if a key is pressed_ or released), and you
 /// always get the real state of the keyboard, even if keys are
-/// pressed or released when your window is out of focus and no
+/// pressed_ or released when your window is out of focus and no
 /// event is triggered.
 ///
 /// Usage example:

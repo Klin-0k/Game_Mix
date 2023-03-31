@@ -190,7 +190,7 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a80a04b2f53005886957f49eee3531599"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsf_1_1Keyboard.html#a80a04b2f53005886957f49eee3531599">isKeyPressed</a> (<a class="el" href="classsf_1_1Keyboard.html#acb4cacd7cc5802dec45724cf3314a142">Key</a> key)</td></tr>
-<tr class="memdesc:a80a04b2f53005886957f49eee3531599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a key is pressed.  <a href="#a80a04b2f53005886957f49eee3531599">More...</a><br /></td></tr>
+<tr class="memdesc:a80a04b2f53005886957f49eee3531599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a key is pressed_.  <a href="#a80a04b2f53005886957f49eee3531599">More...</a><br /></td></tr>
 <tr class="separator:a80a04b2f53005886957f49eee3531599"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad61fee7e793242d444a8c5acd662fe5b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsf_1_1Keyboard.html#ad61fee7e793242d444a8c5acd662fe5b">setVirtualKeyboardVisible</a> (bool visible)</td></tr>
 <tr class="memdesc:ad61fee7e793242d444a8c5acd662fe5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show or hide the virtual keyboard.  <a href="#ad61fee7e793242d444a8c5acd662fe5b">More...</a><br /></td></tr>
@@ -200,7 +200,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Give access to the real-time state of the keyboard. </p>
 <p><a class="el" href="classsf_1_1Keyboard.html" title="Give access to the real-time state of the keyboard. ">sf::Keyboard</a> provides an interface to the state of the keyboard.</p>
 <p>It only contains static functions (a single keyboard is assumed), so it's not meant to be instantiated.</p>
-<p>This class allows users to query the keyboard state at any time and directly, without having to deal with a window and its events. Compared to the KeyPressed and KeyReleased events, <a class="el" href="classsf_1_1Keyboard.html" title="Give access to the real-time state of the keyboard. ">sf::Keyboard</a> can retrieve the state of a key at any time (you don't need to store and update a boolean on your side in order to know if a key is pressed or released), and you always get the real state of the keyboard, even if keys are pressed or released when your window is out of focus and no event is triggered.</p>
+<p>This class allows users to query the keyboard state at any time and directly, without having to deal with a window and its events. Compared to the KeyPressed and KeyReleased events, <a class="el" href="classsf_1_1Keyboard.html" title="Give access to the real-time state of the keyboard. ">sf::Keyboard</a> can retrieve the state of a key at any time (you don't need to store and update a boolean on your side in order to know if a key is pressed_ or released), and you always get the real state of the keyboard, even if keys are pressed_ or released when your window is out of focus and no event is triggered.</p>
 <p>Usage example: </p><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code" href="classsf_1_1Keyboard.html#a80a04b2f53005886957f49eee3531599">sf::Keyboard::isKeyPressed</a>(<a class="code" href="classsf_1_1Keyboard.html#acb4cacd7cc5802dec45724cf3314a142ac3fe5df11d15b57317c053a2ae13d9a9">sf::Keyboard::Left</a>))</div><div class="line">{</div><div class="line">    <span class="comment">// move left...</span></div><div class="line">}</div><div class="line"><span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="classsf_1_1Keyboard.html#a80a04b2f53005886957f49eee3531599">sf::Keyboard::isKeyPressed</a>(<a class="code" href="classsf_1_1Keyboard.html#acb4cacd7cc5802dec45724cf3314a142a2aeb083dea103a8e36b6850b51ef3632">sf::Keyboard::Right</a>))</div><div class="line">{</div><div class="line">    <span class="comment">// move right...</span></div><div class="line">}</div><div class="line"><span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="classsf_1_1Keyboard.html#a80a04b2f53005886957f49eee3531599">sf::Keyboard::isKeyPressed</a>(<a class="code" href="classsf_1_1Keyboard.html#acb4cacd7cc5802dec45724cf3314a142a64b7ecb543c5d03bec8383dde123c95d">sf::Keyboard::Escape</a>))</div><div class="line">{</div><div class="line">    <span class="comment">// quit...</span></div><div class="line">}</div></div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="classsf_1_1Joystick.html" title="Give access to the real-time state of the joysticks. ">sf::Joystick</a>, <a class="el" href="classsf_1_1Mouse.html" title="Give access to the real-time state of the mouse. ">sf::Mouse</a>, <a class="el" href="classsf_1_1Touch.html" title="Give access to the real-time state of the touches. ">sf::Touch</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="Keyboard_8hpp_source.html#l00040">40</a> of file <a class="el" href="Keyboard_8hpp_source.html">Keyboard.hpp</a>.</p>
@@ -466,14 +466,14 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check if a key is pressed. </p>
+<p>Check if a key is pressed_. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Key to check</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the key is pressed, false otherwise </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the key is pressed_, false otherwise </dd></dl>
 
 </div>
 </div>

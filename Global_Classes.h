@@ -5,50 +5,63 @@
 #include <SFML/Graphics.hpp>
 
 extern sf::RenderWindow window;
-
 //----------------------------------------------------------
 
 class Object {
  public:
-  Object(const sf::Image& image, sf::Rect<int> rect, sf::RenderWindow& parent = window, int X = window.getSize().x / 2, int Y = window.getSize().y / 2): parent_(parent), Ox(X), Oy(Y) {
-    SetEnableMod(true);
-    SetVisibleMod(true);
-  }
-  Object(const sf::Image& image, sf::Rect<int> rect, sf::RenderWindow& parent): Object(image, rect, parent, parent.getSize().x / 2, parent.getSize().y / 2) {}
+  Object(const sf::Texture& texture, const sf::Rect<int>& rect, int X, int Y, sf::RenderWindow* parent);
+  Object(const sf::Texture& texture, const sf::Rect<int>& rect, sf::RenderWindow* parent);
+  Object(const sf::Texture& texture, sf::RenderWindow* parent);
+  Object(sf::RenderWindow* parent);
+  Object();
+  ~Object();
   void Move(int X, int Y);
   void MoveByCenter(int X, int Y);
   void SetEnableMod(bool enable);
   void SetVisibleMod(bool visible);
-  bool GetEnableMod();
-  bool GetVisibleMod();
-  const sf::RenderWindow& parent();
-  void SetTextEnteredEvent(void (* Func)());
-  void SetKeyPressedEvent(void (* Func)());
-  void SetKeyReleasedEvent(void (* Func)());
-  void SetMouseWheelScrolledEvent(void (* Func)());
-  void SetMouseButtonPressedEvent(void (* Func)());
-  void SetMouseButtonReleasedEvent(void (* Func)());
-  void SetMouseMovedEvent(void (* Func)());
-  void SetMouseEnteredEvent(void (* Func)());
-  void SetMouseLeftEvent(void (* Func)());
+  bool GetEnableMod() const;
+  bool GetVisibleMod() const;
+  const sf::RenderWindow* parent();
+  void SetTextEnteredEvent(void (* Func)(const sf::Event& event));
+  void SetKeyPressedEvent(void (* Func)(const sf::Event& event));
+  void SetKeyReleasedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseWheelScrolledEvent(void (* Func)(const sf::Event& event));
+  void SetMouseButtonPressedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseButtonReleasedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseMovedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseEnteredEvent(void (* Func)(const sf::Event& event));
+  void SetMouseLeftEvent(void (* Func)(const sf::Event& event));
   friend void EventHandling();
   void Draw();
  protected:
   int Ox, Oy;
   sf::Sprite Sprite_;
-  bool enable_ = true;
-  bool visible_ = true;
-  sf::RenderWindow& parent_;
+  bool enable_ = false;
+  bool visible_ = false;
+  bool under_mouse_ = false;
+  bool pressed_ = false;
+  sf::RenderWindow* parent_;
+//  void (* TextEntered)(const sf::Event& event) = nullptr;
+//  void (* KeyPressed)(const sf::Event& event) = nullptr;
+//  void (* KeyReleased)(const sf::Event& event) = nullptr;
+//  void (* MouseWheelScrolled)(const sf::Event& event) = nullptr;
+//  void (* MouseButtonPressed)(const sf::Event& event) = nullptr;
+//  void (* MouseButtonReleased)(const sf::Event& event) = nullptr;
+//  void (* MouseMoved)(const sf::Event& event) = nullptr;
+//  void (* MouseEntered)(const sf::Event& event) = nullptr;
+//  void (* MouseLeft)(const sf::Event& event) = nullptr;
+  std::function<void(const sf::Event&)> TextEntered = nullptr;
+  std::function<void(const sf::Event&)> KeyPressed = nullptr;
+  std::function<void(const sf::Event&)> KeyReleased = nullptr;
+  std::function<void(const sf::Event&)> MouseWheelScrolled = nullptr;
+  std::function<void(const sf::Event&)> MouseButtonPressed = nullptr;
+  std::function<void(const sf::Event&)> MouseButtonReleased = nullptr;
+  std::function<void(const sf::Event&)> MouseMoved = nullptr;
+  std::function<void(const sf::Event&)> MouseEntered = nullptr;
+  std::function<void(const sf::Event&)> MouseLeft = nullptr;
+
  private:
-  void (* TextEntered)() = nullptr;
-  void (* KeyPressed)() = nullptr;
-  void (* KeyReleased)() = nullptr;
-  void (* MouseWheelScrolled)() = nullptr;
-  void (* MouseButtonPressed)() = nullptr;
-  void (* MouseButtonReleased)() = nullptr;
-  void (* MouseMoved)() = nullptr;
-  void (* MouseEntered)() = nullptr;
-  void (* MouseLeft)() = nullptr;
+
 };
 
 class Character : Object {
@@ -60,8 +73,25 @@ class Character : Object {
 
 class Button : public Object {
  public:
+  Button(const sf::Texture& s1, const sf::Texture& s2, const sf::Texture& s3, sf::RenderWindow* parent);
+  Button(sf::Texture&& s1, sf::Texture&& s2, sf::Texture&& s3, sf::RenderWindow* parent);
+  Button(sf::Texture& s1, sf::Texture& s2, sf::Texture& s3, const sf::Text& text, const sf::Color& color, sf::RenderWindow* parent);
+  Button(sf::Texture&& s1, sf::Texture&& s2, sf::Texture&& s3, const sf::Text& text, const sf::Color& color, sf::RenderWindow* parent);
+  void Print(const sf::Text& text, const sf::Color& color) {}
+  void SetMouseButtonPressedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseButtonReleasedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseMovedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseEnteredEvent(void (* Func)(const sf::Event& event));
+  void SetMouseLeftEvent(void (* Func)(const sf::Event& event));
+ protected:
+  void Assign(const sf::Texture& texture);
+  void ButtonMouseEntered();
+  void ButtonMouseLeft();
+  void ButtonMouseButtonPressed();
+  void ButtonMouseButtonReleased();
+  void ButtonMouseMoved();
  private:
-  bool pressed;
+  sf::Texture p1, p2, p3;
 };
 
 class Game {

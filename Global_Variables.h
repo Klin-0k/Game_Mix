@@ -23,5 +23,6 @@ std::unordered_set<Object*> ObjectsWithMouseMovedEvent = std::unordered_set<Obje
 std::unordered_set<Object*> ObjectsWithMouseEnteredEvent = std::unordered_set<Object*>();
 std::unordered_set<Object*> ObjectsWithMouseLeftEvent = std::unordered_set<Object*>();
 std::unordered_set<Object*> ObjectsToDraw = std::unordered_set<Object*>();
+std::vector<Object*> AllObjects;
 
 //Object test = Object(sf::Image(), sf::Rect<int>());

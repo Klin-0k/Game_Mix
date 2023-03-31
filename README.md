@@ -4,8 +4,8 @@
 
 ### On Windows:
 
-run cmake-build-debug/TP_2023_Project.exe
+run TP_2023_Project.exe
 
 ### On Linux:
 
-run linux_build/TP_2023_Project
+run TP_2023_Project

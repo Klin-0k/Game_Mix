@@ -118,14 +118,14 @@ public:
     static bool hasAxis(unsigned int joystick, Axis axis);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Check if a joystick button is pressed
+    /// \brief Check if a joystick button is pressed_
     ///
     /// If the joystick is not connected, this function returns false.
     ///
     /// \param joystick Index of the joystick
     /// \param button   Button to check
     ///
-    /// \return True if the button is pressed, false otherwise
+    /// \return True if the button is pressed_, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     static bool isButtonPressed(unsigned int joystick, unsigned int button);
@@ -186,9 +186,9 @@ public:
 /// and JoystickButtonReleased events, sf::Joystick can retrieve the
 /// state of axes and buttons of joysticks at any time
 /// (you don't need to store and update a boolean on your side
-/// in order to know if a button is pressed or released), and you
+/// in order to know if a button is pressed_ or released), and you
 /// always get the real state of joysticks, even if they are
-/// moved, pressed or released when your window is out of focus
+/// moved, pressed_ or released when your window is out of focus
 /// and no event is triggered.
 ///
 /// SFML supports:
@@ -215,8 +215,8 @@ public:
 /// // Does joystick #0 define a X axis?
 /// bool hasX = sf::Joystick::hasAxis(0, sf::Joystick::X);
 ///
-/// // Is button #2 pressed on joystick #0?
-/// bool pressed = sf::Joystick::isButtonPressed(0, 2);
+/// // Is button #2 pressed_ on joystick #0?
+/// bool pressed_ = sf::Joystick::isButtonPressed(0, 2);
 ///
 /// // What's the current position of the Y axis on joystick #0?
 /// float position = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);

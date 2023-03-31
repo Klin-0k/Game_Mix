@@ -5,6 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 #add_library(Global_Classes Global_Classes.cpp Global_Classes.h)
 add_executable(${PROJECT_NAME} main.cpp Global_Variables.h)
 #target_link_libraries(${PROJECT_NAME} Global_Classes)
+add_definitions(-DPATH_TO_PROJECT_FILES="${CMAKE_CURRENT_SOURCE_DIR}")
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
 ##########################################################################
 
 

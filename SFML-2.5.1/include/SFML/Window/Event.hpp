@@ -61,11 +61,11 @@ public:
     ////////////////////////////////////////////////////////////
     struct KeyEvent
     {
-        Keyboard::Key code;    ///< Code of the key that has been pressed
-        bool          alt;     ///< Is the Alt key pressed?
-        bool          control; ///< Is the Control key pressed?
-        bool          shift;   ///< Is the Shift key pressed?
-        bool          system;  ///< Is the System key pressed?
+        Keyboard::Key code;    ///< Code of the key that has been pressed_
+        bool          alt;     ///< Is the Alt key pressed_?
+        bool          control; ///< Is the Control key pressed_?
+        bool          shift;   ///< Is the Shift key pressed_?
+        bool          system;  ///< Is the System key pressed_?
     };
 
     ////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ public:
     ////////////////////////////////////////////////////////////
     struct MouseButtonEvent
     {
-        Mouse::Button button; ///< Code of the button that has been pressed
+        Mouse::Button button; ///< Code of the button that has been pressed_
         int           x;      ///< X position of the mouse pointer, relative to the left of the owner window
         int           y;      ///< Y position of the mouse pointer, relative to the top of the owner window
     };
@@ -154,7 +154,7 @@ public:
     struct JoystickButtonEvent
     {
         unsigned int joystickId; ///< Index of the joystick (in range [0 .. Joystick::Count - 1])
-        unsigned int button;     ///< Index of the button that has been pressed (in range [0 .. Joystick::ButtonCount - 1])
+        unsigned int button;     ///< Index of the button that has been pressed_ (in range [0 .. Joystick::ButtonCount - 1])
     };
 
     ////////////////////////////////////////////////////////////
@@ -191,16 +191,16 @@ public:
         LostFocus,              ///< The window lost the focus (no data)
         GainedFocus,            ///< The window gained the focus (no data)
         TextEntered,            ///< A character was entered (data in event.text)
-        KeyPressed,             ///< A key was pressed (data in event.key)
+        KeyPressed,             ///< A key was pressed_ (data in event.key)
         KeyReleased,            ///< A key was released (data in event.key)
         MouseWheelMoved,        ///< The mouse wheel was scrolled (data in event.mouseWheel) (deprecated)
         MouseWheelScrolled,     ///< The mouse wheel was scrolled (data in event.mouseWheelScroll)
-        MouseButtonPressed,     ///< A mouse button was pressed (data in event.mouseButton)
+        MouseButtonPressed,     ///< A mouse button was pressed_ (data in event.mouseButton)
         MouseButtonReleased,    ///< A mouse button was released (data in event.mouseButton)
         MouseMoved,             ///< The mouse cursor moved (data in event.mouseMove)
         MouseEntered,           ///< The mouse cursor entered the area of the window (no data)
         MouseLeft,              ///< The mouse cursor left the area of the window (no data)
-        JoystickButtonPressed,  ///< A joystick button was pressed (data in event.joystickButton)
+        JoystickButtonPressed,  ///< A joystick button was pressed_ (data in event.joystickButton)
         JoystickButtonReleased, ///< A joystick button was released (data in event.joystickButton)
         JoystickMoved,          ///< The joystick moved along an axis (data in event.joystickMove)
         JoystickConnected,      ///< A joystick was connected (data in event.joystickConnect)
@@ -250,7 +250,7 @@ public:
 /// sf::Window::pollEvent and sf::Window::waitEvent functions.
 ///
 /// A sf::Event instance contains the type of the event
-/// (mouse moved, key pressed, window closed, ...) as well
+/// (mouse moved, key pressed_, window closed, ...) as well
 /// as the details about this particular event. Please note that
 /// the event parameters are defined in a union, which means that
 /// only the member matching the type of the event will be properly
@@ -269,7 +269,7 @@ public:
 ///     if (event.type == sf::Event::Closed)
 ///         window.close();
 ///
-///     // The escape key was pressed
+///     // The escape key was pressed_
 ///     if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
 ///         window.close();
 ///

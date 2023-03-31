@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_FLAGS =   -std=gnu++2a
 
-CXX_DEFINES = 
+CXX_DEFINES = -DPATH_TO_PROJECT_FILES=\"/mnt/h/MIPT/CS/TP/TP_2023_Project\"
 
 CXX_INCLUDES = -isystem /mnt/h/MIPT/CS/TP/TP_2023_Project/SFML-2.5.1_for_linux/include 
 

@@ -70,11 +70,11 @@ public:
     };
 
     ////////////////////////////////////////////////////////////
-    /// \brief Check if a mouse button is pressed
+    /// \brief Check if a mouse button is pressed_
     ///
     /// \param button Button to check
     ///
-    /// \return True if the button is pressed, false otherwise
+    /// \return True if the button is pressed_, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     static bool isButtonPressed(Button button);
@@ -147,9 +147,9 @@ public:
 /// and MouseButtonReleased events, sf::Mouse can retrieve the
 /// state of the cursor and the buttons at any time
 /// (you don't need to store and update a boolean on your side
-/// in order to know if a button is pressed or released), and you
+/// in order to know if a button is pressed_ or released), and you
 /// always get the real state of the mouse, even if it is
-/// moved, pressed or released when your window is out of focus
+/// moved, pressed_ or released when your window is out of focus
 /// and no event is triggered.
 ///
 /// The setPosition and getPosition functions can be used to change
