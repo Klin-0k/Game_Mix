@@ -4,55 +4,139 @@
 
 #include <SFML/Graphics.hpp>
 
-extern sf::RenderWindow window;
 //----------------------------------------------------------
 
-class Object {
+class Window;
+class Essence;
+class Object;
+class Button;
+class Fon;
+class MainMenu;
+class PlayMenu;
+class ExitMenu;
+class Settings;
+class Profile;
+class User;
+class BigBoy;
+class Game;
+class InGameMenu;
+
+class Window final : public sf::RenderWindow {
  public:
-  Object(const sf::Texture& texture, const sf::Rect<int>& rect, int X, int Y, sf::RenderWindow* parent);
-  Object(const sf::Texture& texture, const sf::Rect<int>& rect, sf::RenderWindow* parent);
-  Object(const sf::Texture& texture, sf::RenderWindow* parent);
-  Object(sf::RenderWindow* parent);
-  Object();
-  ~Object();
-  void Move(int X, int Y);
-  void MoveByCenter(int X, int Y);
+  void Delete();
+  bool IsWaitingForDeleting() const;
+  static bool ProgramIsWaitingForClosing();
   void SetEnableMod(bool enable);
   void SetVisibleMod(bool visible);
-  bool GetEnableMod() const;
-  bool GetVisibleMod() const;
-  const sf::RenderWindow* parent();
-  void SetTextEnteredEvent(void (* Func)(const sf::Event& event));
-  void SetKeyPressedEvent(void (* Func)(const sf::Event& event));
-  void SetKeyReleasedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseWheelScrolledEvent(void (* Func)(const sf::Event& event));
-  void SetMouseButtonPressedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseButtonReleasedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseMovedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseEnteredEvent(void (* Func)(const sf::Event& event));
-  void SetMouseLeftEvent(void (* Func)(const sf::Event& event));
-  friend void EventHandling();
-  void Draw();
+  [[nodiscard]] bool GetEnableMod() const;
+  [[nodiscard]] bool GetVisibleMod() const;
+  void MakeFrame();
+  using SFML_window = sf::RenderWindow;
+  using SFML_window::SFML_window;
+  ~Window() final;
+  std::function<void()> Close = [this]() { Delete(); };
+  bool IsAlwaysOnFocus = false;
+  static void CloseProgram();
+  std::unordered_set<Essence*> EssencesWithTextEnteredEvent = std::unordered_set<Essence*>();
+  std::unordered_set<Essence*> EssencesWithKeyPressedEvent = std::unordered_set<Essence*>();
+  std::unordered_set<Essence*> EssencesWithKeyReleasedEvent = std::unordered_set<Essence*>();
+  std::unordered_set<Object*> ObjectsWithMouseWheelScrolledEvent = std::unordered_set<Object*>();
+  std::unordered_set<Object*> ObjectsWithMouseButtonPressedEvent = std::unordered_set<Object*>();
+  std::unordered_set<Object*> ObjectsWithMouseButtonReleasedEvent = std::unordered_set<Object*>();
+  std::unordered_set<Object*> ObjectsWithMouseMovedEvent = std::unordered_set<Object*>();
+  std::unordered_set<Essence*> EssencesToDraw = std::unordered_set<Essence*>();
+  std::unordered_set<Essence*> EssencesToDelete = std::unordered_set<Essence*>();
+  std::unordered_set<Essence*> AllEssences = std::unordered_set<Essence*>();
+  static std::unordered_set<Window*> WindowsToDisplay;
+#ifdef DEBAG
+  std::string Name = "Window";
+#endif
+
+ private:
+  void EventHandling();
+  void ChangingEssencesStates();
+  bool enable_ = true;
+  bool visible_ = true;
+  bool WaitingForDeleting = false;
+  static bool WaitingForProgramClosing;
+};
+
+class Essence {
+ public:
+  Essence(Window* parent, bool is_independent);
+  explicit Essence(bool is_independent);
+  Essence();
+  Essence(const Essence& other);
+  Essence& operator=(const Essence& other);
+  virtual ~Essence();
+  virtual void SetEnableMod(bool enable);
+  virtual void SetVisibleMod(bool visible);
+  [[nodiscard]] bool GetEnableMod() const;
+  [[nodiscard]] bool GetVisibleMod() const;
+  const Window* parent();
+  virtual void SetTextEnteredEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetKeyPressedEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetKeyReleasedEvent(const std::function<void(const sf::Event&)>& Func);
+  friend class Window;
+  virtual void Draw();
+  virtual void Delete();
+
  protected:
-  int Ox, Oy;
-  sf::Sprite Sprite_;
-  bool enable_ = false;
-  bool visible_ = false;
-  bool under_mouse_ = false;
-  bool pressed_ = false;
-  sf::RenderWindow* parent_;
-//  void (* TextEntered)(const sf::Event& event) = nullptr;
-//  void (* KeyPressed)(const sf::Event& event) = nullptr;
-//  void (* KeyReleased)(const sf::Event& event) = nullptr;
-//  void (* MouseWheelScrolled)(const sf::Event& event) = nullptr;
-//  void (* MouseButtonPressed)(const sf::Event& event) = nullptr;
-//  void (* MouseButtonReleased)(const sf::Event& event) = nullptr;
-//  void (* MouseMoved)(const sf::Event& event) = nullptr;
-//  void (* MouseEntered)(const sf::Event& event) = nullptr;
-//  void (* MouseLeft)(const sf::Event& event) = nullptr;
+  bool enable_ = true;
+  bool visible_ = true;
+  Window* parent_;
   std::function<void(const sf::Event&)> TextEntered = nullptr;
   std::function<void(const sf::Event&)> KeyPressed = nullptr;
   std::function<void(const sf::Event&)> KeyReleased = nullptr;
+  bool is_independent_;
+ private:
+};
+
+class Object : public Essence {
+ public:
+  Object(const sf::Texture& texture,
+         const sf::Rect<int>& rect,
+         int X,
+         int Y,
+         Window* parent,
+         bool is_independent);
+  Object(const sf::Texture& texture,
+         const sf::Rect<int>& rect,
+         Window* parent,
+         bool is_independent);
+  Object(const sf::Texture& texture, Window* parent, bool is_independent);
+  Object(Window* parent, bool is_independent);
+  explicit Object(bool is_independent);
+  Object();
+  ~Object() override;
+  float GetX();
+  float GetY();
+  float GetWidth();
+  float GetHeight();
+  float GetLocalWidth();
+  float GetLocalHeight();
+  float GetLeft();
+  float GetTop();
+  float GetRight();
+  float GetBottom();
+  void SetScale(float scaleX, float scaleY);
+  void SetSize(float Width, float Height);
+  void Move(float X, float Y);
+  void MoveByCenter(float X, float Y);
+  virtual void SetMouseWheelScrolledEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetMouseButtonPressedEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetMouseButtonReleasedEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& Func);
+  virtual void SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func);
+  friend class Window;
+  void Draw() override;
+  void Assign(const sf::Texture& texture);
+
+ protected:
+  sf::Sprite Sprite_;
+  bool under_mouse_ = false;
+  bool pressed_ = false;
   std::function<void(const sf::Event&)> MouseWheelScrolled = nullptr;
   std::function<void(const sf::Event&)> MouseButtonPressed = nullptr;
   std::function<void(const sf::Event&)> MouseButtonReleased = nullptr;
@@ -64,7 +148,7 @@ class Object {
 
 };
 
-class Character : Object {
+class Character : public Object {
  public:
  private:
 };
@@ -73,25 +157,51 @@ class Character : Object {
 
 class Button : public Object {
  public:
-  Button(const sf::Texture& s1, const sf::Texture& s2, const sf::Texture& s3, sf::RenderWindow* parent);
-  Button(sf::Texture&& s1, sf::Texture&& s2, sf::Texture&& s3, sf::RenderWindow* parent);
-  Button(sf::Texture& s1, sf::Texture& s2, sf::Texture& s3, const sf::Text& text, const sf::Color& color, sf::RenderWindow* parent);
-  Button(sf::Texture&& s1, sf::Texture&& s2, sf::Texture&& s3, const sf::Text& text, const sf::Color& color, sf::RenderWindow* parent);
-  void Print(const sf::Text& text, const sf::Color& color) {}
-  void SetMouseButtonPressedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseButtonReleasedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseMovedEvent(void (* Func)(const sf::Event& event));
-  void SetMouseEnteredEvent(void (* Func)(const sf::Event& event));
-  void SetMouseLeftEvent(void (* Func)(const sf::Event& event));
+  Button(const sf::Texture& s1,
+         const sf::Texture& s2,
+         const sf::Texture& s3,
+         Window* parent,
+         bool is_independent);
+  Button(sf::Texture&& s1,
+         sf::Texture&& s2,
+         sf::Texture&& s3,
+         Window* parent,
+         bool is_independent);
+  Button(const std::string& s1,
+         const std::string& s2,
+         const std::string& s3,
+         Window* parent,
+         bool is_independent);
+  Button(sf::Texture& s1,
+         sf::Texture& s2,
+         sf::Texture& s3,
+         const sf::Text& text,
+         Window* parent,
+         bool is_independent);
+  Button(sf::Texture&& s1,
+         sf::Texture&& s2,
+         sf::Texture&& s3,
+         const sf::Text& text,
+         Window* parent,
+         bool is_independent);
+  static void Print(sf::Text text, sf::Texture& texture);
+  void Print(const sf::Text& text);
+  void SetMouseButtonPressedEvent(const std::function<void(const sf::Event&)>& Func) final;
+  void SetMouseButtonReleasedEvent(const std::function<void(const sf::Event&)>& Func) final;
+  void SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Func) final;
+  void SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& Func) final;
+  void SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func) final;
+  void SetEnableMod(bool enable) final;
+
+  ~Button() override;
  protected:
-  void Assign(const sf::Texture& texture);
   void ButtonMouseEntered();
   void ButtonMouseLeft();
   void ButtonMouseButtonPressed();
   void ButtonMouseButtonReleased();
   void ButtonMouseMoved();
- private:
   sf::Texture p1, p2, p3;
+ private:
 };
 
 class Game {
@@ -99,12 +209,51 @@ class Game {
  private:
 };
 
-class MainMenu {
+class Fon : public Object {
  public:
+  Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, bool is_independent);
+  Fon(std::string PathToFrames, size_t NumberOfFrames, double FPS, Window* parent, bool is_independent);
+  ~Fon();
+  void Draw() override;
  private:
-  Button MenuButton, SettingsButton, ExitButton;
-  Button Game1Button, Game2Button, Game3Button, Game4Button;
+  std::vector<sf::Texture> FonImages;
+  double FPS = 30;
+  sf::Clock LastUpdate;
+  double CurrentFrame = 0;
+};
 
+class MainMenu final : public Essence {
+ public:
+  static MainMenu* getMainMenu();
+  void Draw() final;
+  ~MainMenu() final;
+  void SetEnableMod(bool enable) final;
+  MainMenu(const MainMenu&) = delete;
+  MainMenu& operator=(const MainMenu&) = delete;
+ private:
+  static MainMenu* pmm;
+  static void PlayButtonEvent(const sf::Event& event);
+  void ExitButtonEvent(const sf::Event& event);
+  MainMenu();
+  Button PlayButton, SettingsButton, ExitButton;
+  Fon MainMenuFon;
+};
+
+class PlayMenu final : public Essence {
+ public:
+  static PlayMenu* getPlayMenu();
+  void Draw() final;
+  ~PlayMenu() final;
+  void SetEnableMod(bool enable) final;
+  PlayMenu(const PlayMenu&) = delete;
+  PlayMenu& operator=(const PlayMenu&) = delete;
+ private:
+  static PlayMenu* ppm;
+  static void BackButtonEvent(const sf::Event& event);
+  PlayMenu();
+  Button BackButton;
+  Button Game1Button, Game2Button, Game3Button, Game4Button;
+  Fon PlayMenuFon;
 };
 
 class InGameMenu {
@@ -113,10 +262,23 @@ class InGameMenu {
   Button ContinueButton, MainMenuButton, SettingsButton, ExitButton;
 };
 
-class Exit {
+class ExitMenu final : public Essence {
  public:
+  explicit ExitMenu(Window* WindowThatShouldBeClosed);
+  void Draw() final;
+  static void CloseWithExitMenu(Window* window);
+  void SetEnableMod(bool enable) final;
+  ExitMenu(const ExitMenu&) = delete;
+  ExitMenu& operator=(const ExitMenu&) = delete;
  private:
+  ~ExitMenu() final;
+  Window* WindowThatShouldBeClosed;
   Button ButtonYES, ButtonNO;
+  Fon ExitMenuFon;
+  void YESButtonEvent(const sf::Event& event);
+  void NOButtonEvent(const sf::Event& event);
+  void ExitClosed();
+  static std::unordered_set<Window*> WindowsWithOpenExit;
 };
 
 class Settings {

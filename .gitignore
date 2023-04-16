@@ -1,5 +1,5 @@
 cmake-build-debug/
-linux_build/
+cmake-build-debug-wsl/
 SFML-2.5.1/
 SFML-2.5.1_for_linux/
 .idea/
