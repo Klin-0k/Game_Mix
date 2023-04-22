@@ -82,47 +82,47 @@ void Object::AssignMyTexture(const sf::Texture& texture) {
 }
 void Object::Assign(const sf::Texture& texture) {
   Texture_ = texture;
-  Sprite_.setTexture(texture);
+  Sprite_.setTexture(Texture_);
 }
 void Object::SetMouseWheelScrolledEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseWheelScrolledEvent.erase(this);
-  MouseWheelScrolled = Func;
+  MouseWheelScrolled_ = Func;
   if (Func != nullptr) {
     parent_->ObjectsWithMouseWheelScrolledEvent.insert(this);
   }
 }
 void Object::SetMouseButtonPressedEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseButtonPressedEvent.erase(this);
-  MouseButtonPressed = Func;
+  MouseButtonPressed_ = Func;
   if (Func != nullptr) {
     parent_->ObjectsWithMouseButtonPressedEvent.insert(this);
   }
 }
 void Object::SetMouseButtonReleasedEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseButtonReleasedEvent.erase(this);
-  MouseButtonReleased = Func;
+  MouseButtonReleased_ = Func;
   if (Func != nullptr) {
     parent_->ObjectsWithMouseButtonReleasedEvent.insert(this);
   }
 }
 void Object::SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseMovedEvent.erase(this);
-  MouseMoved = Func;
-  if (MouseMoved != nullptr || MouseEntered != nullptr || MouseLeft != nullptr) {
+  MouseMoved_ = Func;
+  if (MouseMoved_ != nullptr || MouseEntered_ != nullptr || MouseLeft_ != nullptr) {
     parent_->ObjectsWithMouseMovedEvent.insert(this);
   }
 }
 void Object::SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseMovedEvent.erase(this);
-  MouseEntered = Func;
-  if (MouseMoved != nullptr || MouseEntered != nullptr || MouseLeft != nullptr) {
+  MouseEntered_ = Func;
+  if (MouseMoved_ != nullptr || MouseEntered_ != nullptr || MouseLeft_ != nullptr) {
     parent_->ObjectsWithMouseMovedEvent.insert(this);
   }
 }
 void Object::SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseMovedEvent.erase(this);
-  MouseLeft = Func;
-  if (MouseMoved != nullptr || MouseEntered != nullptr || MouseLeft != nullptr) {
+  MouseLeft_ = Func;
+  if (MouseMoved_ != nullptr || MouseEntered_ != nullptr || MouseLeft_ != nullptr) {
     parent_->ObjectsWithMouseMovedEvent.insert(this);
   }
 }

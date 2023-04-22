@@ -9,6 +9,7 @@ Fon::Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, boo
   SetSize(parent_->getSize().x, parent_->getSize().y);
   Move(0, 0);
   this->FPS = FPS;
+  SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
 }
 Fon::Fon(std::string PathToFrames,
          size_t NumberOfFrames,
@@ -28,16 +29,17 @@ Fon::Fon(std::string PathToFrames,
   SetSize(parent_->getSize().x, parent_->getSize().y);
   Move(0, 0);
   this->FPS = FPS;
+  SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
 }
 Fon::~Fon() {
 #ifdef DEBAG
   std::cout << "~Fon\n";
 #endif
 }
-void Fon::Draw() {
-  CurrentFrame += LastUpdate.restart().asMilliseconds() * FPS / 1000.0;
+
+void Fon::Update(double dt) {
+  CurrentFrame += dt * FPS / 1000.0;
   CurrentFrame -=
       static_cast<double>(static_cast<size_t>(CurrentFrame) / FonImages.size() * FonImages.size());
   AssignMyTexture(FonImages[static_cast<size_t>(CurrentFrame)]);
-  parent_->draw(Sprite_);
 }

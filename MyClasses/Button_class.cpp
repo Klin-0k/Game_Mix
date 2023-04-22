@@ -120,12 +120,12 @@ void Button::SetEnableMod(bool enable) {
 }
 void Button::SetMouseButtonPressedEvent(const std::function<void(const sf::Event&)>& Func) {
   if (Func != nullptr) {
-    MouseButtonPressed = [this, Func](const sf::Event& event) {
+    MouseButtonPressed_ = [this, Func](const sf::Event& event) {
       ButtonMouseButtonPressed();
       Func(event);
     };
   } else {
-    MouseButtonPressed = [this](const sf::Event& event) {
+    MouseButtonPressed_ = [this](const sf::Event& event) {
       ButtonMouseButtonPressed();
     };
   }
@@ -133,14 +133,14 @@ void Button::SetMouseButtonPressedEvent(const std::function<void(const sf::Event
 }
 void Button::SetMouseButtonReleasedEvent(const std::function<void(const sf::Event&)>& Func) {
   if (Func != nullptr) {
-    MouseButtonReleased = [this, Func](const sf::Event& event) {
+    MouseButtonReleased_ = [this, Func](const sf::Event& event) {
       ButtonMouseButtonReleased();
       if (under_mouse_) {
         Func(event);
       }
     };
   } else {
-    MouseButtonReleased = [this](const sf::Event& event) {
+    MouseButtonReleased_ = [this](const sf::Event& event) {
       ButtonMouseButtonReleased();
     };
   }
@@ -148,12 +148,12 @@ void Button::SetMouseButtonReleasedEvent(const std::function<void(const sf::Even
 }
 void Button::SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Func) {
   if (Func != nullptr) {
-    MouseMoved = [this, Func](const sf::Event& event) {
+    MouseMoved_ = [this, Func](const sf::Event& event) {
       ButtonMouseMoved();
       Func(event);
     };
   } else {
-    MouseMoved = [this](const sf::Event& event) {
+    MouseMoved_ = [this](const sf::Event& event) {
       ButtonMouseMoved();
     };
   }
@@ -161,12 +161,12 @@ void Button::SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Fun
 }
 void Button::SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& Func) {
   if (Func != nullptr) {
-    MouseEntered = [this, Func](const sf::Event& event) {
+    MouseEntered_ = [this, Func](const sf::Event& event) {
       ButtonMouseEntered();
       Func(event);
     };
   } else {
-    MouseEntered = [this](const sf::Event& event) {
+    MouseEntered_ = [this](const sf::Event& event) {
       ButtonMouseEntered();
     };
   }
@@ -174,12 +174,12 @@ void Button::SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& F
 }
 void Button::SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func) {
   if (Func != nullptr) {
-    MouseLeft = [this, Func](const sf::Event& event) {
+    MouseLeft_ = [this, Func](const sf::Event& event) {
       ButtonMouseLeft();
       Func(event);
     };
   } else {
-    MouseLeft = [this](const sf::Event& event) {
+    MouseLeft_ = [this](const sf::Event& event) {
       ButtonMouseLeft();
     };
   }

@@ -41,25 +41,34 @@ const Window* Essence::parent() {
 }
 void Essence::SetTextEnteredEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->EssencesWithTextEnteredEvent.erase(this);
-  TextEntered = Func;
+  TextEntered_ = Func;
   if (Func != nullptr) {
     parent_->EssencesWithTextEnteredEvent.insert(this);
   }
 }
 void Essence::SetKeyPressedEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->EssencesWithKeyPressedEvent.erase(this);
-  KeyPressed = Func;
+  KeyPressed_ = Func;
   if (Func != nullptr) {
     parent_->EssencesWithKeyPressedEvent.insert(this);
   }
 }
 void Essence::SetKeyReleasedEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->EssencesWithKeyReleasedEvent.erase(this);
-  KeyReleased = Func;
+  KeyReleased_ = Func;
   if (Func != nullptr) {
     parent_->EssencesWithKeyReleasedEvent.insert(this);
   }
 }
+
+void Essence::SetUpdateEvent(const std::function<void(double dt)>& Func, double time = 0) {
+  parent_->EssencesWithUpdate.erase(this);
+  Update_ = Func;
+  if (Func != nullptr) {
+    parent_->EssencesWithUpdate.insert(this);
+  }
+}
+
 void Essence::Draw() {}
 
 void Essence::Delete() {

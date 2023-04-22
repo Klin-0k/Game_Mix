@@ -45,6 +45,7 @@ class Window final : public sf::RenderWindow {
   std::unordered_set<Object*> ObjectsWithMouseButtonReleasedEvent = std::unordered_set<Object*>();
   std::unordered_set<Object*> ObjectsWithMouseMovedEvent = std::unordered_set<Object*>();
   std::unordered_set<Essence*> EssencesToDraw = std::unordered_set<Essence*>();
+  std::unordered_set<Essence*> EssencesWithUpdate = std::unordered_set<Essence*>();
   std::unordered_set<Essence*> EssencesToDelete = std::unordered_set<Essence*>();
   std::unordered_set<Essence*> AllEssences = std::unordered_set<Essence*>();
   static std::unordered_set<Window*> WindowsToDisplay;
@@ -54,11 +55,13 @@ class Window final : public sf::RenderWindow {
 
  private:
   void EventHandling();
+  void UpdatingEssences(double dt);
   void ChangingEssencesStates();
   bool enable_ = true;
   bool visible_ = true;
   bool WaitingForDeleting = false;
   static bool WaitingForProgramClosing;
+  sf::Clock time_between_frames;
 };
 
 class Essence {
@@ -77,6 +80,7 @@ class Essence {
   virtual void SetTextEnteredEvent(const std::function<void(const sf::Event&)>& Func);
   virtual void SetKeyPressedEvent(const std::function<void(const sf::Event&)>& Func);
   virtual void SetKeyReleasedEvent(const std::function<void(const sf::Event&)>& Func);
+  void SetUpdateEvent(const std::function<void(double dt)>& Func, double time);
   friend class Window;
   virtual void Draw();
   virtual void Delete();
@@ -85,9 +89,10 @@ class Essence {
   bool enable_ = true;
   bool visible_ = true;
   Window* parent_;
-  std::function<void(const sf::Event&)> TextEntered = nullptr;
-  std::function<void(const sf::Event&)> KeyPressed = nullptr;
-  std::function<void(const sf::Event&)> KeyReleased = nullptr;
+  std::function<void(const sf::Event&)> TextEntered_ = nullptr;
+  std::function<void(const sf::Event&)> KeyPressed_ = nullptr;
+  std::function<void(const sf::Event&)> KeyReleased_ = nullptr;
+  std::function<void(const double)> Update_ = nullptr;
   bool is_independent_;
  private:
 };
@@ -134,12 +139,12 @@ class Object : public Essence {
   sf::Texture Texture_;
   bool under_mouse_ = false;
   bool pressed_ = false;
-  std::function<void(const sf::Event&)> MouseWheelScrolled = nullptr;
-  std::function<void(const sf::Event&)> MouseButtonPressed = nullptr;
-  std::function<void(const sf::Event&)> MouseButtonReleased = nullptr;
-  std::function<void(const sf::Event&)> MouseMoved = nullptr;
-  std::function<void(const sf::Event&)> MouseEntered = nullptr;
-  std::function<void(const sf::Event&)> MouseLeft = nullptr;
+  std::function<void(const sf::Event&)> MouseWheelScrolled_ = nullptr;
+  std::function<void(const sf::Event&)> MouseButtonPressed_ = nullptr;
+  std::function<void(const sf::Event&)> MouseButtonReleased_ = nullptr;
+  std::function<void(const sf::Event&)> MouseMoved_ = nullptr;
+  std::function<void(const sf::Event&)> MouseEntered_ = nullptr;
+  std::function<void(const sf::Event&)> MouseLeft_ = nullptr;
 
  private:
 
@@ -206,16 +211,15 @@ class Game {
  private:
 };
 
-class Fon : public Object {
+class Fon final : public Object {
  public:
   Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, bool is_independent);
   Fon(std::string PathToFrames, size_t NumberOfFrames, double FPS, Window* parent, bool is_independent);
-  ~Fon();
-  void Draw() override;
+  ~Fon() final;
+  void Update(double dt);
  private:
   std::vector<sf::Texture> FonImages;
   double FPS = 30;
-  sf::Clock LastUpdate;
   double CurrentFrame = 0;
 };
 

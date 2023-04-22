@@ -23,7 +23,7 @@ void Window::EventHandling() {
       case sf::Event::TextEntered:
         for (auto i : EssencesWithTextEnteredEvent) {
           if (i->enable_) {
-            i->TextEntered(event);
+            i->TextEntered_(event);
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
             }
@@ -36,7 +36,7 @@ void Window::EventHandling() {
       case sf::Event::KeyPressed:
         for (auto i : EssencesWithKeyPressedEvent) {
           if (i->enable_) {
-            i->KeyPressed(event);
+            i->KeyPressed_(event);
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
             }
@@ -49,7 +49,7 @@ void Window::EventHandling() {
       case sf::Event::KeyReleased:
         for (auto i : EssencesWithKeyReleasedEvent) {
           if (i->enable_) {
-            i->KeyReleased(event);
+            i->KeyReleased_(event);
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
             }
@@ -62,7 +62,7 @@ void Window::EventHandling() {
       case sf::Event::MouseWheelScrolled:
         for (auto i : ObjectsWithMouseWheelScrolledEvent) {
           if (i->enable_) {
-            i->MouseWheelScrolled(event);
+            i->MouseWheelScrolled_(event);
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
             }
@@ -78,7 +78,7 @@ void Window::EventHandling() {
             if (i->Sprite_.getGlobalBounds().contains(this->mapPixelToCoords(sf::Mouse::getPosition(
                 *this)))) {
               i->pressed_ = true;
-              i->MouseButtonPressed(event);
+              i->MouseButtonPressed_(event);
             }
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
@@ -93,7 +93,7 @@ void Window::EventHandling() {
         for (auto i : ObjectsWithMouseButtonReleasedEvent) {
           if (i->enable_) {
             if (i->pressed_) {
-              i->MouseButtonReleased(event);
+              i->MouseButtonReleased_(event);
               i->pressed_ = false;
             }
             if (WaitingForDeleting || WaitingForProgramClosing) {
@@ -111,7 +111,7 @@ void Window::EventHandling() {
             if (i->under_mouse_
                 && i->Sprite_.getGlobalBounds().contains(this->mapPixelToCoords(sf::Mouse::getPosition(
                     *this)))) {
-              i->MouseMoved(event);
+              i->MouseMoved_(event);
             }
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
@@ -124,7 +124,7 @@ void Window::EventHandling() {
             if (i->under_mouse_
                 && !(i->Sprite_.getGlobalBounds().contains(this->mapPixelToCoords(sf::Mouse::getPosition(
                     *this))))) {
-              i->MouseLeft(event);
+              i->MouseLeft_(event);
               i->under_mouse_ = false;
             }
             if (WaitingForDeleting || WaitingForProgramClosing) {
@@ -138,7 +138,7 @@ void Window::EventHandling() {
             if (!i->under_mouse_
                 && i->Sprite_.getGlobalBounds().contains(mapPixelToCoords(sf::Mouse::getPosition(*this)))) {
               i->under_mouse_ = true;
-              i->MouseEntered(event);
+              i->MouseEntered_(event);
             }
             if (WaitingForDeleting || WaitingForProgramClosing) {
               break;
@@ -153,6 +153,21 @@ void Window::EventHandling() {
     }
   }
 }
+void Window::UpdatingEssences(double dt) {
+  if (!WaitingForDeleting && !WaitingForProgramClosing) {
+    for (auto i : EssencesWithUpdate) {
+      if (i->enable_) {
+        i->Update_(dt);
+        if (WaitingForDeleting || WaitingForProgramClosing) {
+          break;
+        }
+        if (!enable_) {
+          break;
+        }
+      }
+    }
+  }
+}
 void Window::ChangingEssencesStates() {
   for (auto i : EssencesToDelete) {
     delete i;
@@ -160,8 +175,12 @@ void Window::ChangingEssencesStates() {
   EssencesToDelete.clear();
 }
 void Window::MakeFrame() {
+  double dt = time_between_frames.restart().asMilliseconds();
   if (enable_) {
     EventHandling();
+  }
+  if (enable_) {
+    UpdatingEssences(dt);
   }
   ChangingEssencesStates();
   if (WaitingForDeleting || WaitingForProgramClosing) {
@@ -190,6 +209,7 @@ void Window::SetEnableMod(bool enable) {
     }
   }
   enable_ = enable;
+  time_between_frames.restart();
 }
 void Window::SetVisibleMod(bool visible) {
   //todo or not todo, this is the question
