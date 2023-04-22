@@ -12,6 +12,7 @@ Essence::~Essence() {
   parent_->EssencesWithTextEnteredEvent.erase(this);
   parent_->EssencesWithKeyPressedEvent.erase(this);
   parent_->EssencesWithKeyReleasedEvent.erase(this);
+  parent_->EssencesWithUpdate.erase(this);
   parent_->EssencesToDraw.erase(this);
   parent_->AllEssences.erase(this);
 #ifdef DEBAG
