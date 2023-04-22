@@ -63,7 +63,7 @@ MainMenu::MainMenu()
   text.setFont(font);
   text.setFillColor(sf::Color::Yellow);
   text.setStyle(sf::Text::Bold);
-  std::string PlayName = "Play", SettingsName = "Settings", ExitName = "ExitMenu";
+  std::string PlayName = "Play", SettingsName = "Settings", ExitName = "Exit";
   sf::FloatRect textBounds1 = sf::Text(PlayName, font).getLocalBounds();
   float scaleFactor1 = std::min(PlayButton.GetLocalWidth() * 3 / 7 / textBounds1.width,
                                 PlayButton.GetLocalHeight() * 5 / 14 / textBounds1.height);

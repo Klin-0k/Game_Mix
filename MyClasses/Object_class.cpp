@@ -1,9 +1,9 @@
 Object::Object(const sf::Texture& texture,
-               const sf::Rect<int>& rect,
                int X = MainWindow->getSize().x / 2,
                int Y = MainWindow->getSize().y / 2,
                Window* parent = MainWindow,
                bool is_independent = true) : Essence(parent, is_independent) {
+  Assign(texture);
   sf::Vector2u parent_size = parent->getSize();
   sf::Vector2f sprite_size = static_cast<sf::Vector2f>(Sprite_.getTexture()->getSize());
   sf::Vector2f
@@ -11,18 +11,10 @@ Object::Object(const sf::Texture& texture,
   Sprite_.setPosition(position);
 }
 Object::Object(const sf::Texture& texture,
-               const sf::Rect<int>& rect,
                Window* parent = MainWindow,
                bool is_independent = true) : Object(texture,
-                                                    rect,
                                                     parent->getSize().x / 2,
                                                     parent->getSize().y / 2,
-                                                    parent,
-                                                    is_independent) {}
-Object::Object(const sf::Texture& texture,
-               Window* parent = MainWindow,
-               bool is_independent = true) : Object(texture,
-                                                    sf::Rect{0, 0, 0, 0},
                                                     parent,
                                                     is_independent) {}
 Object::Object(Window* parent, bool is_independent) : Essence(parent, is_independent) {
@@ -85,7 +77,13 @@ void Object::Move(float X, float Y) {
 void Object::MoveByCenter(float X, float Y) {
   Sprite_.setPosition(X - GetWidth() / 2, Y - GetHeight() / 2);
 }
-void Object::Assign(const sf::Texture& texture) { Sprite_.setTexture(texture); }
+void Object::AssignMyTexture(const sf::Texture& texture) {
+  Sprite_.setTexture(texture);
+}
+void Object::Assign(const sf::Texture& texture) {
+  Texture_ = texture;
+  Sprite_.setTexture(texture);
+}
 void Object::SetMouseWheelScrolledEvent(const std::function<void(const sf::Event&)>& Func) {
   parent_->ObjectsWithMouseWheelScrolledEvent.erase(this);
   MouseWheelScrolled = Func;

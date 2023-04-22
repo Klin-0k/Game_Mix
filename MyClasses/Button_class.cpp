@@ -6,7 +6,7 @@ Button::Button(const sf::Texture& s1,
                                              p1(s1),
                                              p2(s2),
                                              p3(s3) {
-  Assign(p1);
+  AssignMyTexture(p1);
   SetMouseButtonPressedEvent(nullptr);
   SetMouseButtonReleasedEvent(nullptr);
   SetMouseMovedEvent(nullptr);
@@ -26,7 +26,7 @@ Button::Button(const std::string& s1,
   p1.loadFromFile(s1);
   p2.loadFromFile(s2);
   p3.loadFromFile(s3);
-  Assign(p1);
+  AssignMyTexture(p1);
   SetMouseButtonPressedEvent(nullptr);
   SetMouseButtonReleasedEvent(nullptr);
   SetMouseMovedEvent(nullptr);
@@ -46,7 +46,7 @@ Button::Button(sf::Texture&& s1,
                                              p1(s1),
                                              p2(s2),
                                              p3(s3) {
-  Assign(p1);
+  AssignMyTexture(p1);
   SetMouseButtonPressedEvent(nullptr);
   SetMouseButtonReleasedEvent(nullptr);
   SetMouseMovedEvent(nullptr);
@@ -65,7 +65,7 @@ Button::Button(sf::Texture& s1,
                Window* parent = MainWindow,
                bool is_independent = true) : Button(s1, s2, s3, parent, is_independent) {
   Print(text);
-  Assign(p1);
+  AssignMyTexture(p1);
 }
 Button::Button(sf::Texture&& s1,
                sf::Texture&& s2,
@@ -77,7 +77,7 @@ Button::Button(sf::Texture&& s1,
                                                     std::move(s3),
                                                     parent, is_independent) {
   Print(text);
-  Assign(p1);
+  AssignMyTexture(p1);
 }
 Button::~Button() {
 #ifdef DEBAG
@@ -95,6 +95,12 @@ void Button::Print(sf::Text text, sf::Texture& texture) {
   rt.draw(text);
   rt.display();
   texture.update(rt.getTexture());
+//  static int counter;
+//  sf::Image screenshot;
+//  screenshot.create(rt.getSize().x, rt.getSize().y);
+//  screenshot.copy(rt.getTexture().copyToImage(), 0, 0);
+//  screenshot.saveToFile("button_"+std::to_string(counter)+".png");
+//  ++counter;
 }
 void Button::Print(const sf::Text& text) {
   Print(text, p1);
@@ -107,7 +113,7 @@ void Button::SetEnableMod(bool enable) {
     SetVisibleMod(true);
   }
   if (!enable_) {
-    Assign(p1);
+    AssignMyTexture(p1);
     pressed_ = false;
     under_mouse_ = false;
   }
@@ -181,28 +187,28 @@ void Button::SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func
 }
 
 void Button::ButtonMouseEntered() {
-  Assign(p2);
+  AssignMyTexture(p2);
 }
 void Button::ButtonMouseLeft() {
   if (!pressed_) {
-    Assign(p1);
+    AssignMyTexture(p1);
   }
 }
 void Button::ButtonMouseButtonPressed() {
-  Assign(p3);
+  AssignMyTexture(p3);
 }
 void Button::ButtonMouseButtonReleased() {
   if (!under_mouse_) {
-    Assign(p1);
+    AssignMyTexture(p1);
   } else {
-    Assign(p2);
+    AssignMyTexture(p2);
   }
 }
 void Button::ButtonMouseMoved() {
   if (pressed_) {
-    Assign(p3);
+    AssignMyTexture(p3);
   } else {
-    Assign(p2);
+    AssignMyTexture(p2);
   }
 }
 

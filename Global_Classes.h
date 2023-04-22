@@ -95,13 +95,8 @@ class Essence {
 class Object : public Essence {
  public:
   Object(const sf::Texture& texture,
-         const sf::Rect<int>& rect,
          int X,
          int Y,
-         Window* parent,
-         bool is_independent);
-  Object(const sf::Texture& texture,
-         const sf::Rect<int>& rect,
          Window* parent,
          bool is_independent);
   Object(const sf::Texture& texture, Window* parent, bool is_independent);
@@ -131,10 +126,12 @@ class Object : public Essence {
   virtual void SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func);
   friend class Window;
   void Draw() override;
+  void AssignMyTexture(const sf::Texture& texture);
   void Assign(const sf::Texture& texture);
 
  protected:
   sf::Sprite Sprite_;
+  sf::Texture Texture_;
   bool under_mouse_ = false;
   bool pressed_ = false;
   std::function<void(const sf::Event&)> MouseWheelScrolled = nullptr;
