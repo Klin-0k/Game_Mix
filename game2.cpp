@@ -144,22 +144,6 @@ void Bucket::Update(double dt) {
       }
     }
   }
-//  if (jump && inf == "up"){
-//    this->Move(this->GetLeft(), this->GetTop()-dist/2);
-//    if (this->GetBottom()<=max_height){
-//      inf = "down";
-//    }
-//  } else {
-//    if (jump && inf == "down"){
-//      this->Move(this->GetLeft(), this->GetTop()+dist/2);
-//      float h = this->GetHeight();
-//      if (this->GetBottom()>=(parent_->getSize().y*8/10+h/2)) {
-//        this->Move(this->GetLeft(), (parent_->getSize().y*8/10-h/2));
-//        jump = false;
-//        inf = "up";
-//      }
-//    }
-//  }
 }
 
 void Bucket::Reverse() {
@@ -239,7 +223,7 @@ void game2::Draw() {
 game2::~game2() {
   delete background;
   delete bucket;
-  for (auto& lt: loot){
+  for (auto &lt : loot) {
     lt->Delete();
   }
 }

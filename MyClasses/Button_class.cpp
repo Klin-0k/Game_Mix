@@ -95,12 +95,12 @@ void Button::Print(sf::Text text, sf::Texture& texture) {
   rt.draw(text);
   rt.display();
   texture.update(rt.getTexture());
-  //  static int counter;
-  //  sf::Image screenshot;
-  //  screenshot.create(rt.getSize().x, rt.getSize().y);
-  //  screenshot.copy(rt.getTexture().copyToImage(), 0, 0);
-  //  screenshot.saveToFile("button_"+std::to_string(counter)+".png");
-  //  ++counter;
+//  static int counter;
+//  sf::Image screenshot;
+//  screenshot.create(rt.getSize().x, rt.getSize().y);
+//  screenshot.copy(rt.getTexture().copyToImage(), 0, 0);
+//  screenshot.saveToFile("button_"+std::to_string(counter)+".png");
+//  ++counter;
 }
 void Button::Print(const sf::Text& text) {
   Print(text, p1);

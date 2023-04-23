@@ -22,7 +22,7 @@ class Game;
 class InGameMenu;
 
 class Window final : public sf::RenderWindow {
-public:
+ public:
   void Delete();
   bool IsWaitingForDeleting() const;
   static bool ProgramIsWaitingForClosing();
@@ -53,7 +53,7 @@ public:
   std::string Name = "Window";
 #endif
 
-private:
+ private:
   void EventHandling();
   void UpdatingEssences(double dt);
   void ChangingEssencesStates();
@@ -65,7 +65,7 @@ private:
 };
 
 class Essence {
-public:
+ public:
   Essence(Window* parent, bool is_independent);
   explicit Essence(bool is_independent);
   Essence();
@@ -85,7 +85,7 @@ public:
   virtual void Draw();
   virtual void Delete();
 
-protected:
+ protected:
   bool enable_ = true;
   bool visible_ = true;
   Window* parent_;
@@ -94,11 +94,11 @@ protected:
   std::function<void(const sf::Event&)> KeyReleased_ = nullptr;
   std::function<void(const double)> Update_ = nullptr;
   bool is_independent_;
-private:
+ private:
 };
 
 class Object : public Essence {
-public:
+ public:
   Object(const sf::Texture& texture,
          int X,
          int Y,
@@ -134,7 +134,7 @@ public:
   void AssignMyTexture(const sf::Texture& texture);
   void Assign(const sf::Texture& texture);
 
-protected:
+ protected:
   sf::Sprite Sprite_;
   sf::Texture Texture_;
   bool under_mouse_ = false;
@@ -146,19 +146,19 @@ protected:
   std::function<void(const sf::Event&)> MouseEntered_ = nullptr;
   std::function<void(const sf::Event&)> MouseLeft_ = nullptr;
 
-private:
+ private:
 
 };
 
 class Character : public Object {
-public:
-private:
+ public:
+ private:
 };
 
 //----------------------------------------------------------
 
 class Button : public Object {
-public:
+ public:
   Button(const sf::Texture& s1,
          const sf::Texture& s2,
          const sf::Texture& s3,
@@ -196,42 +196,42 @@ public:
   void SetEnableMod(bool enable) final;
 
   ~Button() override;
-protected:
+ protected:
   void ButtonMouseEntered();
   void ButtonMouseLeft();
   void ButtonMouseButtonPressed();
   void ButtonMouseButtonReleased();
   void ButtonMouseMoved();
   sf::Texture p1, p2, p3;
-private:
+ private:
 };
 
 class Game {
-public:
-private:
+ public:
+ private:
 };
 
 class Fon final : public Object {
-public:
+ public:
   Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, bool is_independent);
   Fon(std::string PathToFrames, size_t NumberOfFrames, double FPS, Window* parent, bool is_independent);
   ~Fon() final;
   void Update(double dt);
-private:
+ private:
   std::vector<sf::Texture> FonImages;
   double FPS = 30;
   double CurrentFrame = 0;
 };
 
 class MainMenu final : public Essence {
-public:
+ public:
   static MainMenu* getMainMenu();
   void Draw() final;
   ~MainMenu() final;
   void SetEnableMod(bool enable) final;
   MainMenu(const MainMenu&) = delete;
   MainMenu& operator=(const MainMenu&) = delete;
-private:
+ private:
   static MainMenu* pmm;
   static void PlayButtonEvent(const sf::Event& event);
   void ExitButtonEvent(const sf::Event& event);
@@ -241,17 +241,17 @@ private:
 };
 
 class PlayMenu final : public Essence {
-public:
+ public:
   static PlayMenu* getPlayMenu();
   void Draw() final;
   ~PlayMenu() final;
   void SetEnableMod(bool enable) final;
   PlayMenu(const PlayMenu&) = delete;
   PlayMenu& operator=(const PlayMenu&) = delete;
-private:
+ private:
   static PlayMenu* ppm;
   static void BackButtonEvent(const sf::Event& event);
-  static void Game2ButtonEvent(const sf::Event& event);
+  static void Game2ButtonEvent(const sf::Event &event);
   PlayMenu();
   Button BackButton;
   Button Game1Button, Game2Button, Game3Button, Game4Button;
@@ -259,20 +259,20 @@ private:
 };
 
 class InGameMenu {
-public:
-private:
+ public:
+ private:
   Button ContinueButton, MainMenuButton, SettingsButton, ExitButton;
 };
 
 class ExitMenu final : public Essence {
-public:
+ public:
   explicit ExitMenu(Window* WindowThatShouldBeClosed);
   void Draw() final;
   static void CloseWithExitMenu(Window* window);
   void SetEnableMod(bool enable) final;
   ExitMenu(const ExitMenu&) = delete;
   ExitMenu& operator=(const ExitMenu&) = delete;
-private:
+ private:
   ~ExitMenu() final;
   Window* WindowThatShouldBeClosed;
   Button ButtonYES, ButtonNO;
@@ -284,97 +284,80 @@ private:
 };
 
 class Settings {
-public:
-private:
+ public:
+ private:
 };
 
 //----------------------------------------------------------
 
 class Profile {
-public:
-private:
+ public:
+ private:
 };
 
 class User {
-public:
-private:
+ public:
+ private:
 };
 
 class BigBoy {
-public:
-private:
-};
-
-//class Bucket : public Object {
-// public:
-//   int lft = 0;
-//   int rgh = 0;
-//   int tp = 0;
-//   int bt = 0;
-//   Bucket(const sf::Texture& texture,
-//          Window* parent,
-//          bool is_independent = true) : Object(texture, parent, is_independent) {
-//                                            lft = rect.left;
-//                                            rgh = rect.width + lft;
-//                                            tp = rect.top;
-//                                            bt = tp - 20;
-//                                        };
-//};
-
-class Bucket : public Object{
  public:
-   std::vector<sf::Texture> animat;
-   bool jump = 0;
-   float max_height = 0;
-   std::string inf = "up";
-   char orientation = 'L';
-   double speed = 1;
-   sf::Clock tmr;
-   double CurrentFrame = 0;
-   double FPS = 0;
-   bool down = false;
-   Bucket(const sf::Texture& texture,
-          double FPS,
-          size_t NumberOfFrames,
-          Window* parent,
-          bool is_independent, std::string PathToFrames);
-   void Reverse();
-   void Update(double dt);
-};
-
-class Loot : public Object{
- public:
-   std::string name;
-   Loot(const sf::Texture& texture, Window* parent, bool is_independent, std::string name);
-};
-
-class game2: Essence {
  private:
-   game2();
-   static game2* game2pointer;
-   int coin = 0;
-   Fon* background;
-   Bucket* bucket;
-   std::vector<Loot*> loot;
-   sf::Clock global_timer;
-   sf::Clock loot_timer;
-   sf::Texture tnt_text;
-   sf::Texture coin_text;
-   int level = 1;
-   double loot_speed;
-   double loot_creat_time;
-   double min_loot_creat_time;
-   double max_loot_speed;
+};
+
+class Bucket : public Object {
  public:
-   void Draw();
-   static game2* getGame2();
-   game2(const game2&) = delete;
-   game2& operator=(const game2&) = delete;
-   void stop();
-   void cont();
-   void exit();
-   void start();
-   int get_coin();
-   void Update(double dt);
-   ~game2();
+  std::vector<sf::Texture> animat;
+  bool jump = 0;
+  float max_height = 0;
+  std::string inf = "up";
+  char orientation = 'L';
+  double speed = 1;
+  sf::Clock tmr;
+  double CurrentFrame = 0;
+  double FPS = 0;
+  bool down = false;
+  Bucket(const sf::Texture &texture, double FPS, size_t NumberOfFrames,
+         Window *parent, bool is_independent, std::string PathToFrames);
+  void Reverse();
+  void Update(double dt);
+};
+
+class Loot : public Object {
+ public:
+  std::string name;
+  Loot(const sf::Texture &texture, Window *parent, bool is_independent,
+       std::string name);
+};
+
+class game2 : Essence {
+ private:
+  game2();
+  static game2 *game2pointer;
+  int coin = 0;
+  Fon *background;
+  Bucket *bucket;
+  std::vector<Loot *> loot;
+  sf::Clock global_timer;
+  sf::Clock loot_timer;
+  sf::Texture tnt_text;
+  sf::Texture coin_text;
+  int level = 1;
+  double loot_speed;
+  double loot_creat_time;
+  double min_loot_creat_time;
+  double max_loot_speed;
+
+ public:
+  void Draw();
+  static game2 *getGame2();
+  game2(const game2 &) = delete;
+  game2 &operator=(const game2 &) = delete;
+  void stop();
+  void cont();
+  void exit();
+  void start();
+  int get_coin();
+  void Update(double dt);
+  ~game2();
 };

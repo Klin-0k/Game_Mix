@@ -82,7 +82,7 @@ MainMenu::MainMenu()
   text.setString(ExitName);
   ExitButton.Print(text);
   float free_space_ = (parent_->getSize().y
-                       - (PlayButton.GetHeight() + SettingsButton.GetHeight() + ExitButton.GetHeight())) / 4;
+      - (PlayButton.GetHeight() + SettingsButton.GetHeight() + ExitButton.GetHeight())) / 4;
   PlayButton.Move((parent_->getSize().x - PlayButton.GetWidth()) / 2, free_space_);
   SettingsButton.Move((parent_->getSize().x - SettingsButton.GetWidth()) / 2,
                       PlayButton.GetBottom() + free_space_);
