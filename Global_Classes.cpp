@@ -8,4 +8,5 @@
 #include "MyClasses/MainMenu_class.cpp"
 #include "MyClasses/PlayMenu_class.cpp"
 #include "MyClasses/ExitMenu_class.cpp"
+#include "game2.cpp"
 

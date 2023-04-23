@@ -211,4 +211,3 @@ void Button::ButtonMouseMoved() {
     AssignMyTexture(p2);
   }
 }
-

@@ -123,8 +123,13 @@ PlayMenu::PlayMenu()
   BackButton.MoveByCenter(parent_->getSize().x / 2,
                           parent_->getSize().y * 65 / 100 + parent_->getSize().y * 35 / 200);
   BackButton.SetMouseButtonReleasedEvent(BackButtonEvent);
+  Game2Button.SetMouseButtonReleasedEvent(Game2ButtonEvent);
 }
 void PlayMenu::BackButtonEvent(const sf::Event& event) {
   MainMenu::getMainMenu();
+  ppm->Delete();
+}
+void PlayMenu::Game2ButtonEvent(const sf::Event& event) {
+  game2::getGame2();
   ppm->Delete();
 }

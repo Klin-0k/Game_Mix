@@ -251,6 +251,7 @@ class PlayMenu final : public Essence {
  private:
   static PlayMenu* ppm;
   static void BackButtonEvent(const sf::Event& event);
+  static void Game2ButtonEvent(const sf::Event &event);
   PlayMenu();
   Button BackButton;
   Button Game1Button, Game2Button, Game3Button, Game4Button;
@@ -302,4 +303,61 @@ class User {
 class BigBoy {
  public:
  private:
+};
+
+class Bucket : public Object {
+ public:
+  std::vector<sf::Texture> animat;
+  bool jump = 0;
+  float max_height = 0;
+  std::string inf = "up";
+  char orientation = 'L';
+  double speed = 1;
+  sf::Clock tmr;
+  double CurrentFrame = 0;
+  double FPS = 0;
+  bool down = false;
+  Bucket(const sf::Texture &texture, double FPS, size_t NumberOfFrames,
+         Window *parent, bool is_independent, std::string PathToFrames);
+  void Reverse();
+  void Update(double dt);
+};
+
+class Loot : public Object {
+ public:
+  std::string name;
+  Loot(const sf::Texture &texture, Window *parent, bool is_independent,
+       std::string name);
+};
+
+class game2 : Essence {
+ private:
+  game2();
+  static game2 *game2pointer;
+  int coin = 0;
+  Fon *background;
+  Bucket *bucket;
+  std::vector<Loot *> loot;
+  sf::Clock global_timer;
+  sf::Clock loot_timer;
+  sf::Texture tnt_text;
+  sf::Texture coin_text;
+  int level = 1;
+  double loot_speed;
+  double loot_creat_time;
+  double min_loot_creat_time;
+  double max_loot_speed;
+
+ public:
+  void Draw();
+  static game2 *getGame2();
+  game2(const game2 &) = delete;
+  game2 &operator=(const game2 &) = delete;
+  void stop();
+  void cont();
+  void exit();
+  void start();
+  int get_coin();
+  void Update(double dt);
+  ~game2();
 };
