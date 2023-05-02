@@ -24,26 +24,27 @@ Bucket::Bucket(const sf::Texture& texture,
   SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
 }
 
-void game2::Update(double dt){
-  if (global_timer.getElapsedTime().asMilliseconds() >= level*7000){
+void game2::Update(double dt) {
+  if (global_timer.getElapsedTime().asMilliseconds() >= level * 7000) {
     global_timer.restart();
-    level+=1;
+    level += 1;
   }
-  if (loot_timer.getElapsedTime().asMilliseconds() >= std::max(loot_creat_time/(level*level), min_loot_creat_time)){
+  if (loot_timer.getElapsedTime().asMilliseconds() >=
+      std::max(loot_creat_time / (level * level), min_loot_creat_time)) {
     loot_timer.restart();
-    int r = std::rand()%3 + 1;
-    if (r == 1){
-      Loot* l = new Loot(tnt_text, parent_, false, "TNT");
+    int r = std::rand() % 3 + 1;
+    if (r == 1) {
+      Loot *l = new Loot(tnt_text, parent_, false, "TNT");
       loot.push_back(l);
-      l->SetSize(parent_->getSize().y/25, parent_->getSize().y/25);
-      int rr = std::rand()%19 + 1;
-      l->MoveByCenter(rr * parent_->getSize().x/20, -(l->GetHeight()/2));
+      l->SetSize(parent_->getSize().y / 25, parent_->getSize().y / 25);
+      int rr = std::rand() % 19 + 1;
+      l->MoveByCenter(rr * parent_->getSize().x / 20, -(l->GetHeight() / 2));
     } else {
-      Loot* l = new Loot(coin_text, parent_, false, "coin");
+      Loot *l = new Loot(coin_text, parent_, false, "coin");
       loot.push_back(l);
-      l->SetSize(parent_->getSize().y/25, parent_->getSize().y/25);
-      int rr = std::rand()%19 + 1;
-      l->MoveByCenter(rr * parent_->getSize().x/20, -(l->GetHeight()/2));
+      l->SetSize(parent_->getSize().y / 25, parent_->getSize().y / 25);
+      int rr = std::rand() % 19 + 1;
+      l->MoveByCenter(rr * parent_->getSize().x / 20, -(l->GetHeight() / 2));
     }
   }
   float h = this->bucket->GetHeight();
@@ -51,15 +52,19 @@ void game2::Update(double dt){
   float l = this->bucket->GetLeft();
   float r = this->bucket->GetRight();
   float t = this->bucket->GetTop();
-  float start = parent_->getSize().y*8/10+h/2;
-  auto dist = dt * std::min(loot_speed*std::sqrt(level), max_loot_speed);
+  float start = parent_->getSize().y * 8 / 10 + h / 2;
+  auto dist = dt * std::min(loot_speed * std::sqrt(level), max_loot_speed);
   auto it = loot.begin();
-  for (auto& lt : loot){
-    float center_y = lt->GetTop()+lt->GetHeight()/2;
+  while (it != loot.end()) {
+    Loot *lt = *it;
+    float center_y = lt->GetTop() + lt->GetHeight() / 2;
     float loot_left = lt->GetLeft();
     float loot_right = lt->GetRight();
-    if (center_y <= t+h*9/40 && center_y>=t+h/10 && loot_left>=l+w/20 && loot_right<=r-w/20) {
-      if (lt->name=="TNT"){
+    if (center_y <= t + h * 9 / 40 && center_y >= t + h / 10 &&
+        loot_left >= l + w / 20 && loot_right <= r - w / 20 &&
+        std::min(loot_speed * std::sqrt(level), max_loot_speed) >=
+            bucket->vertical_speed) {
+      if (lt->name == "TNT") {
         coin = 0;
       } else {
         coin += 1;
@@ -68,10 +73,10 @@ void game2::Update(double dt){
       it = loot.erase(it);
       continue;
     }
-    if(lt->GetBottom()<start){
-      lt->Move(lt->GetLeft(), lt->GetTop()+dist);
+    if (lt->GetBottom() < start) {
+      lt->Move(lt->GetLeft(), lt->GetTop() + dist);
       ++it;
-    } else{
+    } else {
       lt->Delete();
       it = loot.erase(it);
       continue;
@@ -80,7 +85,7 @@ void game2::Update(double dt){
 }
 
 void Bucket::Update(double dt) {
-  auto dist = dt * speed/1.1;
+  auto dist = dt * horizontal_speed /1.1;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->GetLeft()>=dist){
     if (orientation == 'R'){
       this->Reverse();
@@ -110,11 +115,12 @@ void Bucket::Update(double dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && jump==true) {
     inf = "down";
     down = true;
+    vertical_speed = horizontal_speed *2.5;
   }
   float h = this->GetHeight();
   float start = parent_->getSize().y*8/10+h/2;
-  double g = speed/410.0;
-  double sp = speed*1.3;
+  double g = horizontal_speed /410.0;
+  double sp = horizontal_speed *1.3;
   if (jump && inf == "up"){
     double tm = tmr.getElapsedTime().asMilliseconds();
     float heigh = sp*tm - g*(0.5)*tm*tm;
@@ -122,6 +128,7 @@ void Bucket::Update(double dt) {
       this->Move(this->GetLeft(), start-heigh-h);
     }
     max_height = heigh;
+    vertical_speed = -1;
     if (g>=sp/tm && tm!=0){
       max_height = heigh;
       inf = "down";
@@ -130,10 +137,11 @@ void Bucket::Update(double dt) {
   } else {
     if (jump && inf == "down") {
       if (down){
-        this->Move(this->GetLeft(), this->GetTop()+dt*speed*2.5);
+        this->Move(this->GetLeft(), this->GetTop()+dt* vertical_speed);
       } else {
         double tm = tmr.getElapsedTime().asMilliseconds();
         double s = g * (0.5) * tm * tm;
+        vertical_speed = g*tm;
         this->Move(this->GetLeft(), start - max_height + s - h);
       }
       if (this->GetBottom() >= start) {
@@ -141,6 +149,7 @@ void Bucket::Update(double dt) {
         jump = false;
         inf = "up";
         down = false;
+        vertical_speed = 0;
       }
     }
   }
@@ -170,14 +179,14 @@ game2::game2() {
   bucket->max_height = (parent_->getSize().y/3);
   bucket->SetSize(parent_->getSize().x/8, parent_->getSize().y/4);
   bucket->MoveByCenter(parent_->getSize().x/2, parent_->getSize().y*8/10);
-  bucket->speed=parent_->getSize().x/1060.0;
+  bucket->horizontal_speed =parent_->getSize().x/1060.0;
   bucket->SetUpdateEvent([this] (double dt) { bucket->Update(dt); });
   global_timer.restart();
   loot_timer.restart();
   min_loot_creat_time = 300.0;
   loot_creat_time = 3000.0;
-  max_loot_speed = bucket->speed*4;
-  loot_speed = bucket->speed/8;
+  max_loot_speed = bucket->horizontal_speed *4;
+  loot_speed = bucket->horizontal_speed /8;
   SetUpdateEvent([this] (double dt) {Update(dt); });
 }
 

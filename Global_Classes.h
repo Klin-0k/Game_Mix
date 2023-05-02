@@ -312,7 +312,8 @@ class Bucket : public Object {
   float max_height = 0;
   std::string inf = "up";
   char orientation = 'L';
-  double speed = 1;
+  double horizontal_speed;
+  double vertical_speed;
   sf::Clock tmr;
   double CurrentFrame = 0;
   double FPS = 0;
