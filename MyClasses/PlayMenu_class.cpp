@@ -11,8 +11,23 @@ void PlayMenu::Draw() {
   Game2Button.Draw();
   Game3Button.Draw();
   Game4Button.Draw();
+  sf::Font font;
+  font.loadFromFile(PATH_TO_RESOURCES
+                    "/Fonts/JosefinSans-VariableFont_wght.ttf");
+  sf::Text text;
+  text.setString("Coins: " + std::to_string(coins));
+  text.setCharacterSize(150);
+  text.setFont(font);
+  text.setFillColor(sf::Color::Yellow);
+  text.setStyle(sf::Text::Bold);
+  text.setPosition(parent_->getSize().x / 2 - text.getLocalBounds().width / 2, parent_->getSize().y / 100);
+  parent_->draw(text);
 }
 PlayMenu::~PlayMenu() {
+  std::ofstream file;
+  file.open(PATH_TO_RESOURCES"/game2/record.txt");
+  file << std::to_string(coins);
+  file.close();
   ppm = nullptr;
 #ifdef DEBAG
   std::cout << "~PlayMenu\n\n";
@@ -60,6 +75,11 @@ PlayMenu::PlayMenu()
                   45,
                   parent_,
                   false) {
+  std::ifstream file(PATH_TO_RESOURCES"/game2/record.txt");
+  std::string line;
+  std::getline(file, line);
+  coins = std::stoi(line);
+  file.close();
   float targetHeight = parent_->getSize().y / 6.0f;
   float targetWidth = targetHeight * BackButton.GetWidth() / BackButton.GetHeight();
   BackButton.SetSize(targetWidth, targetHeight);
