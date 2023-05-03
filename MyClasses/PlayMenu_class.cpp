@@ -124,6 +124,7 @@ PlayMenu::PlayMenu()
                           parent_->getSize().y * 65 / 100 + parent_->getSize().y * 35 / 200);
   BackButton.SetMouseButtonReleasedEvent(BackButtonEvent);
   Game2Button.SetMouseButtonReleasedEvent(Game2ButtonEvent);
+  Game1Button.SetMouseButtonReleasedEvent(Game1ButtonEvent);
 }
 void PlayMenu::BackButtonEvent(const sf::Event& event) {
   MainMenu::getMainMenu();
@@ -131,5 +132,9 @@ void PlayMenu::BackButtonEvent(const sf::Event& event) {
 }
 void PlayMenu::Game2ButtonEvent(const sf::Event& event) {
   game2::getGame2();
+  ppm->Delete();
+}
+void PlayMenu::Game1ButtonEvent(const sf::Event &event) {
+  Game1::GetGame1();
   ppm->Delete();
 }
