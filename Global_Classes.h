@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <unordered_set>
 
 #include <SFML/Graphics.hpp>
 
@@ -252,6 +253,7 @@ class PlayMenu final : public Essence {
   static PlayMenu* ppm;
   static void BackButtonEvent(const sf::Event& event);
   static void Game2ButtonEvent(const sf::Event &event);
+  static void Game1ButtonEvent(const sf::Event& event);
   PlayMenu();
   Button BackButton;
   Button Game1Button, Game2Button, Game3Button, Game4Button;
@@ -361,4 +363,77 @@ class game2 : Essence {
   int get_coin();
   void Update(double dt);
   ~game2();
+};
+
+struct Coords {
+  int x;
+  int y;
+};
+
+struct Figure {
+  std::vector<sf::RectangleShape> tiles;
+  size_t size;
+  int type;
+};
+
+class Game1 : Essence {
+ private:
+  Game1();
+  void CheckEvents(const sf::Event& event);
+  void DestroyRow(int i, int j);
+  sf::Color GetRandomColor();
+  Object* game_background;
+  static Game1 *game_1_pointer;
+  Fon *background;
+  sf::Texture game_background_image;
+  static const int width_of_net_in_tiles = 15;
+  int height_of_net_in_tiles;
+  float indent_x;
+  float indent_y;
+  int tile_size;
+  sf::RectangleShape tile;
+
+  sf::RectangleShape red_line;
+  sf::RectangleShape white_line;
+
+  std::vector<std::vector<Coords>> figures_pos;
+  std::vector<std::vector<sf::RectangleShape>> figures;
+  int type_of_figure;
+  Figure figure;
+  Figure next_figure;
+  sf::Color color;
+  sf::Color next_color;
+  int speed_of_falling;
+  int moves_by_x;
+  int moves_by_y;
+  int rotation;
+  int indent_by_x;
+
+  std::vector<std::vector<bool>> is_tiled;
+  std::vector<std::vector<bool>> is_destroyed;
+  std::vector<std::vector<bool>> supposed_to_be_destroyed;
+  std::vector<std::vector<sf::Color>> mem_color;
+
+  int start_transparency = 255;
+  int transparency = start_transparency;
+  int speed_of_destruction = 5;
+  bool in_process_of_destruction = false;
+  int row_of_destruction = -1;
+  int counter_of_destructed_rows = 0;
+  int max_value_before_speed_up = 5;
+
+  int score = 0;
+  //record = get_record();
+  int rows = 0;
+  int one_tile_cost = 10;
+
+ public:
+  static Game1* GetGame1();
+  Game1(const Game1&) = delete;
+  Game1& operator=(const Game1&) = delete;
+  void stop();
+  void cont();
+  void Update(double dt);
+  void Draw();
+  ~Game1();
 };
