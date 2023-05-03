@@ -246,6 +246,7 @@ void game2::Draw() {
 game2::~game2() {
   delete background;
   bucket->~Bucket();
+  delete bucket;
   for (auto &lt : loot) {
     lt->Delete();
   }
