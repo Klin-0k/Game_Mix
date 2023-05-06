@@ -11,7 +11,7 @@ jobs:
           sudo apt update -y
           sudo apt install -y cmake build-essential
       - name: Install gtest
-        run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib
+        run: sudo apt-get install libgtest-dev
       - name: Install SFML-2.5.1
         run: |
           wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
