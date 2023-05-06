@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include "../Global_Classes.cpp"
 
 TEST(LootTest, Constructor) {
