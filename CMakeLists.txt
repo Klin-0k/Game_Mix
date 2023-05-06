@@ -33,3 +33,5 @@ find_package(SFML REQUIRED graphics network audio window system)
 ##########################################################################
 
 set(DEBUG 0)
+
+add_subdirectory(tests)

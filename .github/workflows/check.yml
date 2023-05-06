@@ -1,0 +1,31 @@
+name: Test
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get project
+        uses: actions/checkout@v3
+      - name: Install c++ and cmake
+        run: |
+          apt update
+          apt install -y cmake build-essential
+      - name: Install gtest
+        run: sudo apt-get install libgtest-dev
+      - name: Install SFML-2.5.1
+        run: |
+          wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
+          tar -xvf SFML-2.5.1-linux-gcc-64-bit.tar.gz
+          mkdir SFML-2.5.1_for_linux
+          mv SFML-2.5.1/* SFML-2.5.1_for_linux/
+      - name: Build
+        run: |
+          mkdir cmake-build-debug
+          cd cmake-build-debug
+          cmake ..
+          make
+          cd ..
+      - name: Testing
+        run: |
+          cd tests
+          ./Test
