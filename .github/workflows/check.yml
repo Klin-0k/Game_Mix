@@ -20,6 +20,9 @@ jobs:
           mv SFML-2.5.1/* SFML-2.5.1_for_linux/
       - name: Build
         run: |
+          cd SFML-2.5.1_for_linux
+          cmake .
+          make
           cd ..
           mkdir cmake-build-debug
           cd cmake-build-debug
