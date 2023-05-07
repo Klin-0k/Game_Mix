@@ -393,10 +393,17 @@ class Game1 : Essence {
   void CheckEvents(const sf::Event& event);
   void DestroyRow(int i, int j);
   sf::Color GetRandomColor();
+  int GetRecord();
+  void SetRecord(int my_record, int my_score);
+  void SetText(sf::Text& target, const sf::Font& font, const std::string& text, int character_size, sf::Color my_color,
+               sf::Vector2f pos);
+  void ReloadNet();
   Object* game_background;
+  Object* game_over_background;
+  Button
   static Game1 *game_1_pointer;
   Fon *background;
-  sf::Texture game_background_image;
+  sf::Texture game_background_image, game_over_background_image;
   static const int width_of_net_in_tiles = 15;
   int height_of_net_in_tiles;
   float indent_x;
@@ -412,8 +419,7 @@ class Game1 : Essence {
   int type_of_figure;
   Figure figure;
   Figure next_figure;
-  sf::Color color;
-  sf::Color next_color;
+
   int speed_of_falling;
   int moves_by_x;
   int moves_by_y;
@@ -434,9 +440,26 @@ class Game1 : Essence {
   int max_value_before_speed_up = 5;
 
   int score = 0;
-  //record = get_record();
   int rows = 0;
   int one_tile_cost = 10;
+  int coins;
+  int record;
+
+  sf::Font main_font;
+  sf::Text record_text, record_value, score_text, score_value, coins_text, coins_value, new_text, back_text,
+  restart_text, game_over_text;
+
+  sf::Color color;
+  sf::Color next_color;
+  sf::Color my_green = {41, 232, 35};
+  sf::Color my_blue = {20, 54, 247};
+  sf::Color my_orange = {252, 233, 56};
+  sf::Color my_skyblue = {187, 237, 234};
+  sf::Color my_white = {255, 255, 255};
+  sf::Color my_transparent = {255, 255, 255, 0};
+
+  bool is_active_game_over = false;
+
 
  public:
   static Game1* GetGame1();
