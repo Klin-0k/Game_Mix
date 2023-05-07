@@ -400,7 +400,6 @@ class Game1 : Essence {
   void ReloadNet();
   Object* game_background;
   Object* game_over_background;
-  Button
   static Game1 *game_1_pointer;
   Fon *background;
   sf::Texture game_background_image, game_over_background_image;
