@@ -25,6 +25,9 @@ Bucket::Bucket(const sf::Texture& texture,
 }
 
 void game2::Update(double dt) {
+  if (bucket->dead) {
+    return ;
+  }
   if (global_timer.getElapsedTime().asMilliseconds() >= level * 7000) {
     global_timer.restart();
     level += 1;
@@ -89,8 +92,11 @@ void game2::Update(double dt) {
 }
 
 void Bucket::Update(double dt) {
+  if (dead){
+    return ;
+  }
   auto dist = dt * horizontal_speed /1.1;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->GetLeft()>=dist){
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && this->GetLeft()>=dist){
     if (orientation == 'R'){
       this->Reverse();
       orientation = 'L';
@@ -101,7 +107,7 @@ void Bucket::Update(double dt) {
         static_cast<double>(static_cast<size_t>(CurrentFrame) / animat.size() * animat.size());
     AssignMyTexture(animat[static_cast<size_t>(CurrentFrame)]);
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->GetRight()<=parent_->getSize().x-dist){
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && this->GetRight()<=parent_->getSize().x-dist){
     if (orientation == 'L'){
       this->Reverse();
       orientation = 'R';
@@ -112,11 +118,11 @@ void Bucket::Update(double dt) {
         static_cast<double>(static_cast<size_t>(CurrentFrame) / animat.size() * animat.size());
     AssignMyTexture(animat[static_cast<size_t>(CurrentFrame)]);
   }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && jump==false) {
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
     jump = true;
     tmr.restart();
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && jump==true) {
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
     inf = "down";
     down = true;
     vertical_speed = horizontal_speed *2.5;
@@ -166,6 +172,14 @@ void Bucket::Reverse() {
   Sprite_.setTextureRect(textureRect);
 }
 
+Bucket::~Bucket(){
+  size_t s = heart.size();
+  for (size_t i = 0; i < s; ++i){
+    heart[i]->Delete();
+  }
+  (*this).Delete();
+}
+
 int game2::get_coin() {
   return coin;
 }
@@ -199,16 +213,29 @@ game2::game2() {
     bucket->heart.push_back(l);
   }
   SetUpdateEvent([this] (double dt) {Update(dt); });
+  exit_button = new Button(PATH_TO_RESOURCES"/buttons/buttonN1.png",
+              PATH_TO_RESOURCES"/buttons/buttonN2.png",
+              PATH_TO_RESOURCES"/buttons/buttonN3.png",
+              parent_,
+              false);
+  exit_button->SetMouseButtonReleasedEvent([this](const sf::Event& event) { button_link(event); });
+  sf::Font font;
+  font.loadFromFile(PATH_TO_RESOURCES
+                    "/Fonts/JosefinSans-VariableFont_wght.ttf");
+  sf::Text text;
+  text.setString("Exit");
+  text.setCharacterSize(60);
+  text.setFont(font);
+  text.setStyle(sf::Text::Bold);
+  exit_button->Print(text);
+  exit_button->SetSize(parent_->getSize().x / 10, parent_->getSize().y / 15);
+  exit_button->MoveByCenter(parent_->getSize().x / 2, parent_->getSize().y*58 / 60);
 }
 
-void game2::cont() {
-  SetEnableMod(false);
+void game2::button_link(const sf::Event& event) {
+  PlayMenu::getPlayMenu()->coins+=get_coin();
+  game2pointer->Delete();
 }
-
-void game2::stop(){
-    SetEnableMod(true);
-}
-
 
 game2* game2::game2pointer = nullptr;
 
@@ -220,34 +247,53 @@ game2* game2::getGame2() {
 }
 
 void game2::Draw() {
-  background->Draw();
-  bucket->Draw();
-  for (auto& lt : loot){
-    lt->Draw();
+  if (!bucket->dead) {
+    background->Draw();
+    bucket->Draw();
+    for (auto &lt : loot) {
+      lt->Draw();
+    }
+    sf::Font font;
+    font.loadFromFile(PATH_TO_RESOURCES
+                      "/Fonts/JosefinSans-VariableFont_wght.ttf");
+    sf::Text text;
+    text.setPosition(parent_->getSize().x * 24 / 30, parent_->getSize().y / 30);
+    text.setString("Coins: " + std::to_string(coin));
+    text.setCharacterSize(60);
+    text.setFont(font);
+    text.setFillColor(sf::Color::Green);
+    text.setStyle(sf::Text::Bold);
+    parent_->draw(text);
+    text.setString("Level: " + std::to_string(level));
+    text.setPosition(parent_->getSize().x / 30, parent_->getSize().y / 30);
+    parent_->draw(text);
+    for (int i = 0; i < bucket->hearts; ++i) {
+      bucket->heart[i]->Draw();
+    }
+  } else {
+    parent_->clear(sf::Color::Black);
+    sf::Font font;
+    font.loadFromFile(PATH_TO_RESOURCES
+                      "/Fonts/JosefinSans-VariableFont_wght.ttf");
+    sf::Text text;
+    text.setString("GAME OVER");
+    text.setCharacterSize(150);
+    text.setFont(font);
+    text.setFillColor(sf::Color::Yellow);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(parent_->getSize().x / 2 - text.getLocalBounds().width / 2, parent_->getSize().y / 2 - text.getLocalBounds().height / 2);
+    parent_->draw(text);
   }
-  sf::Font font;
-  font.loadFromFile(PATH_TO_RESOURCES"/Fonts/JosefinSans-VariableFont_wght.ttf");
-  sf::Text text;
-  text.setPosition ( parent_->getSize().x*24/30 , parent_->getSize().y/30) ;
-  text.setString ( "Coins: "+std::to_string(coin) ) ;
-  text.setCharacterSize(60);
-  text.setFont(font);
-  text.setFillColor(sf::Color::Green);
-  text.setStyle(sf::Text::Bold);
-  parent_->draw(text);
-  text.setString ( "Level: "+std::to_string(level) ) ;
-  text.setPosition ( parent_->getSize().x/30 , parent_->getSize().y/30) ;
-  parent_->draw(text);
-  for (int i = 0; i < bucket->hearts; ++i){
-    bucket->heart[i]->Draw();
-  }
+  exit_button->Draw();
 }
 
 game2::~game2() {
   delete background;
-  bucket->~Bucket();
+  bucket->Delete();
   delete bucket;
   for (auto &lt : loot) {
     lt->Delete();
   }
+  exit_button->Delete();
+  game2pointer = nullptr;
 }

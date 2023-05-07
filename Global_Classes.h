@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <unordered_set>
+#include <fstream>
 
 #include <SFML/Graphics.hpp>
 
@@ -243,6 +244,7 @@ class MainMenu final : public Essence {
 
 class PlayMenu final : public Essence {
  public:
+  int coins = 0;
   static PlayMenu* getPlayMenu();
   void Draw() final;
   ~PlayMenu() final;
@@ -328,13 +330,7 @@ class Bucket : public Object {
          Window *parent, bool is_independent, std::string PathToFrames);
   void Reverse();
   void Update(double dt);
-  ~Bucket(){
-    size_t s = heart.size();
-    for (size_t i = 0; i < s; ++i){
-      heart[i]->Delete();
-    }
-    (*this).Delete();
-  }
+  ~Bucket();
 };
 
 class Loot : public Object {
@@ -356,6 +352,7 @@ class game2 : Essence {
   sf::Clock loot_timer;
   sf::Texture tnt_text;
   sf::Texture coin_text;
+  Button* exit_button;
   int level = 1;
   double loot_speed;
   double loot_creat_time;
@@ -364,13 +361,10 @@ class game2 : Essence {
 
  public:
   void Draw();
+  void button_link(const sf::Event& event);
   static game2 *getGame2();
   game2(const game2 &) = delete;
   game2 &operator=(const game2 &) = delete;
-  void stop();
-  void cont();
-  void exit();
-  void start();
   int get_coin();
   void Update(double dt);
   ~game2();
@@ -458,7 +452,6 @@ class Game1 : Essence {
   sf::Color my_transparent = {255, 255, 255, 0};
 
   bool is_active_game_over = false;
-
 
  public:
   static Game1* GetGame1();
