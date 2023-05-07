@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <unordered_set>
+#include <fstream>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -243,6 +245,7 @@ class MainMenu final : public Essence {
 
 class PlayMenu final : public Essence {
  public:
+  int coins = 0;
   static PlayMenu* getPlayMenu();
   void Draw() final;
   ~PlayMenu() final;
@@ -356,6 +359,7 @@ class game2 : Essence {
   sf::Clock loot_timer;
   sf::Texture tnt_text;
   sf::Texture coin_text;
+  Button* exit_button;
   int level = 1;
   double loot_speed;
   double loot_creat_time;
@@ -364,13 +368,10 @@ class game2 : Essence {
 
  public:
   void Draw();
+  void button_link(const sf::Event& event);
   static game2 *getGame2();
   game2(const game2 &) = delete;
   game2 &operator=(const game2 &) = delete;
-  void stop();
-  void cont();
-  void exit();
-  void start();
   int get_coin();
   void Update(double dt);
   ~game2();
