@@ -172,6 +172,14 @@ void Bucket::Reverse() {
   Sprite_.setTextureRect(textureRect);
 }
 
+Bucket::~Bucket(){
+  size_t s = heart.size();
+  for (size_t i = 0; i < s; ++i){
+    heart[i]->Delete();
+  }
+  (*this).Delete();
+}
+
 int game2::get_coin() {
   return coin;
 }

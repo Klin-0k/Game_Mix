@@ -331,13 +331,7 @@ class Bucket : public Object {
          Window *parent, bool is_independent, std::string PathToFrames);
   void Reverse();
   void Update(double dt);
-  ~Bucket(){
-    size_t s = heart.size();
-    for (size_t i = 0; i < s; ++i){
-      heart[i]->Delete();
-    }
-    (*this).Delete();
-  }
+  ~Bucket();
 };
 
 class Loot : public Object {
