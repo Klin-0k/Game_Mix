@@ -24,11 +24,11 @@ Bucket::Bucket(const sf::Texture& texture,
   SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
 }
 
-void game2::Update(double dt) {
+void Game2::Update(double dt) {
   if (bucket->dead) {
     return ;
   }
-  bucket->horizontal_speed =parent_->getSize().x/1060.0;
+  bucket->horizontal_speed = parent_->getSize().x/1060.0;
   if (global_timer.getElapsedTime().asMilliseconds() >= level * 7000) {
     global_timer.restart();
     level += 1;
@@ -122,7 +122,6 @@ void Bucket::Update(double dt) {
   if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
     jump = true;
     tmr.restart();
-
   }
   if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
     inf = "down";
@@ -184,11 +183,11 @@ Bucket::~Bucket(){
   (*this).Delete();
 }
 
-int game2::get_coin() {
+int Game2::get_coin() {
   return coin;
 }
 
-game2::game2() {
+Game2::Game2() {
   std::srand(time(NULL));
   tnt_text.loadFromFile(PATH_TO_RESOURCES"/game2/TNT.png");
   coin_text.loadFromFile(PATH_TO_RESOURCES"/game2/coin.png");
@@ -236,21 +235,21 @@ game2::game2() {
   exit_button->MoveByCenter(parent_->getSize().x / 2, parent_->getSize().y*58 / 60);
 }
 
-void game2::button_link(const sf::Event& event) {
+void Game2::button_link(const sf::Event& event) {
   PlayMenu::getPlayMenu()->coins+=get_coin();
   game2pointer->Delete();
 }
 
-game2* game2::game2pointer = nullptr;
+Game2 *Game2::game2pointer = nullptr;
 
-game2* game2::getGame2() {
+Game2 *Game2::getGame2() {
   if (game2pointer == nullptr) {
-    game2pointer = new game2();
+    game2pointer = new Game2();
   }
   return game2pointer;
 }
 
-void game2::Draw() {
+void Game2::Draw() {
   if (!bucket->dead) {
     background->Draw();
     bucket->Draw();
@@ -291,7 +290,7 @@ void game2::Draw() {
   exit_button->Draw();
 }
 
-game2::~game2() {
+Game2::~Game2() {
   delete background;
   bucket->Delete();
   delete bucket;

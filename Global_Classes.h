@@ -341,10 +341,10 @@ class Loot : public Object {
        std::string name);
 };
 
-class game2 : Essence {
+class Game2 : Essence {
  private:
-  game2();
-  static game2 *game2pointer;
+  Game2();
+  static Game2 *game2pointer;
   int coin = 0;
   Fon *background;
   Bucket *bucket;
@@ -363,12 +363,12 @@ class game2 : Essence {
  public:
   void Draw();
   void button_link(const sf::Event& event);
-  static game2 *getGame2();
-  game2(const game2 &) = delete;
-  game2 &operator=(const game2 &) = delete;
+  static Game2 *getGame2();
+  Game2(const Game2 &) = delete;
+  Game2 &operator=(const Game2 &) = delete;
   int get_coin();
   void Update(double dt);
-  ~game2();
+  ~Game2();
 };
 
 struct Coords {

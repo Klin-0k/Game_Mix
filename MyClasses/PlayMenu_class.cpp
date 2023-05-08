@@ -151,7 +151,7 @@ void PlayMenu::BackButtonEvent(const sf::Event& event) {
   ppm->Delete();
 }
 void PlayMenu::Game2ButtonEvent(const sf::Event& event) {
-  game2::getGame2();
+  Game2::getGame2();
   ppm->Delete();
 }
 void PlayMenu::Game1ButtonEvent(const sf::Event &event) {
