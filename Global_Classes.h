@@ -331,6 +331,9 @@ class Bucket : public Object {
          Window *parent, bool is_independent, std::string PathToFrames);
   void Reverse();
   void Update(double dt);
+  void Turn_Left(double dt, double dist);
+  void Turn_Right(double dt, double dist);
+  void Jumping(double dt);
   ~Bucket();
 };
 
@@ -359,6 +362,8 @@ class Game2 : Essence {
   double loot_creat_time;
   double min_loot_creat_time;
   double max_loot_speed;
+  void Loot_Generating();
+  void Loot_Moving(double dt);
 
  public:
   void Draw();
