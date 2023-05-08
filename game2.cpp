@@ -28,6 +28,7 @@ void game2::Update(double dt) {
   if (bucket->dead) {
     return ;
   }
+  bucket->horizontal_speed =parent_->getSize().x/1060.0;
   if (global_timer.getElapsedTime().asMilliseconds() >= level * 7000) {
     global_timer.restart();
     level += 1;
@@ -121,6 +122,7 @@ void Bucket::Update(double dt) {
   if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
     jump = true;
     tmr.restart();
+
   }
   if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
     inf = "down";
@@ -161,6 +163,8 @@ void Bucket::Update(double dt) {
         down = false;
         vertical_speed = 0;
       }
+    } else {
+      max_height = (parent_->getSize().y/3);
     }
   }
 }
@@ -224,7 +228,7 @@ game2::game2() {
                     "/Fonts/JosefinSans-VariableFont_wght.ttf");
   sf::Text text;
   text.setString("Exit");
-  text.setCharacterSize(60);
+  text.setCharacterSize(parent_->getSize().y / 15);
   text.setFont(font);
   text.setStyle(sf::Text::Bold);
   exit_button->Print(text);
@@ -259,7 +263,7 @@ void game2::Draw() {
     sf::Text text;
     text.setPosition(parent_->getSize().x * 24 / 30, parent_->getSize().y / 30);
     text.setString("Coins: " + std::to_string(coin));
-    text.setCharacterSize(60);
+    text.setCharacterSize(parent_->getSize().y / 15);
     text.setFont(font);
     text.setFillColor(sf::Color::Green);
     text.setStyle(sf::Text::Bold);
@@ -277,7 +281,7 @@ void game2::Draw() {
                       "/Fonts/JosefinSans-VariableFont_wght.ttf");
     sf::Text text;
     text.setString("GAME OVER");
-    text.setCharacterSize(150);
+    text.setCharacterSize(parent_->getSize().y / 8);
     text.setFont(font);
     text.setFillColor(sf::Color::Yellow);
     text.setStyle(sf::Text::Bold);
