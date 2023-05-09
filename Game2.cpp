@@ -186,6 +186,9 @@ void Bucket::Update(double dt) {
     vertical_speed = horizontal_speed *2.5;
   }
   Jumping(dt);
+  if (hearts <= 0){
+    dead = true;
+  }
 }
 
 void Bucket::Reverse() {
