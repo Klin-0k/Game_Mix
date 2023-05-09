@@ -209,6 +209,31 @@ class Button : public Object {
  private:
 };
 
+//----------------------------------------------------------
+
+class Button : public Object {
+ public:
+  Button(const sf::Texture& s1, const sf::Texture& s2, const sf::Texture& s3, sf::RenderWindow* parent);
+  Button(sf::Texture&& s1, sf::Texture&& s2, sf::Texture&& s3, sf::RenderWindow* parent);
+  Button(sf::Texture& s1, sf::Texture& s2, sf::Texture& s3, const sf::Text& text, const sf::Color& color, sf::RenderWindow* parent);
+  Button(sf::Texture&& s1, sf::Texture&& s2, sf::Texture&& s3, const sf::Text& text, const sf::Color& color, sf::RenderWindow* parent);
+  void Print(const sf::Text& text, const sf::Color& color) {}
+  void SetMouseButtonPressedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseButtonReleasedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseMovedEvent(void (* Func)(const sf::Event& event));
+  void SetMouseEnteredEvent(void (* Func)(const sf::Event& event));
+  void SetMouseLeftEvent(void (* Func)(const sf::Event& event));
+ protected:
+  void Assign(const sf::Texture& texture);
+  void ButtonMouseEntered();
+  void ButtonMouseLeft();
+  void ButtonMouseButtonPressed();
+  void ButtonMouseButtonReleased();
+  void ButtonMouseMoved();
+ private:
+  sf::Texture p1, p2, p3;
+};
+
 class Game {
  public:
  private:
