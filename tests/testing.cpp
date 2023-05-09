@@ -37,8 +37,9 @@ TEST(BucketTest, BucketTest3) {
   sf::Window w;
   Window window(sf::VideoMode(1000, 800), "My window", sf::Style::None);
   Bucket bucket(texture, 60.0, 12, &window, false, "../Resources/game2/animation/*.png");
+  bucket.jump = true;
   bucket.Jumping(1);
-  EXPECT_EQ(bucket.GetTop()>bucket.parent()->getSize().y/3, true);
+  EXPECT_EQ(bucket.GetTop()>bucket.parent()->getSize().y/2, true);
   window.close();
 }
 
