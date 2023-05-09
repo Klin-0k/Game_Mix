@@ -16,7 +16,7 @@ void PlayMenu::Draw() {
                     "/Fonts/JosefinSans-VariableFont_wght.ttf");
   sf::Text text;
   text.setString("Coins: " + std::to_string(coins));
-  text.setCharacterSize(150);
+  text.setCharacterSize(parent_->getSize().y / 8);
   text.setFont(font);
   text.setFillColor(sf::Color::Yellow);
   text.setStyle(sf::Text::Bold);
@@ -151,7 +151,7 @@ void PlayMenu::BackButtonEvent(const sf::Event& event) {
   ppm->Delete();
 }
 void PlayMenu::Game2ButtonEvent(const sf::Event& event) {
-  game2::getGame2();
+  Game2::getGame2();
   ppm->Delete();
 }
 void PlayMenu::Game1ButtonEvent(const sf::Event &event) {

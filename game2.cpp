@@ -24,14 +24,7 @@ Bucket::Bucket(const sf::Texture& texture,
   SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
 }
 
-void game2::Update(double dt) {
-  if (bucket->dead) {
-    return ;
-  }
-  if (global_timer.getElapsedTime().asMilliseconds() >= level * 7000) {
-    global_timer.restart();
-    level += 1;
-  }
+void Game2::Loot_Generating(){
   if (loot_timer.getElapsedTime().asMilliseconds() >=
       std::max(loot_creat_time / (level * level), min_loot_creat_time)) {
     loot_timer.restart();
@@ -50,6 +43,9 @@ void game2::Update(double dt) {
       l->MoveByCenter(rr * parent_->getSize().x / 20, -(l->GetHeight() / 2));
     }
   }
+}
+
+void Game2::Loot_Moving(double dt){
   float h = this->bucket->GetHeight();
   float w = this->bucket->GetWidth();
   float l = this->bucket->GetLeft();
@@ -86,47 +82,49 @@ void game2::Update(double dt) {
       continue;
     }
   }
+}
+
+void Game2::Update(double dt) {
+  if (bucket->dead) {
+    return ;
+  }
+  bucket->horizontal_speed = parent_->getSize().x/1060.0;
+  if (global_timer.getElapsedTime().asMilliseconds() >= level * 7000) {
+    global_timer.restart();
+    level += 1;
+  }
+  Loot_Generating();
+  Loot_Moving(dt);
   if (bucket->hearts <= 0){
     bucket->dead = true;
   }
 }
 
-void Bucket::Update(double dt) {
-  if (dead){
-    return ;
+void Bucket::Turn_Left(double dt, double dist){
+  if (orientation == 'R'){
+    this->Reverse();
+    orientation = 'L';
   }
-  auto dist = dt * horizontal_speed /1.1;
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && this->GetLeft()>=dist){
-    if (orientation == 'R'){
-      this->Reverse();
-      orientation = 'L';
-    }
-    this->Move(this->GetLeft() - dist, this->GetTop());
-    CurrentFrame += dt * FPS / 1000.0;
-    CurrentFrame -=
-        static_cast<double>(static_cast<size_t>(CurrentFrame) / animat.size() * animat.size());
-    AssignMyTexture(animat[static_cast<size_t>(CurrentFrame)]);
+  this->Move(this->GetLeft() - dist, this->GetTop());
+  CurrentFrame += dt * FPS / 1000.0;
+  CurrentFrame -=
+      static_cast<double>(static_cast<size_t>(CurrentFrame) / animat.size() * animat.size());
+  AssignMyTexture(animat[static_cast<size_t>(CurrentFrame)]);
+}
+
+void Bucket::Turn_Right(double dt, double dist){
+  if (orientation == 'L'){
+    this->Reverse();
+    orientation = 'R';
   }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && this->GetRight()<=parent_->getSize().x-dist){
-    if (orientation == 'L'){
-      this->Reverse();
-      orientation = 'R';
-    }
-    this->Move(this->GetLeft() + dist, this->GetTop());
-    CurrentFrame += dt * FPS / 1000.0;
-    CurrentFrame -=
-        static_cast<double>(static_cast<size_t>(CurrentFrame) / animat.size() * animat.size());
-    AssignMyTexture(animat[static_cast<size_t>(CurrentFrame)]);
-  }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
-    jump = true;
-    tmr.restart();
-  }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
-    inf = "down";
-    down = true;
-    vertical_speed = horizontal_speed *2.5;
-  }
+  this->Move(this->GetLeft() + dist, this->GetTop());
+  CurrentFrame += dt * FPS / 1000.0;
+  CurrentFrame -=
+      static_cast<double>(static_cast<size_t>(CurrentFrame) / animat.size() * animat.size());
+  AssignMyTexture(animat[static_cast<size_t>(CurrentFrame)]);
+}
+
+void Bucket::Jumping(double dt){
   float h = this->GetHeight();
   float start = parent_->getSize().y*8/10+h/2;
   double g = horizontal_speed /410.0;
@@ -161,7 +159,35 @@ void Bucket::Update(double dt) {
         down = false;
         vertical_speed = 0;
       }
+    } else {
+      max_height = (parent_->getSize().y/3);
     }
+  }
+}
+
+void Bucket::Update(double dt) {
+  if (dead){
+    return ;
+  }
+  auto dist = dt * horizontal_speed /1.1;
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && this->GetLeft()>=dist){
+    Turn_Left(dt, dist);
+  }
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && this->GetRight()<=parent_->getSize().x-dist){
+    Turn_Right(dt, dist);
+  }
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
+    jump = true;
+    tmr.restart();
+  }
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
+    inf = "down";
+    down = true;
+    vertical_speed = horizontal_speed *2.5;
+  }
+  Jumping(dt);
+  if (hearts <= 0){
+    dead = true;
   }
 }
 
@@ -172,11 +198,19 @@ void Bucket::Reverse() {
   Sprite_.setTextureRect(textureRect);
 }
 
-int game2::get_coin() {
+Bucket::~Bucket(){
+  size_t s = heart.size();
+  for (size_t i = 0; i < s; ++i){
+    heart[i]->Delete();
+  }
+  (*this).Delete();
+}
+
+int Game2::get_coin() {
   return coin;
 }
 
-game2::game2() {
+Game2::Game2() {
   std::srand(time(NULL));
   tnt_text.loadFromFile(PATH_TO_RESOURCES"/game2/TNT.png");
   coin_text.loadFromFile(PATH_TO_RESOURCES"/game2/coin.png");
@@ -216,7 +250,7 @@ game2::game2() {
                     "/Fonts/JosefinSans-VariableFont_wght.ttf");
   sf::Text text;
   text.setString("Exit");
-  text.setCharacterSize(60);
+  text.setCharacterSize(parent_->getSize().y / 15);
   text.setFont(font);
   text.setStyle(sf::Text::Bold);
   exit_button->Print(text);
@@ -224,21 +258,21 @@ game2::game2() {
   exit_button->MoveByCenter(parent_->getSize().x / 2, parent_->getSize().y*58 / 60);
 }
 
-void game2::button_link(const sf::Event& event) {
+void Game2::button_link(const sf::Event& event) {
   PlayMenu::getPlayMenu()->coins+=get_coin();
   game2pointer->Delete();
 }
 
-game2* game2::game2pointer = nullptr;
+Game2 *Game2::game2pointer = nullptr;
 
-game2* game2::getGame2() {
+Game2 *Game2::getGame2() {
   if (game2pointer == nullptr) {
-    game2pointer = new game2();
+    game2pointer = new Game2();
   }
   return game2pointer;
 }
 
-void game2::Draw() {
+void Game2::Draw() {
   if (!bucket->dead) {
     background->Draw();
     bucket->Draw();
@@ -251,7 +285,7 @@ void game2::Draw() {
     sf::Text text;
     text.setPosition(parent_->getSize().x * 24 / 30, parent_->getSize().y / 30);
     text.setString("Coins: " + std::to_string(coin));
-    text.setCharacterSize(60);
+    text.setCharacterSize(parent_->getSize().y / 15);
     text.setFont(font);
     text.setFillColor(sf::Color::Green);
     text.setStyle(sf::Text::Bold);
@@ -269,7 +303,7 @@ void game2::Draw() {
                       "/Fonts/JosefinSans-VariableFont_wght.ttf");
     sf::Text text;
     text.setString("GAME OVER");
-    text.setCharacterSize(150);
+    text.setCharacterSize(parent_->getSize().y / 8);
     text.setFont(font);
     text.setFillColor(sf::Color::Yellow);
     text.setStyle(sf::Text::Bold);
@@ -279,7 +313,7 @@ void game2::Draw() {
   exit_button->Draw();
 }
 
-game2::~game2() {
+Game2::~Game2() {
   delete background;
   bucket->Delete();
   delete bucket;

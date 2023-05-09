@@ -1,6 +1,0 @@
-/mnt/c/Users/Alexandr/Desktop/Klinok/TP_2023_Project/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/Alexandr/Desktop/Klinok/TP_2023_Project/CMakeFiles/edit_cache.dir
-/mnt/c/Users/Alexandr/Desktop/Klinok/TP_2023_Project/CMakeFiles/TP_2023_Project.dir
-/mnt/c/Users/Alexandr/Desktop/Klinok/TP_2023_Project/tests/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/Alexandr/Desktop/Klinok/TP_2023_Project/tests/CMakeFiles/edit_cache.dir
-/mnt/c/Users/Alexandr/Desktop/Klinok/TP_2023_Project/tests/CMakeFiles/Test.dir
