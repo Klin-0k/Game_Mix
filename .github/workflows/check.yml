@@ -9,7 +9,7 @@ jobs:
       - name: Install c++ and cmake and xvfb and format
         run: |
           sudo apt update -y
-          sudo apt install -y cmake build-essential
+          sudo apt install -y cmake build-essential git
           sudo apt-get install -y xvfb
           sudo apt-get install clang-format
       - name: Install gtest
@@ -28,6 +28,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git add -A
           git commit -m "Automatically formatted code"
+          git push -u origin checkpoint_4
       - name: Build
         run: |
           mkdir cmake-build-debug
