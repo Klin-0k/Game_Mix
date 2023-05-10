@@ -6,11 +6,12 @@ jobs:
     steps:
       - name: Get project
         uses: actions/checkout@v3
-      - name: Install c++ and cmake and xvfb
+      - name: Install c++ and cmake and xvfb and format
         run: |
           sudo apt update -y
           sudo apt install -y cmake build-essential
           sudo apt-get install -y xvfb
+          sudo apt-get install clang-format
       - name: Install gtest
         run: sudo apt-get install libgtest-dev
       - name: Install SFML-2.5.1
@@ -19,6 +20,8 @@ jobs:
           tar -xvf SFML-2.5.1-linux-gcc-64-bit.tar.gz
           mkdir SFML-2.5.1_for_linux
           mv SFML-2.5.1/* SFML-2.5.1_for_linux/
+      - name: Format code
+        run: find . -name "*.cpp" -o -name "*.h" | xargs clang-format -i
       - name: Build
         run: |
           mkdir cmake-build-debug
