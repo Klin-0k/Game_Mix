@@ -165,31 +165,31 @@ void Bucket::Jumping(double dt){
   }
 }
 
-void Bucket::Update(double dt) {
-  if (dead){
-    return ;
-  }
-  auto dist = dt * horizontal_speed /1.1;
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && this->GetLeft()>=dist){
-    Turn_Left(dt, dist);
-  }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && this->GetRight()<=parent_->getSize().x-dist){
-    Turn_Right(dt, dist);
-  }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
-    jump = true;
-    tmr.restart();
-  }
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
-    inf = "down";
-    down = true;
-    vertical_speed = horizontal_speed *2.5;
-  }
-  Jumping(dt);
-  if (hearts <= 0){
-    dead = true;
-  }
-}
+    void Bucket::Update(double dt) {
+      if (dead){
+        return ;
+      }
+      auto dist = dt * horizontal_speed /1.1;
+      if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && this->GetLeft()>=dist){
+        Turn_Left(dt, dist);
+      }
+      if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && this->GetRight()<=parent_->getSize().x-dist){
+        Turn_Right(dt, dist);
+      }
+      if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && jump==false) {
+        jump = true;
+        tmr.restart();
+      }
+      if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && jump==true) {
+        inf = "down";
+        down = true;
+        vertical_speed = horizontal_speed *2.5;
+      }
+      Jumping(dt);
+      if (hearts <= 0){
+        dead = true;
+      }
+    }
 
 void Bucket::Reverse() {
   sf::IntRect textureRect = Sprite_.getTextureRect();
