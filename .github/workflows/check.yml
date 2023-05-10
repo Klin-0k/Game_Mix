@@ -27,10 +27,8 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
           git config --global --add safe.directory /github/workspace
-        uses: ad-m/github-push-action@v0.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: checkpoint_4
+          git commit -a -m "Format code"
+          git push -u origin checkpoint_4
       - name: Build
         run: |
           mkdir cmake-build-debug
