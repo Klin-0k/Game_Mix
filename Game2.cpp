@@ -21,7 +21,7 @@ Bucket::Bucket(const sf::Texture& texture,
     animat.emplace_back(std::move(Frame));
   }
   this->FPS = FPS;
-  SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
+  SetUpdateEvent([this](double dt) { Update(dt); });
 }
 
 void Game2::Loot_Generating(){

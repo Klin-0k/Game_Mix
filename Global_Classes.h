@@ -82,7 +82,7 @@ class Essence {
   virtual void SetTextEnteredEvent(const std::function<void(const sf::Event&)>& Func);
   virtual void SetKeyPressedEvent(const std::function<void(const sf::Event&)>& Func);
   virtual void SetKeyReleasedEvent(const std::function<void(const sf::Event&)>& Func);
-  void SetUpdateEvent(const std::function<void(double dt)>& Func, double time);
+  void SetUpdateEvent(const std::function<void(double dt)>& Func);
   friend class Window;
   virtual void Draw();
   virtual void Delete();
