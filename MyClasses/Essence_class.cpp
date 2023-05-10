@@ -62,7 +62,7 @@ void Essence::SetKeyReleasedEvent(const std::function<void(const sf::Event&)>& F
   }
 }
 
-void Essence::SetUpdateEvent(const std::function<void(double dt)>& Func, double time = 0) {
+void Essence::SetUpdateEvent(const std::function<void(double dt)>& Func) {
   parent_->EssencesWithUpdate.erase(this);
   Update_ = Func;
   if (Func != nullptr) {

@@ -9,7 +9,7 @@ Fon::Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, boo
   SetSize(parent_->getSize().x, parent_->getSize().y);
   Move(0, 0);
   this->FPS = FPS;
-  SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
+  SetUpdateEvent([this](double dt) { Update(dt); });
 }
 Fon::Fon(std::string PathToFrames,
          size_t NumberOfFrames,
@@ -29,7 +29,7 @@ Fon::Fon(std::string PathToFrames,
   SetSize(parent_->getSize().x, parent_->getSize().y);
   Move(0, 0);
   this->FPS = FPS;
-  SetUpdateEvent([this](double dt) { Update(dt); }, 1000 / FPS);
+  SetUpdateEvent([this](double dt) { Update(dt); });
 }
 Fon::~Fon() {
 #ifdef DEBAG
