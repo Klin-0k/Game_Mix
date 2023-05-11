@@ -20,12 +20,9 @@ jobs:
           tar -xvf SFML-2.5.1-linux-gcc-64-bit.tar.gz
           mkdir SFML-2.5.1_for_linux
           mv SFML-2.5.1/* SFML-2.5.1_for_linux/
-      - name: Format code
-        run: find . -name "*.cpp" -o -name "*.h" | xargs clang-format -i
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check code formatting
+        run: |
+          clang-format --dry-run --Werror $(find . -type f -name '*.cpp' -o -name '*.h')
       - name: Build
         run: |
           mkdir cmake-build-debug
