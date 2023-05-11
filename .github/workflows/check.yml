@@ -20,15 +20,9 @@ jobs:
           tar -xvf SFML-2.5.1-linux-gcc-64-bit.tar.gz
           mkdir SFML-2.5.1_for_linux
           mv SFML-2.5.1/* SFML-2.5.1_for_linux/
-      - name: Format code
-        run: find . -name "*.cpp" -o -name "*.h" | xargs clang-format -i
-      - name: Push changes
+      - name: Check code formatting
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git config --global --add safe.directory /github/workspace
-          git commit -a -m "Format code"
-          git push -u origin checkpoint_4
+          clang-format --dry-run --Werror $(find . -type f -name '*.cpp' -o -name '*.h')
       - name: Build
         run: |
           mkdir cmake-build-debug
