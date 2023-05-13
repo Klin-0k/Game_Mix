@@ -9,8 +9,8 @@ jobs:
       - name: Check code formatting
         run: |
           sudo apt-get install -y clang-format
-          clang-format --style=.clang-format --dry-run --Werror $(find . -type f -name '*.cpp' -o -name '*.h')
-      - name: Install c++ and cmake and xvfb
+          clang-format --dry-run --Werror $(find . -type f -name '*.cpp' -o -name '*.h')
+      - name: Install c++ cmake xvfb
         run: |
           sudo apt update -y
           sudo apt install -y cmake build-essential git
