@@ -11,7 +11,7 @@ if (UNIX)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/linux_lib)
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/linux_lib)
 endif (UNIX)
-add_executable(${PROJECT_NAME} main.cpp Global_Definitions.h Resources/icons/i.rc tests/testing_game1.cpp)
+add_executable(${PROJECT_NAME} main.cpp Global_Definitions.h Resources/icons/i.rc)
 add_definitions(-DPATH_TO_PROJECT_FILES="${CMAKE_CURRENT_SOURCE_DIR}")
 add_definitions(-DPATH_TO_RESOURCES="${CMAKE_CURRENT_SOURCE_DIR}/Resources")
 ##########################################################################

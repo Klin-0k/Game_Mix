@@ -1,3 +1,4 @@
+#!/bin/sh
 if ! [ -d ./SFML-2.5.1_for_linux ]; then
   wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
   mkdir SFML-2.5.1_for_linux
@@ -6,11 +7,13 @@ if ! [ -d ./SFML-2.5.1_for_linux ]; then
   rm -r SFML-2.5.1_for_linux/SFML-2.5.1
   rm SFML-2.5.1-linux-gcc-64-bit.tar.gz
 fi
-cd test
+if ! [ -d ./tests/googletest-1.13.0 ]; then
+cd tests
 curl -LO 'https://github.com/google/googletest/archive/refs/tags/v1.13.0.zip'
 unzip v1.13.0.zip
 rm v1.13.0.zip
 cd ..
+fi
 if [ -d ./linux_bush_build ]; then
   rm -r ./linux_bush_build
 fi

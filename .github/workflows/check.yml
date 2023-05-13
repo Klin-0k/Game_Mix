@@ -18,7 +18,6 @@ jobs:
           sudo apt-get install -y unzip
       - name: Install gtest SFML-2.5.1 and Build
         run: |
-          ls -la
           sudo ./build_linux_version.sh
       - name: Testing
         run: xvfb-run -a ./exe/Test
