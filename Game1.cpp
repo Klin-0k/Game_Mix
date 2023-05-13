@@ -1,10 +1,10 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <stdlib.h>
 #include <time.h>
 
-void Game1::ButtonLink(const sf::Event &event) {
-  PlayMenu::getPlayMenu()->coins+=coins;
+void Game1::ButtonLink(const sf::Event& event) {
+  PlayMenu::getPlayMenu()->coins += coins;
   SetRecord(record, score);
   ReloadNet();
   game_1_pointer->Delete();
@@ -17,41 +17,39 @@ void Game1::ReloadGame(const sf::Event& event) {
 }
 
 void Game1::CreateBackground() {
-  background = new Fon(PATH_TO_RESOURCES"/Game1/images/background*.png",
+  background = new Fon(PATH_TO_RESOURCES "/Game1/images/background*.png",
                        1, 0, parent_, false);
-  game_background_image.loadFromFile(PATH_TO_RESOURCES"/Game1/images/game_background.jpg");
-  game_over_background_image.loadFromFile(PATH_TO_RESOURCES"/Game1/images/game_over_background.jpg");
-  game_background =  new Object(game_background_image, parent_, false);
-  game_over_background =  new Object(game_over_background_image, parent_, false);
+  game_background_image.loadFromFile(PATH_TO_RESOURCES "/Game1/images/game_background.jpg");
+  game_over_background_image.loadFromFile(PATH_TO_RESOURCES "/Game1/images/game_over_background.jpg");
+  game_background = new Object(game_background_image, parent_, false);
+  game_over_background = new Object(game_over_background_image, parent_, false);
   game_background->Move(indent_x, indent_y);
   game_background->SetScale(static_cast<float>(0.5 * parent_->getSize().x) / game_background->GetLocalWidth(),
                             static_cast<float>(0.96 * parent_->getSize().y) / game_background->GetLocalHeight());
   game_over_background->Move(indent_x, indent_y);
   game_over_background->SetScale(static_cast<float>(0.5 * parent_->getSize().x) / game_over_background->GetLocalWidth(),
                                  static_cast<float>(0.96 * parent_->getSize().y) / game_over_background->GetLocalHeight());
-
 }
 
 void Game1::CreateButtons() {
-  back_button = new Button(PATH_TO_RESOURCES"/buttons/back_button0.png",
-                           PATH_TO_RESOURCES"/buttons/back_button0.png",
-                           PATH_TO_RESOURCES"/buttons/back_button0.png",
+  back_button = new Button(PATH_TO_RESOURCES "/buttons/back_button0.png",
+                           PATH_TO_RESOURCES "/buttons/back_button0.png",
+                           PATH_TO_RESOURCES "/buttons/back_button0.png",
                            parent_,
                            false);
   back_button->SetMouseButtonReleasedEvent([this](const sf::Event& event) { ButtonLink(event); });
   back_button->SetSize(parent_->getSize().x / 3, parent_->getSize().y / 6);
   back_button->Move(static_cast<float>(game_background->GetWidth() * 1.18),
                     static_cast<float>(game_background->GetHeight() * 0.84));
-  restart_button = new Button(PATH_TO_RESOURCES"/buttons/restart_button0.png",
-                              PATH_TO_RESOURCES"/buttons/restart_button0.png",
-                              PATH_TO_RESOURCES"/buttons/restart_button0.png",
+  restart_button = new Button(PATH_TO_RESOURCES "/buttons/restart_button0.png",
+                              PATH_TO_RESOURCES "/buttons/restart_button0.png",
+                              PATH_TO_RESOURCES "/buttons/restart_button0.png",
                               parent_,
                               false);
   restart_button->SetMouseButtonReleasedEvent([this](const sf::Event& event) { ReloadGame(event); });
   restart_button->SetSize(parent_->getSize().x / 3, parent_->getSize().y / 6);
   restart_button->Move(static_cast<float>(game_background->GetWidth() * 1.18),
                        static_cast<float>(game_background->GetHeight() * 0.50));
-
 }
 
 void Game1::SetTileProperties() {
@@ -92,8 +90,7 @@ void Game1::CreateFigures() {
           {{0, 0}, {-tile_size, 0}, {0, tile_size}, {-tile_size, -tile_size}},
           {{0, 0}, {0, -tile_size}, {0, tile_size}, {-tile_size, -tile_size}},
           {{0, 0}, {0, -tile_size}, {0, tile_size}, {tile_size, -tile_size}},
-          {{0, 0}, {0, -tile_size}, {0, tile_size}, {-tile_size, 0}}
-      };
+          {{0, 0}, {0, -tile_size}, {0, tile_size}, {-tile_size, 0}}};
   figures.resize(figures_pos.size(), std::vector<sf::RectangleShape>(figures_pos[0].size()));
   for (size_t i = 0; i < figures.size(); ++i) {
     for (size_t j = 0; j < figures[i].size(); ++j) {
@@ -161,13 +158,13 @@ void Game1::CreateTextObjects() {
 
 Game1::Game1() {
   std::srand(time(NULL));
-  SetUpdateEvent([this] (double dt) {Update(dt); });
-  SetKeyPressedEvent( [this](const sf::Event& event){ CheckEvents(event); });
+  SetUpdateEvent([this](double dt) { Update(dt); });
+  SetKeyPressedEvent([this](const sf::Event& event) { CheckEvents(event); });
   indent_x = static_cast<float>(0.02 * parent_->getSize().x);
   indent_y = static_cast<float>(0.02 * parent_->getSize().y);
   CreateBackground();
   CreateButtons();
-  main_font.loadFromFile(PATH_TO_RESOURCES"/Game1/fonts/main_font.ttf");
+  main_font.loadFromFile(PATH_TO_RESOURCES "/Game1/fonts/main_font.ttf");
   //background music starts playing
   SetTileProperties();
   CreateDesignLines();
@@ -192,7 +189,7 @@ void Game1::SetText(sf::Text& target, const sf::Font& font, const std::string& t
 
 int Game1::GetRecord() {
   std::ifstream record_file;
-  record_file.open(PATH_TO_RESOURCES"/Game1/data_files/record.txt");
+  record_file.open(PATH_TO_RESOURCES "/Game1/data_files/record.txt");
   char ch;
   std::string my_record;
   if (record_file.is_open()) {
@@ -210,7 +207,7 @@ void Game1::SetRecord(int my_record, int my_score) {
   int new_record = std::max(my_record, my_score);
   record = new_record;
   std::ofstream record_file;
-  record_file.open(PATH_TO_RESOURCES"/Game1/data_files/record.txt");
+  record_file.open(PATH_TO_RESOURCES "/Game1/data_files/record.txt");
   record_file << std::to_string(new_record);
   record_file.close();
 }
@@ -220,24 +217,20 @@ sf::Color Game1::GetRandomColor() {
 }
 
 void Game1::CheckEvents(const sf::Event& event) {
-  if (event.type == sf::Event::KeyPressed and
-      (event.key.code == sf::Keyboard::Key::Left or event.key.code == sf::Keyboard::Key::A)) {
+  if (event.type == sf::Event::KeyPressed and (event.key.code == sf::Keyboard::Key::Left or event.key.code == sf::Keyboard::Key::A)) {
     moves_by_x = -1;
   }
-  if (event.type == sf::Event::KeyPressed and
-      (event.key.code == sf::Keyboard::Key::Right or event.key.code == sf::Keyboard::Key::D)) {
+  if (event.type == sf::Event::KeyPressed and (event.key.code == sf::Keyboard::Key::Right or event.key.code == sf::Keyboard::Key::D)) {
     moves_by_x = 1;
   }
-  if (event.type == sf::Event::KeyPressed and
-      (event.key.code == sf::Keyboard::Key::Down or event.key.code == sf::Keyboard::Key::S)) {
+  if (event.type == sf::Event::KeyPressed and (event.key.code == sf::Keyboard::Key::Down or event.key.code == sf::Keyboard::Key::S)) {
     for (size_t i = 0; i < figure.size; ++i) {
       if (figure.tiles[i].getPosition().y < game_background->GetHeight() - tile_size) {
         moves_by_y = 1;
       }
     }
   }
-  if (event.type == sf::Event::KeyPressed and
-      (event.key.code == sf::Keyboard::Key::Up or event.key.code == sf::Keyboard::Key::W)) {
+  if (event.type == sf::Event::KeyPressed and (event.key.code == sf::Keyboard::Key::Up or event.key.code == sf::Keyboard::Key::W)) {
     rotation = 1;
   }
 }
@@ -292,10 +285,8 @@ void Game1::DrawNextFigure() {
   if (!is_active_game_over) {
     for (size_t i = 0; i < next_figure.size; ++i) {
       sf::RectangleShape figure_tile(sf::Vector2f(tile_size - 2, tile_size - 2));
-      figure_tile.setPosition(next_figure.tiles[i].getPosition().x +
-                                  1.18 * game_background->GetWidth() - tile_size * next_figure.size / 2,
-                              next_figure.tiles[i].getPosition().y + 0.6 * game_background->GetHeight() -
-                                  tile_size * next_figure.size / 2);
+      figure_tile.setPosition(next_figure.tiles[i].getPosition().x + 1.18 * game_background->GetWidth() - tile_size * next_figure.size / 2,
+                              next_figure.tiles[i].getPosition().y + 0.6 * game_background->GetHeight() - tile_size * next_figure.size / 2);
       figure_tile.setFillColor(next_color);
       parent_->draw(figure_tile);
     }
@@ -369,35 +360,25 @@ void Game1::MoveByX(const Figure& prev_figure) {
   for (size_t i = 0; i < figure.size; ++i) {
     sf::Vector2f current_position = figure.tiles[i].getPosition();
     figure.tiles[i].setPosition(current_position.x + moves_by_x * tile_size, current_position.y);
-    if (figure.tiles[i].getPosition().x < 0 or
-        figure.tiles[i].getPosition().x > game_background->GetWidth() - tile_size or
-        is_tiled[(static_cast<int>(figure.tiles[i].getPosition().y) +
-            indent_by_x) / tile_size][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] or
-        is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) /
-            tile_size + 1][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size]) {
+    if (figure.tiles[i].getPosition().x < 0 or figure.tiles[i].getPosition().x > game_background->GetWidth() - tile_size or is_tiled[(static_cast<int>(figure.tiles[i].getPosition().y) + indent_by_x) / tile_size][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] or is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) / tile_size + 1][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size]) {
       figure = prev_figure;
       break;
     }
   }
 }
 
-void Game1::MoveByY(const Figure &prev_figure) {
+void Game1::MoveByY(const Figure& prev_figure) {
   for (size_t i = 0; i < figure.size; ++i) {
-    if (is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) /
-        tile_size + 1][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] or
-        figure.tiles[i].getPosition().y > game_background->GetHeight() - tile_size - red_line.getSize().y) {
+    if (is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) / tile_size + 1][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] or figure.tiles[i].getPosition().y > game_background->GetHeight() - tile_size - red_line.getSize().y) {
       //figure_placing_sound starts playing
       if (static_cast<int>(figure.tiles[i].getPosition().y) / tile_size + 1 == is_tiled.size()) {
-        is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) /
-            tile_size][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] = true;
+        is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) / tile_size][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] = true;
       }
       for (int j = 0; j < figure.size; ++j) {
-        is_tiled[static_cast<int>(figure.tiles[j].getPosition().y) /
-            tile_size][static_cast<int>(figure.tiles[j].getPosition().x) / tile_size] = true;
+        is_tiled[static_cast<int>(figure.tiles[j].getPosition().y) / tile_size][static_cast<int>(figure.tiles[j].getPosition().x) / tile_size] = true;
       }
       for (int j = 0; j < figure.size; ++j) {
-        mem_color[static_cast<int>(figure.tiles[j].getPosition().y) /
-            tile_size][static_cast<int>(figure.tiles[j].getPosition().x) / tile_size] = color;
+        mem_color[static_cast<int>(figure.tiles[j].getPosition().y) / tile_size][static_cast<int>(figure.tiles[j].getPosition().x) / tile_size] = color;
       }
       color = next_color;
       figure = next_figure;
@@ -412,7 +393,7 @@ void Game1::MoveByY(const Figure &prev_figure) {
   }
 }
 
-void Game1::Rotate(const Figure &prev_figure) {
+void Game1::Rotate(const Figure& prev_figure) {
   sf::RectangleShape center_of_rotation = figure.tiles[0];
   if (rotation == 1 && figure.type != 1) {
     for (size_t i = 0; i < figure.size; ++i) {
@@ -421,11 +402,7 @@ void Game1::Rotate(const Figure &prev_figure) {
       sf::Vector2f current_position = figure.tiles[i].getPosition();
       figure.tiles[i].setPosition(center_of_rotation.getPosition().x - difference_x,
                                   center_of_rotation.getPosition().y + difference_y);
-      if (figure.tiles[i].getPosition().x < 0 or
-          figure.tiles[i].getPosition().x > game_background->GetWidth() - tile_size or
-          is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) /
-              tile_size + 1][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] or
-          figure.tiles[i].getPosition().y > game_background->GetHeight() - tile_size) {
+      if (figure.tiles[i].getPosition().x < 0 or figure.tiles[i].getPosition().x > game_background->GetWidth() - tile_size or is_tiled[static_cast<int>(figure.tiles[i].getPosition().y) / tile_size + 1][static_cast<int>(figure.tiles[i].getPosition().x) / tile_size] or figure.tiles[i].getPosition().y > game_background->GetHeight() - tile_size) {
         figure = prev_figure;
         break;
       }
@@ -459,11 +436,10 @@ void Game1::FindDestroyedRows() {
     }
     if (number_of_tiled_in_row < width_of_net_in_tiles) {
       current_row -= 1;
-      for (int j = 0; j <width_of_net_in_tiles; ++j) {
+      for (int j = 0; j < width_of_net_in_tiles; ++j) {
         is_destroyed[row][j] = false;
       }
-    }
-    else {
+    } else {
       destroyed_rows += 1;
       counter_of_destructed_rows += 1;
       if (counter_of_destructed_rows == max_value_before_speed_up) {

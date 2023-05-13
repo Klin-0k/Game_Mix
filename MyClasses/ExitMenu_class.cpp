@@ -20,42 +20,43 @@ void ExitMenu::SetEnableMod(bool enable) {
 }
 ExitMenu::ExitMenu(Window* WindowThatShouldBeClosed)
     : Essence(new Window(sf::VideoMode(sf::VideoMode::getDesktopMode().height * 3 / 8 * 16 / 9,
-                                       sf::VideoMode::getDesktopMode().height * 3 / 8), "Exit")),
+                                       sf::VideoMode::getDesktopMode().height * 3 / 8),
+                         "Exit")),
       WindowThatShouldBeClosed(WindowThatShouldBeClosed),
-      ButtonYES(PATH_TO_RESOURCES"/buttons/buttonN1.png",
-                PATH_TO_RESOURCES"/buttons/buttonN2.png",
-                PATH_TO_RESOURCES"/buttons/buttonN3.png",
+      ButtonYES(PATH_TO_RESOURCES "/buttons/buttonN1.png",
+                PATH_TO_RESOURCES "/buttons/buttonN2.png",
+                PATH_TO_RESOURCES "/buttons/buttonN3.png",
                 parent_,
                 false),
-      ButtonNO(PATH_TO_RESOURCES"/buttons/buttonN1.png",
-               PATH_TO_RESOURCES"/buttons/buttonN2.png",
-               PATH_TO_RESOURCES"/buttons/buttonN3.png",
+      ButtonNO(PATH_TO_RESOURCES "/buttons/buttonN1.png",
+               PATH_TO_RESOURCES "/buttons/buttonN2.png",
+               PATH_TO_RESOURCES "/buttons/buttonN3.png",
                parent_,
                false),
-      ExitMenuFon(PATH_TO_RESOURCES"/Fons/ExitMenu/(*).png", 23,
+      ExitMenuFon(PATH_TO_RESOURCES "/Fons/ExitMenu/(*).png", 23,
                   30,
                   parent_,
                   false) {
   parent_->setPosition({static_cast<int>(WindowThatShouldBeClosed->getPosition().x
-      + (WindowThatShouldBeClosed->getSize().x - parent_->getSize().x) / 2),
+                                         + (WindowThatShouldBeClosed->getSize().x - parent_->getSize().x) / 2),
                         static_cast<int>(WindowThatShouldBeClosed->getPosition().y
-                            + (WindowThatShouldBeClosed->getSize().y - parent_->getSize().y) / 2)});
+                                         + (WindowThatShouldBeClosed->getSize().y - parent_->getSize().y) / 2)});
   sf::Image window_icon;
-  window_icon.loadFromFile(PATH_TO_PROJECT_FILES"/Resources/icons/exit_icon.jpg");
+  window_icon.loadFromFile(PATH_TO_PROJECT_FILES "/Resources/icons/exit_icon.jpg");
   parent_->setIcon(1024, 1024, window_icon.getPixelsPtr());
   Window::WindowsToDisplay.insert(parent_);
   parent_->IsAlwaysOnFocus = true;
   parent_->requestFocus();
   parent_->Close = [this] { ExitClosed(); };
   WindowThatShouldBeClosed->SetEnableMod(false);
-//  ExitWindow->setMouseCursorGrabbed(true);
+  //  ExitWindow->setMouseCursorGrabbed(true);
   float targetHeight = parent_->getSize().y / 6.0f;
   float targetWidth = targetHeight * ButtonYES.GetWidth() / ButtonYES.GetHeight();
   ButtonYES.SetSize(targetWidth, targetHeight);
   targetWidth = targetHeight * ButtonNO.GetWidth() / ButtonNO.GetHeight();
   ButtonNO.SetSize(targetWidth, targetHeight);
   sf::Font font;
-  font.loadFromFile(PATH_TO_RESOURCES"/Fonts/JosefinSans-VariableFont_wght.ttf");
+  font.loadFromFile(PATH_TO_RESOURCES "/Fonts/JosefinSans-VariableFont_wght.ttf");
   sf::Text text;
   text.setFont(font);
   text.setFillColor(sf::Color::Yellow);
@@ -74,7 +75,8 @@ ExitMenu::ExitMenu(Window* WindowThatShouldBeClosed)
   text.setString(NOName);
   ButtonNO.Print(text);
   float free_vertical_space_ = (parent_->getSize().y
-      - (ButtonYES.GetHeight() + ButtonNO.GetHeight()) / 2) / 2;
+                                - (ButtonYES.GetHeight() + ButtonNO.GetHeight()) / 2)
+      / 2;
   float free_horizontal_space_ =
       (parent_->getSize().x - (ButtonYES.GetWidth() + ButtonNO.GetWidth())) / 3;
   ButtonYES.Move(free_horizontal_space_, free_vertical_space_);

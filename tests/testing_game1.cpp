@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
 #include "../Global_Classes.cpp"
 #include <SFML/Window/Keyboard.hpp>
+#include <gtest/gtest.h>
 
 TEST(FirstFrameTest, StableGlobals) {
   Game1 game1;

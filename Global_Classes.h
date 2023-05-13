@@ -1,8 +1,11 @@
 #pragma once
 
 #include <iostream>
+
 #include <unordered_set>
+
 #include <fstream>
+
 #include <functional>
 
 #include <SFML/Graphics.hpp>
@@ -97,6 +100,7 @@ class Essence {
   std::function<void(const sf::Event&)> KeyReleased_ = nullptr;
   std::function<void(const double)> Update_ = nullptr;
   bool is_independent_;
+
  private:
 };
 
@@ -150,7 +154,6 @@ class Object : public Essence {
   std::function<void(const sf::Event&)> MouseLeft_ = nullptr;
 
  private:
-
 };
 
 class Character : public Object {
@@ -199,6 +202,7 @@ class Button : public Object {
   void SetEnableMod(bool enable) override;
 
   ~Button() override;
+
  protected:
   void ButtonMouseEntered();
   void ButtonMouseLeft();
@@ -206,6 +210,7 @@ class Button : public Object {
   void ButtonMouseButtonReleased();
   void ButtonMouseMoved();
   sf::Texture p1, p2, p3;
+
  private:
 };
 
@@ -217,9 +222,14 @@ class Game {
 class Fon : public Object {
  public:
   Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, bool is_independent);
-  Fon(std::string PathToFrames, size_t NumberOfFrames, double FPS, Window* parent, bool is_independent);
+  Fon(std::string PathToFrames,
+      size_t NumberOfFrames,
+      double FPS,
+      Window* parent,
+      bool is_independent);
   ~Fon() override;
   void Update(double dt);
+
  private:
   std::vector<sf::Texture> FonImages;
   double FPS = 30;
@@ -234,6 +244,7 @@ class MainMenu : public Essence {
   void SetEnableMod(bool enable) override;
   MainMenu(const MainMenu&) = delete;
   MainMenu& operator=(const MainMenu&) = delete;
+
  protected:
   static MainMenu* pmm;
   static void PlayButtonEvent(const sf::Event& event);
@@ -252,10 +263,11 @@ class PlayMenu : public Essence {
   void SetEnableMod(bool enable) override;
   PlayMenu(const PlayMenu&) = delete;
   PlayMenu& operator=(const PlayMenu&) = delete;
+
  protected:
   static PlayMenu* ppm;
   static void BackButtonEvent(const sf::Event& event);
-  static void Game2ButtonEvent(const sf::Event &event);
+  static void Game2ButtonEvent(const sf::Event& event);
   static void Game1ButtonEvent(const sf::Event& event);
   PlayMenu();
   Button BackButton;
@@ -278,6 +290,7 @@ class ExitMenu : public Essence {
   ExitMenu(const ExitMenu&) = delete;
   ExitMenu& operator=(const ExitMenu&) = delete;
   ~ExitMenu() override;
+
  protected:
   Window* WindowThatShouldBeClosed;
   Button ButtonYES, ButtonNO;
@@ -314,7 +327,7 @@ class Bucket : public Object {
  public:
   std::vector<sf::Texture> animat;
   int hearts = 3;
-  bool dead  = false;
+  bool dead = false;
   sf::Texture heart_texture;
   std::vector<Object*> heart;
   bool jump = 0;
@@ -327,8 +340,8 @@ class Bucket : public Object {
   double CurrentFrame = 0;
   double FPS = 0;
   bool down = false;
-  Bucket(const sf::Texture &texture, double FPS, size_t NumberOfFrames,
-         Window *parent, bool is_independent, std::string PathToFrames);
+  Bucket(const sf::Texture& texture, double FPS, size_t NumberOfFrames,
+         Window* parent, bool is_independent, std::string PathToFrames);
   void Reverse();
   void Update(double dt);
   void Turn_Left(double dt, double dist);
@@ -340,18 +353,18 @@ class Bucket : public Object {
 class Loot : public Object {
  public:
   std::string name;
-  Loot(const sf::Texture &texture, Window *parent, bool is_independent,
+  Loot(const sf::Texture& texture, Window* parent, bool is_independent,
        std::string name);
 };
 
 class Game2 : Essence {
  private:
   Game2();
-  static Game2 *game2pointer;
+  static Game2* game2pointer;
   int coin = 0;
-  Fon *background;
-  Bucket *bucket;
-  std::vector<Loot *> loot;
+  Fon* background;
+  Bucket* bucket;
+  std::vector<Loot*> loot;
   sf::Clock global_timer;
   sf::Clock loot_timer;
   sf::Texture tnt_text;
@@ -368,9 +381,9 @@ class Game2 : Essence {
  public:
   void Draw();
   void button_link(const sf::Event& event);
-  static Game2 *getGame2();
-  Game2(const Game2 &) = delete;
-  Game2 &operator=(const Game2 &) = delete;
+  static Game2* getGame2();
+  Game2(const Game2&) = delete;
+  Game2& operator=(const Game2&) = delete;
   int get_coin();
   void Update(double dt);
   ~Game2() override;
@@ -391,9 +404,9 @@ class Game1 : Essence {
  public:
   Game1();
 
-  static Game1 *game_1_pointer;
+  static Game1* game_1_pointer;
 
-  Fon *background;
+  Fon* background;
 
   Object* game_background;
   Object* game_over_background;
@@ -501,7 +514,11 @@ class Game1 : Essence {
   sf::Color GetRandomColor();
   int GetRecord();
   void SetRecord(int my_record, int my_score);
-  void SetText(sf::Text& target, const sf::Font& font, const std::string& text, int character_size, sf::Color my_color,
+  void SetText(sf::Text& target,
+               const sf::Font& font,
+               const std::string& text,
+               int character_size,
+               sf::Color my_color,
                sf::Vector2f pos);
 
   void CheckEvents(const sf::Event& event);

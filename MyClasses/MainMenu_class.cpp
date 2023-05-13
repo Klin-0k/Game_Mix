@@ -27,26 +27,26 @@ void MainMenu::SetEnableMod(bool enable) {
 }
 MainMenu::MainMenu()
     : Essence(),
-      PlayButton(PATH_TO_RESOURCES"/buttons/buttonN1.png",
-                 PATH_TO_RESOURCES"/buttons/buttonN2.png",
-                 PATH_TO_RESOURCES"/buttons/buttonN3.png",
+      PlayButton(PATH_TO_RESOURCES "/buttons/buttonN1.png",
+                 PATH_TO_RESOURCES "/buttons/buttonN2.png",
+                 PATH_TO_RESOURCES "/buttons/buttonN3.png",
                  parent_,
                  false),
-      SettingsButton(PATH_TO_RESOURCES"/buttons/buttonN1.png",
-                     PATH_TO_RESOURCES"/buttons/buttonN2.png",
-                     PATH_TO_RESOURCES"/buttons/buttonN3.png",
+      SettingsButton(PATH_TO_RESOURCES "/buttons/buttonN1.png",
+                     PATH_TO_RESOURCES "/buttons/buttonN2.png",
+                     PATH_TO_RESOURCES "/buttons/buttonN3.png",
                      parent_,
                      false),
-      ExitButton(PATH_TO_RESOURCES"/buttons/buttonN1.png",
-                 PATH_TO_RESOURCES"/buttons/buttonN2.png",
-                 PATH_TO_RESOURCES"/buttons/buttonN3.png",
+      ExitButton(PATH_TO_RESOURCES "/buttons/buttonN1.png",
+                 PATH_TO_RESOURCES "/buttons/buttonN2.png",
+                 PATH_TO_RESOURCES "/buttons/buttonN3.png",
                  parent_,
                  false),
-      MainMenuFon({PATH_TO_RESOURCES"/Fons/MainMenu/(0).png",
-                   PATH_TO_RESOURCES"/Fons/MainMenu/(1).png",
-                   PATH_TO_RESOURCES"/Fons/MainMenu/(2).png",
-                   PATH_TO_RESOURCES"/Fons/MainMenu/(3).png",
-                   PATH_TO_RESOURCES"/Fons/MainMenu/(4).png"},
+      MainMenuFon({PATH_TO_RESOURCES "/Fons/MainMenu/(0).png",
+                   PATH_TO_RESOURCES "/Fons/MainMenu/(1).png",
+                   PATH_TO_RESOURCES "/Fons/MainMenu/(2).png",
+                   PATH_TO_RESOURCES "/Fons/MainMenu/(3).png",
+                   PATH_TO_RESOURCES "/Fons/MainMenu/(4).png"},
                   30,
                   parent_,
                   false) {
@@ -58,7 +58,7 @@ MainMenu::MainMenu()
   targetWidth = targetHeight * ExitButton.GetWidth() / ExitButton.GetHeight();
   ExitButton.SetSize(targetWidth, targetHeight);
   sf::Font font;
-  font.loadFromFile(PATH_TO_RESOURCES"/Fonts/JosefinSans-VariableFont_wght.ttf");
+  font.loadFromFile(PATH_TO_RESOURCES "/Fonts/JosefinSans-VariableFont_wght.ttf");
   sf::Text text;
   text.setFont(font);
   text.setFillColor(sf::Color::Yellow);
@@ -82,7 +82,8 @@ MainMenu::MainMenu()
   text.setString(ExitName);
   ExitButton.Print(text);
   float free_space_ = (parent_->getSize().y
-      - (PlayButton.GetHeight() + SettingsButton.GetHeight() + ExitButton.GetHeight())) / 4;
+                       - (PlayButton.GetHeight() + SettingsButton.GetHeight() + ExitButton.GetHeight()))
+      / 4;
   PlayButton.Move((parent_->getSize().x - PlayButton.GetWidth()) / 2, free_space_);
   SettingsButton.Move((parent_->getSize().x - SettingsButton.GetWidth()) / 2,
                       PlayButton.GetBottom() + free_space_);

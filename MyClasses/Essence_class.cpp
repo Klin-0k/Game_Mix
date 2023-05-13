@@ -19,13 +19,13 @@ Essence::~Essence() {
   std::cout << "~Essence\n\n";
 #endif
 }
-void  Essence::SetEnableMod(bool enable) {
+void Essence::SetEnableMod(bool enable) {
   enable_ = enable;
   if (enable_ && !visible_) {
     visible_ = true;
   }
 }
-void  Essence::SetVisibleMod(bool visible) {
+void Essence::SetVisibleMod(bool visible) {
   visible_ = visible;
   if (enable_ && !visible_) {
     enable_ = false;

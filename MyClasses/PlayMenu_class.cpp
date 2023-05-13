@@ -25,7 +25,7 @@ void PlayMenu::Draw() {
 }
 PlayMenu::~PlayMenu() {
   std::ofstream file;
-  file.open(PATH_TO_RESOURCES"/game2/record.txt");
+  file.open(PATH_TO_RESOURCES "/game2/record.txt");
   file << std::to_string(coins);
   file.close();
   ppm = nullptr;
@@ -46,36 +46,36 @@ void PlayMenu::SetEnableMod(bool enable) {
 }
 PlayMenu::PlayMenu()
     : Essence(),
-      BackButton(PATH_TO_RESOURCES"/buttons/buttonN1.png",
-                 PATH_TO_RESOURCES"/buttons/buttonN2.png",
-                 PATH_TO_RESOURCES"/buttons/buttonN3.png",
+      BackButton(PATH_TO_RESOURCES "/buttons/buttonN1.png",
+                 PATH_TO_RESOURCES "/buttons/buttonN2.png",
+                 PATH_TO_RESOURCES "/buttons/buttonN3.png",
                  parent_,
                  false),
-      Game1Button(PATH_TO_RESOURCES"/buttons/UIpack/PNG/blue_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/green_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/yellow_button12.png",
+      Game1Button(PATH_TO_RESOURCES "/buttons/UIpack/PNG/blue_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/green_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/yellow_button12.png",
                   parent_,
                   false),
-      Game2Button(PATH_TO_RESOURCES"/buttons/UIpack/PNG/blue_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/green_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/yellow_button12.png",
+      Game2Button(PATH_TO_RESOURCES "/buttons/UIpack/PNG/blue_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/green_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/yellow_button12.png",
                   parent_,
                   false),
-      Game3Button(PATH_TO_RESOURCES"/buttons/UIpack/PNG/blue_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/green_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/yellow_button12.png",
+      Game3Button(PATH_TO_RESOURCES "/buttons/UIpack/PNG/blue_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/green_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/yellow_button12.png",
                   parent_,
                   false),
-      Game4Button(PATH_TO_RESOURCES"/buttons/UIpack/PNG/blue_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/green_button11.png",
-                  PATH_TO_RESOURCES"/buttons/UIpack/PNG/yellow_button12.png",
+      Game4Button(PATH_TO_RESOURCES "/buttons/UIpack/PNG/blue_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/green_button11.png",
+                  PATH_TO_RESOURCES "/buttons/UIpack/PNG/yellow_button12.png",
                   parent_,
                   false),
-      PlayMenuFon(PATH_TO_RESOURCES"/Fons/PlayMenu/(*).png", 99,
+      PlayMenuFon(PATH_TO_RESOURCES "/Fons/PlayMenu/(*).png", 99,
                   45,
                   parent_,
                   false) {
-  std::ifstream file(PATH_TO_RESOURCES"/game2/record.txt");
+  std::ifstream file(PATH_TO_RESOURCES "/game2/record.txt");
   std::string line;
   std::getline(file, line);
   coins = std::stoi(line);
@@ -93,7 +93,7 @@ PlayMenu::PlayMenu()
   targetWidth = targetHeight * Game4Button.GetWidth() / Game4Button.GetHeight();
   Game4Button.SetSize(targetWidth, targetHeight);
   sf::Font font;
-  font.loadFromFile(PATH_TO_RESOURCES"/Fonts/JosefinSans-VariableFont_wght.ttf");
+  font.loadFromFile(PATH_TO_RESOURCES "/Fonts/JosefinSans-VariableFont_wght.ttf");
   sf::Text text;
   text.setFont(font);
   text.setFillColor(sf::Color::Yellow);
@@ -130,9 +130,11 @@ PlayMenu::PlayMenu()
   text.setString(Game4Name);
   Game4Button.Print(text);
   float free_horizontal_space_for_Games = (parent_->getSize().x
-      - (Game1Button.GetWidth() + Game2Button.GetWidth())) / 3;
+                                           - (Game1Button.GetWidth() + Game2Button.GetWidth()))
+      / 3;
   float free_vertical_space_for_Games = (parent_->getSize().y * 65 / 100
-      - (Game1Button.GetHeight() + Game2Button.GetHeight())) / 3;
+                                         - (Game1Button.GetHeight() + Game2Button.GetHeight()))
+      / 3;
   Game1Button.Move(free_horizontal_space_for_Games, free_vertical_space_for_Games);
   Game2Button.Move(Game1Button.GetRight() + free_horizontal_space_for_Games,
                    free_vertical_space_for_Games);
@@ -154,7 +156,7 @@ void PlayMenu::Game2ButtonEvent(const sf::Event& event) {
   Game2::getGame2();
   ppm->Delete();
 }
-void PlayMenu::Game1ButtonEvent(const sf::Event &event) {
+void PlayMenu::Game1ButtonEvent(const sf::Event& event) {
   Game1::GetGame1();
   ppm->Delete();
 }

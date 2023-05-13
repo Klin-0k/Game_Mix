@@ -1,7 +1,7 @@
-#include <gtest/gtest.h>
 #include "../Global_Classes.cpp"
-#include <SFML/Window/Keyboard.hpp>
 #include "InterfaceTests.cpp"
+#include <SFML/Window/Keyboard.hpp>
+#include <gtest/gtest.h>
 
 TEST(LootTest, Constructor) {
   sf::Texture texture;
