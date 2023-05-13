@@ -11,14 +11,6 @@ curl -LO 'https://github.com/google/googletest/archive/refs/tags/v1.13.0.zip'
 unzip v1.13.0.zip
 rm v1.13.0.zip
 cd ..
-#if command -v apt &> /dev/null; then
-#  apt-get update
-#  apt-get install libgtest-dev
-#  apt-get install libgmock-dev
-#elif command -v apk &> /dev/null; then
-#  apk add libgtest-dev
-#  apk add libgmock-dev
-#fi
 if [ -d ./linux_bush_build ]; then
   rm -r ./linux_bush_build
 fi
