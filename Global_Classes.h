@@ -388,7 +388,7 @@ struct Figure {
 };
 
 class Game1 : Essence {
- private:
+ public:
   Game1();
 
   static Game1 *game_1_pointer;
@@ -470,7 +470,6 @@ class Game1 : Essence {
   sf::Color my_white = {255, 255, 255};
   sf::Color my_transparent = {255, 255, 255, 0};
 
- public:
   static Game1* GetGame1();
   Game1(const Game1&) = delete;
   Game1& operator=(const Game1&) = delete;
