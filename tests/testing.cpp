@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "../Global_Classes.cpp"
 #include <SFML/Window/Keyboard.hpp>
+#include "InterfaceTests.cpp"
 
 TEST(LootTest, Constructor) {
   sf::Texture texture;
@@ -39,7 +40,7 @@ TEST(BucketTest, BucketTest3) {
   Bucket bucket(texture, 60.0, 12, &window, false, "../Resources/game2/animation/*.png");
   bucket.jump = true;
   bucket.Jumping(1);
-  EXPECT_EQ(bucket.GetTop()>bucket.parent()->getSize().y/2, true);
+  EXPECT_EQ(bucket.GetTop() > bucket.parent()->getSize().y / 2, true);
   window.close();
 }
 
@@ -54,7 +55,7 @@ TEST(BucketTest, BucketTest4) {
   window.close();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

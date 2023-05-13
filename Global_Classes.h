@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_set>
 #include <fstream>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 
@@ -23,7 +24,7 @@ class BigBoy;
 class Game;
 class InGameMenu;
 
-class Window final : public sf::RenderWindow {
+class Window : public sf::RenderWindow {
  public:
   void Delete();
   bool IsWaitingForDeleting() const;
@@ -35,7 +36,7 @@ class Window final : public sf::RenderWindow {
   void MakeFrame();
   using SFML_window = sf::RenderWindow;
   using SFML_window::SFML_window;
-  ~Window() final;
+  ~Window() override;
   std::function<void()> Close = [this]() { Delete(); };
   bool IsAlwaysOnFocus = false;
   static void CloseProgram();
@@ -55,8 +56,8 @@ class Window final : public sf::RenderWindow {
   std::string Name = "Window";
 #endif
 
- private:
-  void EventHandling();
+ protected:
+  void EventHandling(const sf::Event& event);
   void UpdatingEssences(double dt);
   void ChangingEssencesStates();
   bool enable_ = true;
@@ -190,12 +191,12 @@ class Button : public Object {
          bool is_independent);
   static void Print(sf::Text text, sf::Texture& texture);
   void Print(const sf::Text& text);
-  void SetMouseButtonPressedEvent(const std::function<void(const sf::Event&)>& Func) final;
-  void SetMouseButtonReleasedEvent(const std::function<void(const sf::Event&)>& Func) final;
-  void SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Func) final;
-  void SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& Func) final;
-  void SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func) final;
-  void SetEnableMod(bool enable) final;
+  void SetMouseButtonPressedEvent(const std::function<void(const sf::Event&)>& Func) override;
+  void SetMouseButtonReleasedEvent(const std::function<void(const sf::Event&)>& Func) override;
+  void SetMouseMovedEvent(const std::function<void(const sf::Event&)>& Func) override;
+  void SetMouseEnteredEvent(const std::function<void(const sf::Event&)>& Func) override;
+  void SetMouseLeftEvent(const std::function<void(const sf::Event&)>& Func) override;
+  void SetEnableMod(bool enable) override;
 
   ~Button() override;
  protected:
@@ -213,11 +214,11 @@ class Game {
  private:
 };
 
-class Fon final : public Object {
+class Fon : public Object {
  public:
   Fon(std::vector<std::string> PathsToFrames, double FPS, Window* parent, bool is_independent);
   Fon(std::string PathToFrames, size_t NumberOfFrames, double FPS, Window* parent, bool is_independent);
-  ~Fon() final;
+  ~Fon() override;
   void Update(double dt);
  private:
   std::vector<sf::Texture> FonImages;
@@ -225,33 +226,33 @@ class Fon final : public Object {
   double CurrentFrame = 0;
 };
 
-class MainMenu final : public Essence {
+class MainMenu : public Essence {
  public:
   static MainMenu* getMainMenu();
-  void Draw() final;
-  ~MainMenu() final;
-  void SetEnableMod(bool enable) final;
+  void Draw() override;
+  ~MainMenu() override;
+  void SetEnableMod(bool enable) override;
   MainMenu(const MainMenu&) = delete;
   MainMenu& operator=(const MainMenu&) = delete;
- private:
+ protected:
   static MainMenu* pmm;
   static void PlayButtonEvent(const sf::Event& event);
-  void ExitButtonEvent(const sf::Event& event);
+  static void ExitButtonEvent(const sf::Event& event);
   MainMenu();
   Button PlayButton, SettingsButton, ExitButton;
   Fon MainMenuFon;
 };
 
-class PlayMenu final : public Essence {
+class PlayMenu : public Essence {
  public:
   int coins = 0;
   static PlayMenu* getPlayMenu();
-  void Draw() final;
-  ~PlayMenu() final;
-  void SetEnableMod(bool enable) final;
+  void Draw() override;
+  ~PlayMenu() override;
+  void SetEnableMod(bool enable) override;
   PlayMenu(const PlayMenu&) = delete;
   PlayMenu& operator=(const PlayMenu&) = delete;
- private:
+ protected:
   static PlayMenu* ppm;
   static void BackButtonEvent(const sf::Event& event);
   static void Game2ButtonEvent(const sf::Event &event);
@@ -268,16 +269,16 @@ class InGameMenu {
   Button ContinueButton, MainMenuButton, SettingsButton, ExitButton;
 };
 
-class ExitMenu final : public Essence {
+class ExitMenu : public Essence {
  public:
   explicit ExitMenu(Window* WindowThatShouldBeClosed);
-  void Draw() final;
+  void Draw() override;
   static void CloseWithExitMenu(Window* window);
-  void SetEnableMod(bool enable) final;
+  void SetEnableMod(bool enable) override;
   ExitMenu(const ExitMenu&) = delete;
   ExitMenu& operator=(const ExitMenu&) = delete;
- private:
-  ~ExitMenu() final;
+  ~ExitMenu() override;
+ protected:
   Window* WindowThatShouldBeClosed;
   Button ButtonYES, ButtonNO;
   Fon ExitMenuFon;
@@ -333,7 +334,7 @@ class Bucket : public Object {
   void Turn_Left(double dt, double dist);
   void Turn_Right(double dt, double dist);
   void Jumping(double dt);
-  ~Bucket();
+  ~Bucket() override;
 };
 
 class Loot : public Object {
@@ -372,7 +373,7 @@ class Game2 : Essence {
   Game2 &operator=(const Game2 &) = delete;
   int get_coin();
   void Update(double dt);
-  ~Game2();
+  ~Game2() override;
 };
 
 struct Coords {
@@ -511,5 +512,5 @@ class Game1 : Essence {
   void ButtonLink(const sf::Event& event);
   void ReloadGame(const sf::Event& event);
 
-  ~Game1();
+  ~Game1() override;
 };

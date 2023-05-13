@@ -97,5 +97,5 @@ void MainMenu::PlayButtonEvent(const sf::Event& event) {
   pmm->Delete();
 }
 void MainMenu::ExitButtonEvent(const sf::Event& event) {
-  parent_->Close();
+  pmm->parent_->Close();
 }

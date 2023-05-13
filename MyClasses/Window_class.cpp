@@ -11,9 +11,7 @@ bool Window::IsWaitingForDeleting() const {
 bool Window::ProgramIsWaitingForClosing() {
   return WaitingForProgramClosing;
 }
-void Window::EventHandling() {
-  sf::Event event = sf::Event();
-  while (pollEvent(event)) {
+void Window::EventHandling(const sf::Event& event) {
     switch (event.type) {
       case sf::Event::Closed:Close();
         break;
@@ -75,8 +73,7 @@ void Window::EventHandling() {
       case sf::Event::MouseButtonPressed:
         for (auto i : ObjectsWithMouseButtonPressedEvent) {
           if (i->enable_) {
-            if (i->Sprite_.getGlobalBounds().contains(this->mapPixelToCoords(sf::Mouse::getPosition(
-                *this)))) {
+            if (i->Sprite_.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
               i->pressed_ = true;
               i->MouseButtonPressed_(event);
             }
@@ -109,8 +106,7 @@ void Window::EventHandling() {
         for (auto i : ObjectsWithMouseMovedEvent) {
           if (i->enable_) {
             if (i->under_mouse_
-                && i->Sprite_.getGlobalBounds().contains(this->mapPixelToCoords(sf::Mouse::getPosition(
-                    *this)))) {
+                && i->Sprite_.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y)) {
               i->MouseMoved_(event);
             }
             if (WaitingForDeleting || WaitingForProgramClosing) {
@@ -122,8 +118,7 @@ void Window::EventHandling() {
           }
           if (i->enable_) {
             if (i->under_mouse_
-                && !(i->Sprite_.getGlobalBounds().contains(this->mapPixelToCoords(sf::Mouse::getPosition(
-                    *this))))) {
+                && !(i->Sprite_.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))) {
               i->MouseLeft_(event);
               i->under_mouse_ = false;
             }
@@ -136,7 +131,7 @@ void Window::EventHandling() {
           }
           if (i->enable_) {
             if (!i->under_mouse_
-                && i->Sprite_.getGlobalBounds().contains(mapPixelToCoords(sf::Mouse::getPosition(*this)))) {
+                && i->Sprite_.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y)) {
               i->under_mouse_ = true;
               i->MouseEntered_(event);
             }
@@ -151,7 +146,6 @@ void Window::EventHandling() {
         break;
       default:break;
     }
-  }
 }
 void Window::UpdatingEssences(double dt) {
   if (!WaitingForDeleting && !WaitingForProgramClosing) {
@@ -177,7 +171,10 @@ void Window::ChangingEssencesStates() {
 void Window::MakeFrame() {
   double dt = time_between_frames.restart().asMilliseconds();
   if (enable_) {
-    EventHandling();
+    sf::Event event = sf::Event();
+    if (pollEvent(event)) {
+      EventHandling(event);
+    }
   }
   if (enable_) {
     UpdatingEssences(dt);
