@@ -6,7 +6,7 @@ TEST(FirstFrameTest, StableGlobals) {
   auto MainWindow = new Window(sf::VideoMode(sf::VideoMode::getDesktopMode().height * 3 / 4 * 16 / 9,
                                              sf::VideoMode::getDesktopMode().height * 3 / 4),
                                "Casino");
-  Game1 *game1 = Game1::GetGame1();
+  Game1* game1 = Game1::GetGame1();
   EXPECT_FALSE(game1->is_active_game_over);
   EXPECT_GT(game1->tile_size, 0);
   EXPECT_LE(game1->tile_size, game1->game_background->GetWidth());
@@ -21,7 +21,7 @@ TEST(UpdateTest, CorrectMovements) {
   auto MainWindow = new Window(sf::VideoMode(sf::VideoMode::getDesktopMode().height * 3 / 4 * 16 / 9,
                                              sf::VideoMode::getDesktopMode().height * 3 / 4),
                                "Casino");
-  Game1 *game1 = Game1::GetGame1();
+  Game1* game1 = Game1::GetGame1();
   game1->CreateBackground();
   game1->SetTileProperties();
   game1->CreateFigures();
@@ -49,7 +49,7 @@ TEST(UpdateTest, CorrectCounters) {
   auto MainWindow = new Window(sf::VideoMode(sf::VideoMode::getDesktopMode().height * 3 / 4 * 16 / 9,
                                              sf::VideoMode::getDesktopMode().height * 3 / 4),
                                "Casino");
-  Game1 *game1 = Game1::GetGame1();
+  Game1* game1 = Game1::GetGame1();
   game1->coins = 3228;
   game1->record = 9999;
   game1->score = 2023;
@@ -65,7 +65,7 @@ TEST(UpdateTest, CorrectGameOver) {
   auto MainWindow = new Window(sf::VideoMode(sf::VideoMode::getDesktopMode().height * 3 / 4 * 16 / 9,
                                              sf::VideoMode::getDesktopMode().height * 3 / 4),
                                "Casino");
-  Game1 *game1 = Game1::GetGame1();
+  Game1* game1 = Game1::GetGame1();
   game1->is_active_game_over = true;
   game1->speed_of_falling = 5;
   game1->Update(0.01);
