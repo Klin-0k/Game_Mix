@@ -1,0 +1,24 @@
+name: Test
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get project
+        uses: actions/checkout@v3
+      - name: Check code formatting
+        run: |
+          sudo apt-get install -y clang-format
+          clang-format --dry-run --Werror $(find . -type f -name '*.cpp' -o -name '*.h')
+      - name: Installing required packages
+        run: |
+          sudo apt update -y
+          sudo apt install -y cmake build-essential git
+          sudo apt-get install -y xvfb
+          sudo apt-get install -y unzip
+      - name: Installing required packages and Build
+        run: |
+          chmod +x build_linux_version.sh
+          ./build_linux_version.sh
+      - name: Testing
+        run: xvfb-run -a ./exe/Test

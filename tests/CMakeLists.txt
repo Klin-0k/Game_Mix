@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(Test)
+
+set(CMAKE_CXX_STANDARD 20)
+
+add_subdirectory(googletest-1.13.0)
+add_executable(Test testing.cpp)
+target_link_libraries(Test gtest_main gmock_main)
+if (WIN32)
+set(SFML ../SFML-2.5.1)
+set(SFML_DIR ${SFML}/lib/cmake/SFML)
+set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc")
+set(SFML_STATIC_LIBRARIES TRUE)
+endif(WIN32)
+if (UNIX)
+set(SFML ../SFML-2.5.1_for_linux)
+set(SFML_DIR ${SFML}/lib/cmake/SFML)
+endif (UNIX)
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
+find_package(SFML REQUIRED graphics network audio window system)
