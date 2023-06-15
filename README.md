@@ -1,4 +1,4 @@
-# TP_2023_Project
+# Game_Mix
 
 ## How to run:
 
