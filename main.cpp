@@ -1,14 +1,14 @@
-#include "Global_Classes.cpp"
+#include <Global_Definitions.h>
 
 int main() {
   GettingStarted();
-  while (true) {
-    for (auto window : Window::WindowsToDisplay) {
+  while (!Window::WindowsToDisplay.empty()) {
+    for (auto window_it = Window::WindowsToDisplay.begin(); window_it != Window::WindowsToDisplay.end();) {
+      auto window = *(window_it++);
       window->MakeFrame();
       if (window->IsWaitingForDeleting()) {
         Window::WindowsToDisplay.erase(window);
         delete window;
-        break;
       }
       if (Window::ProgramIsWaitingForClosing()) {
         while (!Window::WindowsToDisplay.empty()) {
@@ -18,9 +18,6 @@ int main() {
         }
         break;
       }
-    }
-    if (Window::WindowsToDisplay.empty()) {
-      break;
     }
   }
   return 0;

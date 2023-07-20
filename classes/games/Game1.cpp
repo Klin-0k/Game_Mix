@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <classes/games/Game1.h>
+#include <classes/menus/PlayMenu_class.h>
+
 void Game1::ButtonLink(const sf::Event& event) {
   PlayMenu::getPlayMenu()->coins += coins;
   SetRecord(record, score);
@@ -483,7 +486,7 @@ void Game1::Update(double dt) {
 
 Game1* Game1::game_1_pointer = nullptr;
 
-Game1* Game1::GetGame1() {
+Game1* Game1::getGame1() {
   if (game_1_pointer == nullptr) {
     game_1_pointer = new Game1();
   }

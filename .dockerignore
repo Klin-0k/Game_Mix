@@ -7,4 +7,3 @@ lib/
 arc/
 CMakeFiles/
 tests/googletest/
-*.DS_Store

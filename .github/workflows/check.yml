@@ -13,12 +13,10 @@ jobs:
       - name: Installing required packages
         run: |
           sudo apt update -y
-          sudo apt install -y cmake build-essential git
-          sudo apt-get install -y xvfb
-          sudo apt-get install -y unzip
-      - name: Installing required packages and Build
+          sudo apt-get install -y build-essential cmake libgl1-mesa-dev libxrandr-dev libudev-dev libopenal-dev libvorbis-dev libogg-dev libflac-dev libx11-dev libxrandr-dev libxext-dev libxi-dev libxcursor-dev libfreetype6-dev xvfb curl unzip
+      - name: Installing required libraries and Build
         run: |
-          chmod +x build_linux_version.sh
-          ./build_linux_version.sh
+          chmod +x build.sh
+          ./build.sh
       - name: Testing
         run: xvfb-run -a ./exe/Test

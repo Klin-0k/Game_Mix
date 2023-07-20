@@ -4,6 +4,9 @@
 #include <string>
 #include <time.h>
 
+#include <classes/games/Game2.h>
+#include <classes/menus/PlayMenu_class.h>
+
 Loot::Loot(const sf::Texture& texture, Window* parent, bool is_independent, std::string name) : Object(texture, parent, is_independent), name(name) {}
 
 Bucket::Bucket(const sf::Texture& texture,

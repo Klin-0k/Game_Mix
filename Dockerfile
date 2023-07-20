@@ -1,9 +1,6 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04:
 RUN apt-get update
-RUN apt-get install -y build-essential cmake
-RUN apt-get install -y libgl1-mesa-dev libxrandr-dev
-RUN apt-get install -y xvfb
-RUN apt-get install -y unzip
-COPY . ./TP_2023_Project
-WORKDIR ./TP_2023_Project
-RUN ./build_linux_version.sh
+RUN apt-get install -y build-essential cmake libgl1-mesa-dev libxrandr-dev libudev-dev libopenal-dev libvorbis-dev libogg-dev libflac-dev libx11-dev libxrandr-dev libxext-dev libxi-dev libxcursor-dev libfreetype6-dev xvfb curl unzip
+COPY . app
+WORKDIR app
+RUN ./build.sh
